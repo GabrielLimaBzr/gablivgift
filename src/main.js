@@ -12,5 +12,16 @@ const app = createApp(App)
 app.use(router)
 
 
-app.use(createVuestic());
+app.use(createVuestic({
+    config: {
+        colors: {
+            variables: {
+                primary: "#f32c42",
+                secondary: "#36a8b3",
+                backgroundPrimary: "#fdfffb",
+                backgroundSecondary: "#caccc8",
+            }
+        }
+    }
+}));
 app.mount('#app')

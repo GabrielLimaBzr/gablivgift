@@ -27,3 +27,5 @@ npm run dev
 ```sh
 npm run build
 ```
+
+idea: mudar de cor de acordo com o perfil

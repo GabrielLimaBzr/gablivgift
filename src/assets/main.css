@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --va-font-family: 'Source Sans Pro', sans-serif;
