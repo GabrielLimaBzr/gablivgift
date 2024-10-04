@@ -1,5 +1,5 @@
 <template>
-    <h1>home sdmasfas</h1>
+    <h1>Livia meu amor</h1>
 </template>
 <script>
 export default {
