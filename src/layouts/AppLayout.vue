@@ -19,10 +19,9 @@ import NavBar from '@/components/NavBar.vue';
     border: 1px solid red;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     height: 100dvh;
     align-items: center;
-    min-width: 425px;
 }
 
 .lay-cont{
