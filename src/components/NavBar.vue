@@ -1,14 +1,14 @@
 <template>
-    <header>
-        <div class="header py-2 px-6 mt-4 flex items-center gap-3 justify-between">
+    <header class="drop-shadow-lg">
+        <div class="header py-2 px-4 mt-4 flex items-center gap-3 justify-between">
             <div class="flex-none h-6 w-6">
                 <img class="w-full" src="../assets/logo.svg" alt="LoG">
             </div>
 
             <div class="flex-grow">
-                <VaInput class="w-full"v-model="search" placeholder="Procure eventos..." :clearable="true" color="textInverted">
+                <VaInput class="w-full" v-model="search" placeholder="Procure eventos..." :clearable="true" color="textInverted">
                     <template #prependInner>
-                        <VaIcon color="textInverted" name="search"></VaIcon>
+                        <VaIcon style="color: white !important;" color="textInverted" name="search"></VaIcon>
                     </template>
                 </VaInput>
             </div>
@@ -31,11 +31,21 @@ const search = ref('');
 </script>
 <style>
 .header {
-    background-color: var(--va-background-secondary);
+    background: rgba(226, 226, 226, 0.253);
     border-radius: 50px;
+    backdrop-filter: blur(6px);
 }
 
 .va-input-wrapper__size-keeper {
     width: 100%;
 }
+
+.va-input-wrapper__text input {
+    color: white;
+}
+
+.va-icon.va-icon {
+    color: white !important;
+}
+
 </style>
