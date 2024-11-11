@@ -2,12 +2,11 @@
     <div class="flex flex-col justify-center w-full items-center py-4">
         <h1 class="title">GabLivGifts</h1>
         <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma imensa lista de desesjos!</p>
+        <Card></Card>
     </div>
 </template>
-<script>
-export default {
-    
-}
+<script setup>
+import Card from '@/components/Card.vue';
 </script>
 <style >
 .title{
