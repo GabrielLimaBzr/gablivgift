@@ -1,12 +1,13 @@
 <template>
-    <header class="drop-shadow-lg">
-        <div class="header py-2 px-4 mt-4 flex items-center gap-3 justify-between">
+    <header>
+        <div class="header py-2 px-4 mt-4 flex items-center gap-3 justify-between drop-shadow">
             <div class="flex-none h-6 w-6">
                 <img class="w-full" src="../assets/logo.svg" alt="LoG">
             </div>
 
             <div class="flex-grow">
-                <VaInput class="w-full" v-model="search" placeholder="Procure eventos..." :clearable="true" color="textInverted">
+                <VaInput class="w-full" v-model="search" placeholder="Procure eventos..." :clearable="true"
+                    color="textInverted">
                     <template #prependInner>
                         <VaIcon style="color: white !important;" color="textInverted" name="search"></VaIcon>
                     </template>
@@ -48,4 +49,9 @@ const search = ref('');
     color: white !important;
 }
 
+.drop-shadow {
+    -webkit-box-shadow: 0px 0px 11px 5px rgba(0, 0, 0, 0.357);
+    -moz-box-shadow: 0px 0px 11px 5px rgba(0, 0, 0, 0.357);
+    box-shadow: 0px 0px 11px 5px rgba(95, 95, 95, 0.357);
+}
 </style>

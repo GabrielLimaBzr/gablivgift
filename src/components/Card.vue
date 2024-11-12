@@ -1,5 +1,4 @@
 <template>
-  <div class="content">
     <a href="#" class="card">
       <div class="card__image-container">
         <img
@@ -11,7 +10,6 @@
         <span>2 minutes!</span>
       </div>
     </a>
-  </div>
 </template>
 
 <script>
@@ -21,32 +19,28 @@ export default {
 </script>
 
 <style>
-.content {
-  border: solid 0px orange;
-
-  margin: 30px;
-}
 
 .card {
   --blur: 16px;
-  --size: clamp(300px, 50vmin, 600px);
-  width: var(--size);
+  width: 100%;
   aspect-ratio: 4 / 3;
   position: relative;
-  border-radius: 2rem;
-  overflow: hidden; /* Impede que a imagem amplie para fora do card */
-  color: #000;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  color: var(--va-text-inverted);
   transform: translateZ(0);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  min-width: 100%;
 }
 
 .card__image-container {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 2rem;
+  border-radius: var(--border-radius);
+  border: solid 3px hsla(0, 0%, 100%, 0.318);
 }
 
 .card__img {
@@ -66,14 +60,14 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: hsl(0 0% 100% / 0.5);
+  background: hsla(0, 0%, 16%, 0.575);
   backdrop-filter: blur(var(--blur));
   height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom-left-radius: 2rem;
-  border-bottom-right-radius: 2rem;
+  border-bottom-left-radius:  var(--border-radius);
+  border-bottom-right-radius:  var(--border-radius);
   z-index: 1; /* Mantém o footer acima da imagem */
 }
 

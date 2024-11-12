@@ -1,8 +1,28 @@
 <template>
-    <div class="flex flex-col justify-center w-full items-center py-4">
+    <div class="flex flex-col justify-center w-full items-center py-10">
         <h1 class="title">GabLivGifts</h1>
         <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma imensa lista de desesjos!</p>
-        <Card></Card>
+        <div class="w-full grid grid-cols-3 gap-7 mt-10">
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+        </div>
+        
     </div>
 </template>
 <script setup>
@@ -17,7 +37,7 @@ import Card from '@/components/Card.vue';
 }
 
 .sub{
-    color: rgba(255, 255, 255, 0.199);
+    color: rgba(255, 255, 255, 0.59);
 }
 
 .fra{

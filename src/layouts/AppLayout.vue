@@ -19,7 +19,7 @@ import NavBar from '@/components/NavBar.vue';
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100dvh;
+    min-height: 100dvh;
     align-items: center;
 }
 
@@ -28,139 +28,10 @@ import NavBar from '@/components/NavBar.vue';
     flex-direction: column;
     width: 100%;
     max-width: 1000px;
-}
-@keyframes hero-gradient-animation {
-    0% {
-        --c-0: hsla(0, 63%, 30%, 0);
-        --x-0: 33%;
-        --s-start-0: 0%;
-        --s-end-0: 27.60885426007294%;
-        --y-0: 49%;
-        --y-1: 51%;
-        --s-start-1: 12.221950636596706%;
-        --s-end-1: 78.61653873376679%;
-        --c-1: hsla(0, 0%, 3%, 1);
-        --x-1: 95%;
-    }
-
-    100% {
-        --c-0: hsla(0, 0%, 3%, 0);
-        --x-0: 98%;
-        --s-start-0: 0%;
-        --s-end-0: 40.838370324549416%;
-        --y-0: 88%;
-        --y-1: 46%;
-        --s-start-1: 44.80197560436854%;
-        --s-end-1: 78.61653873376679%;
-        --c-1: hsla(0, 0%, 3%, 1);
-        --x-1: 7%;
-    }
-}
-
-@property --c-0 {
-    syntax: '<color>';
-    inherits: false;
-    initial-value: hsla(0, 63%, 30%, 0)
-}
-
-@property --x-0 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 33%
-}
-
-@property --s-start-0 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 0%
-}
-
-@property --s-end-0 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 27.60885426007294%
-}
-
-@property --y-0 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 49%
-}
-
-@property --y-1 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 51%
-}
-
-@property --s-start-1 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 12.221950636596706%
-}
-
-@property --s-end-1 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 78.61653873376679%
-}
-
-@property --c-1 {
-    syntax: '<color>';
-    inherits: false;
-    initial-value: hsla(0, 0%, 3%, 1)
-}
-
-@property --x-1 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 95%
-}
-
-@property --y-2 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 52%
-}
-
-@property --s-start-2 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 12.221950636596706%
-}
-
-@property --s-end-2 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 48.141699800112974%
-}
-
-@property --c-2 {
-    syntax: '<color>';
-    inherits: false;
-    initial-value: hsla(0, 0%, 3%, 1)
-}
-
-@property --x-2 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 80%
-}
-
-.your_css_selector_here {
-    --c-0: hsla(0, 63%, 30%, 0);
-    --x-0: 33%;
-    --y-0: 49%;
-    --y-1: 51%;
-    --c-1: hsla(0, 0%, 3%, 1);
-    --x-1: 95%;
-    --y-2: 52%;
-    --c-2: hsla(0, 0%, 3%, 1);
-    --x-2: 80%;
-    ;
-    background-color: hsla(338.82352941176475, 76%, 10%, 1);
-    background-image: radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)), radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)), radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2));
-    animation: hero-gradient-animation 10s linear infinite alternate-reverse;
-    background-blend-mode: normal, normal, normal;
+    
+}.your_css_selector_here {
+    background-color: hsla(79, 98%, 66%, 1);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1799 1799' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"), radial-gradient(circle at 94% 95%, hsla(170, 88%, 68%, 1) 3%, transparent 76%), radial-gradient(circle at 89% 34%, hsla(263, 96%, 51%, 1) 1%, transparent 86%), radial-gradient(circle at 86% 50%, hsla(318, 80%, 65%, 1) 7%, transparent 76%), radial-gradient(circle at 89% 79%, hsla(248, 76%, 53%, 1) 7%, transparent 87%), radial-gradient(circle at 15% 44%, hsla(4, 74%, 80%, 1) 15%, transparent 81%), radial-gradient(circle at 99% 20%, hsla(75, 88%, 92%, 1) 1%, transparent 68%);
+    background-blend-mode: overlay, normal, normal, normal, normal, normal, normal;
 }
 </style>
