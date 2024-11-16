@@ -6,7 +6,7 @@
             </div>
 
             <div class="flex-grow">
-                <VaInput class="w-full" v-model="search" placeholder="Procure eventos..." :clearable="true"
+                <VaInput class="w-full" v-model="search" placeholder="Procurar presente..." :clearable="true"
                     color="textInverted">
                     <template #prependInner>
                         <VaIcon style="color: white !important;" color="textInverted" name="search"></VaIcon>
@@ -32,7 +32,7 @@ const search = ref('');
 </script>
 <style>
 .header {
-    background: rgba(226, 226, 226, 0.253);
+    background: hsla(0, 0%, 16%, 0.575);
     border-radius: 50px;
     backdrop-filter: blur(6px);
 }

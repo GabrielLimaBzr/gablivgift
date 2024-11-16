@@ -27,7 +27,7 @@ import Card from '@/components/Card.vue';
 </script>
 <style >
 .title{
-    color: white;
+    color: rgba(228, 228, 228, 0.77);
     font-size: 1.875rem;
     line-height: 2.25rem;
     font-weight: 800;
