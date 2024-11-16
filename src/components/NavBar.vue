@@ -15,11 +15,13 @@
             </div>
 
             <div class="flex-none h-6 w-6">
-                <VaButtonDropdown class="w-full" preset="plain" color="textInverted" hide-icon>
+                <VaButtonDropdown class="w-full" preset="plain" color="textInverted" hide-icon placement="left">
                     <template #label>
                         <VaIcon class="w-full mb-3" name="settings" size="large" />
                     </template>
-                    Button with custom label
+                    <div class="z-40">
+                        Button with custom label
+                    </div>
                 </VaButtonDropdown>
             </div>
         </div>
@@ -53,5 +55,9 @@ const search = ref('');
     -webkit-box-shadow: 0px 0px 11px 5px rgba(0, 0, 0, 0.357);
     -moz-box-shadow: 0px 0px 11px 5px rgba(0, 0, 0, 0.357);
     box-shadow: 0px 0px 11px 5px rgba(95, 95, 95, 0.357);
+}
+
+.va-dropdown__content{
+    z-index: 1000 !important;
 }
 </style>
