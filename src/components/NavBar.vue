@@ -1,6 +1,6 @@
 <template>
     <header>
-        <div class="header py-2 px-4 mt-4 flex items-center gap-3 justify-between drop-shadow">
+        <div class="header py-2 px-4 mt-4 flex items-center gap-3 justify-between">
             <div class="flex-none h-6 w-6">
                 <img class="w-full" src="../assets/logo.svg" alt="LoG">
             </div>
