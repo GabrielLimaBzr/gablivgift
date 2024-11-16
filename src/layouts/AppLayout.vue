@@ -1,7 +1,7 @@
 <template>
     <div class="layout effect">
-        <div class="lay-cont p-4">
-            <NavBar />
+        <div class="lay-cont p-4 pt-14">
+            <NavBar/>
             <div class="">
                 <router-view />
             </div>
