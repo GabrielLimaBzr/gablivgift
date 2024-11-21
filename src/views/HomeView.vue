@@ -3,25 +3,23 @@
     <h1 class="title">GabLivGifts</h1>
     <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma imensa lista de
       desesjos!</p>
-    <VaScrollContainer class="max-h-[70vh] mt-5" vertical>
-      <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 p-2">
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-      </div>
-    </VaScrollContainer>
+    <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 p-2">
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+    </div>
     <button class="add-button" @click="onAdd">
       <VaIcon class="w-full" name="redeem" size="2rem" />
     </button>
@@ -96,6 +94,7 @@ import Card from '@/components/Card.vue';
 
   /* Tablets e telas médias */
   .add-button {
+    left: 80%;
     width: 80px;
     height: 80px;
   }
