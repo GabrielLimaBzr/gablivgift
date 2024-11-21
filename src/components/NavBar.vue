@@ -34,7 +34,7 @@ const search = ref('');
 </script>
 <style>
 .header {
-    background: hsla(0, 0%, 16%, 0.575);
+    background: hsla(0, 0%, 25%, 0.575);
     border-radius: 50px;
     backdrop-filter: blur(6px);
 }
