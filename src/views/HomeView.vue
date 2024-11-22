@@ -22,6 +22,7 @@
     </div>
     <button class="add-button" @click="onAdd">
       <VaIcon class="w-full" name="redeem" size="2rem" />
+      <span> + Presente</span>
     </button>
   </div>
 </template>
@@ -48,31 +49,24 @@ import Card from '@/components/Card.vue';
   border-bottom: solid 1px var(--va-primary);
 }
 
-/* Estilos do botão fixo */
 .add-button {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   bottom: 6%;
-  /* Distância da parte inferior */
   left: 50%;
-  /* Centraliza horizontalmente */
   transform: translateX(-50%);
-  /* Ajusta para o centro */
   background: hsla(0, 0%, 80%, 0.563);
   backdrop-filter: blur(6px);
   color: #fff;
-  /* Cor do texto */
   border: none;
   border-radius: 50%;
-  /* Torna o botão redondo */
   width: 100px;
-  /* Largura */
   height: 100px;
-  /* Altura */
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   cursor: pointer;
-  font-size: 24px;
-  /* Tamanho do texto */
-  display: flex;
+  font-size: 12px;
+  font-weight: lighter;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -81,7 +75,6 @@ import Card from '@/components/Card.vue';
 .add-button:hover {
   background: hsla(0, 0%, 0%, 0.342);
   transform: translateX(-50%) scale(1.1);
-  /* Efeito de zoom */
 }
 
 .add-button:active {
