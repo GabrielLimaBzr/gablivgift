@@ -21,7 +21,7 @@ import NavBar from '@/components/NavBar.vue';
 }
 
 .layout {
-    background-color: var(--va-background-primary);
+    background-color: rgba(14, 14, 14, 0.72);
     display: flex;
     flex-direction: column;
     width: 100%;
