@@ -1,8 +1,8 @@
 <template>
-    <div class="layout effect">
+    <div class="layout effect border">
         <div class="lay-cont p-4 pt-14">
             <NavBar/>
-            <div class="">
+            <div class="border">
                 <router-view />
             </div>
         </div>
@@ -16,6 +16,10 @@ import NavBar from '@/components/NavBar.vue';
 </script>
 
 <style>
+.border{
+    border: solid 10px red
+}
+
 .layout {
     background-color: var(--va-background-primary);
     display: flex;
