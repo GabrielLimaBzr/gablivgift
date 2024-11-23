@@ -9,7 +9,7 @@
                 <VaInput class="w-full" v-model="search" placeholder="Procurar presente..." :clearable="true"
                     color="textInverted">
                     <template #prependInner>
-                        <VaIcon style="color: red!important;" color="textInverted" name="search"></VaIcon>
+                        <VaIcon style="color: white !important;" color="textInverted" name="search"></VaIcon>
                     </template>
                 </VaInput>
             </div>
@@ -44,11 +44,11 @@ const search = ref('');
 }
 
 .va-input-wrapper__text input {
-    color: rgb(255, 0, 0);
+    color: white;
 }
 
 .va-icon.va-icon {
-    color: rgb(255, 0, 0) !important;
+    color: white !important;
 }
 
 .drop-shadow {
