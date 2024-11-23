@@ -29,3 +29,13 @@ npm run build
 ```
 
 idea: mudar de cor de acordo com o perfil
+
+categorizar itens
+
+ordernar cat e data
+
+visualiar por: livia ou gabriel
+
+filtro por preços
+
+
