@@ -4,14 +4,8 @@
     <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma imensa lista de
       desesjos!</p>
 
-    <div class="p-2 m-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-      <VaSelect v-model="value" :options="options" class="col-span-1 fixed-size" color="textInverted">
-        <template #prepend>
-          <label aria-hidden="true"
-            class="mr-2 pt-1 va-input-label va-input-wrapper__label va-input-wrapper__label--outer"
-            id="input-label-va-10" style="color: var(--va-text-inverted);">Ordernar por:</label>
-        </template>
-
+    <div class="p-2 m-5 grid grid-cols-3 gap-3 justify-stretch">
+      <VaSelect v-model="value" :options="options" label="Ordernar por:" class="col-span-1 w-[150px]" color="primary"> 
         <template #content="{ value }">
           <span class="textOption">
             {{ value }}
@@ -19,13 +13,7 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueP" :options="adcionadorPor" class="col-span-1 fixed-size" color="textInverted">
-        <template #prepend>
-          <label aria-hidden="true"
-            class="mr-2 pt-1 va-input-label va-input-wrapper__label va-input-wrapper__label--outer"
-            id="input-label-va-10" style="color: var(--va-text-inverted);">Adicionado por:</label>
-        </template>
-
+      <VaSelect v-model="valueP" :options="adcionadorPor" label="Adicionado por:" class="col-span-1 w-[150px]" color="primary"> 
         <template #content="{ value }">
           <span class="textOption">
             {{ value }}
@@ -33,13 +21,7 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueZ" :options="precoAte" class="col-span-1 fixed-size" color="textInverted" @create-new="addNewOption" allow-create>
-        <template #prepend>
-          <label aria-hidden="true"
-            class="mr-2 pt-1 va-input-label va-input-wrapper__label va-input-wrapper__label--outer"
-            id="input-label-va-10" style="color: var(--va-text-inverted);">Preço:</label>
-        </template>
-
+      <VaSelect v-model="valueZ" :options="precoAte" label="Preço:" class="col-span-1 w-[150px]" color="primary"> 
         <template #content="{ value }">
           <span class="textOption">
             {{ value }}
@@ -48,7 +30,7 @@
       </VaSelect>
     </div>
 
-    <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 p-2">
+    <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 p-2 md:px-1 sm:px-6">
       <Card></Card>
       <Card></Card>
       <Card></Card>
@@ -110,6 +92,12 @@ export default {
 
 </script>
 <style scoped>
+.fixed-size {
+  width: 100%; /* Garante que cada select ocupe o mesmo espaço dentro de sua coluna */
+  max-width: 300px; /* Ajuste conforme necessário para o tamanho desejado */
+  display: flex;
+  flex-direction: column;
+}
 
 .textOption {
   color: var(--va-text-inverted) !important;
