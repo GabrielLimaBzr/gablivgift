@@ -20,6 +20,7 @@ app.use(createVuestic({
                 secondary: "#36a8b3",
                 backgroundPrimary: "#fdfffb",
                 backgroundSecondary: "#caccc8",
+                customBg: "#292929aa"
             }
         }
     }

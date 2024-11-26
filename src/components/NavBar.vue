@@ -1,6 +1,6 @@
 <template>
     <header>
-        <div class="header fixed top-4 left-1/2 transform -translate-x-1/2 max-w-[968px] w-[90%] py-2 px-4 flex items-center gap-3 justify-between shadow-md z-10">
+        <div class="header fixed top-4 left-1/2 transform -translate-x-1/2 max-w-[968px] w-[90%] py-2 px-4 flex items-center gap-3 justify-between z-10 drop-shadow">
             <div class="flex-none h-6 w-6">
                 <img class="w-full" src="../assets/logo.svg" alt="LoG">
             </div>
@@ -34,7 +34,7 @@ const search = ref('');
 </script>
 <style>
 .header {
-    background: hsla(0, 0%, 25%, 0.575);
+    background: var(--va-bg-custom);
     border-radius: 50px;
     backdrop-filter: blur(6px);
 }
@@ -49,12 +49,6 @@ const search = ref('');
 
 .va-icon.va-icon {
     color: white !important;
-}
-
-.drop-shadow {
-    -webkit-box-shadow: 0px 0px 11px 5px rgba(0, 0, 0, 0.357);
-    -moz-box-shadow: 0px 0px 11px 5px rgba(0, 0, 0, 0.357);
-    box-shadow: 0px 0px 11px 5px rgba(95, 95, 95, 0.357);
 }
 
 .va-dropdown__content{

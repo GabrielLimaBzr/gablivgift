@@ -60,7 +60,7 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: hsla(0, 0%, 16%, 0.575);
+  background:  var(--va-custom-bg);
   backdrop-filter: blur(var(--blur));
   height: 30%;
   display: flex;

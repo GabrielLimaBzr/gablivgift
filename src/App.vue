@@ -12,4 +12,10 @@ import { SpeedInsights } from '@vercel/speed-insights/vue';
 * {
   box-sizing: border-box;
 }
+
+.va-select-dropdown__options-wrapper{
+  background-color: #404040 !important;
+  backdrop-filter: blur(var(--blur));
+  color: var(--va-text-inverted);
+}
 </style>
