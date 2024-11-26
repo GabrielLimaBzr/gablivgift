@@ -1,6 +1,6 @@
 <template>
   <va-modal v-model="showModal" @ok="onConfirmed" @close="onCanceled" stateful close-button hideDefaultActions blur
-    fixed-layout max-height="90vh" class="w-full" :mobileFullscreen="false">
+    fixed-layout class="w-full" :mobileFullscreen="true">
     <div class="p-2">
       <h2 class="text-xl font-semibold mb-4 flex content-center">
         <VaIcon class="mr-2" name="redeem" size="1.5rem" /> Adicionar Presente
@@ -123,4 +123,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>
