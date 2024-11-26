@@ -1,6 +1,6 @@
 <template>
   <va-modal v-model="showModal" @ok="onConfirmed" @close="onCanceled" stateful close-button hideDefaultActions blur
-    fixed-layout class="w-full" :mobileFullscreen="true">
+    fixed-layout class="w-full" :mobileFullscreen="false">
     <div class="p-2">
       <h2 class="text-xl font-semibold mb-4 flex content-center">
         <VaIcon class="mr-2" name="redeem" size="1.5rem" /> Adicionar Presente
@@ -46,11 +46,11 @@
 
         <!-- Botões de Ação -->
         <div class="flex justify-end space-x-3 col-start-2">
-          <va-button type="button" color="secondary" @click="onCanceled" preset="secondary" hover-behavior="opacity"
+          <va-button size="large" type="button" color="secondary" @click="onCanceled" preset="secondary" hover-behavior="opacity"
             :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button type="submit" color="primary">
+          <va-button size="large" type="submit" color="primary">
             Salvar
           </va-button>
         </div>
