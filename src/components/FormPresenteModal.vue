@@ -1,25 +1,27 @@
 <template>
   <va-modal v-model="showModal" @ok="onConfirmed" @close="onCanceled" stateful close-button hideDefaultActions blur
-    fixed-layout max-height="90vh" class="w-full">
+    fixed-layout max-height="90vh" class="w-full" :mobileFullscreen="false">
     <div class="p-2">
       <h2 class="text-xl font-semibold mb-4 flex content-center">
         <VaIcon class="mr-2" name="redeem" size="1.5rem" /> Adicionar Presente
+        
       </h2>
-      <va-form ref="form" class="space-y-4">
+      
+      <va-form ref="form" class="space-y-4 grid grid-cols-2 gap-4">
         <!-- Campo Título -->
-        <div>
+        <div class="col-span-2">
           <va-input v-model="form.title" label="Título" placeholder="Digite o título do presente" required
             class="w-full" />
         </div>
 
         <!-- Campo Descrição -->
-        <div>
+        <div class="col-span-2">
           <va-textarea v-model="form.description" label="Descrição" placeholder="Descreva o presente, inclua links etc."
             required rows="4" class="w-full" />
         </div>
 
         <!-- Campo Imagem -->
-        <div>
+        <div class="col-span-2">
           <va-input v-model="form.image" label="Imagem (URL)" placeholder="Insira o link da imagem" type="url" required
             class="w-full" />
         </div>
@@ -37,13 +39,13 @@
         </div>
 
         <!-- Campo Prioridade -->
-        <div class="flex items-center">
+        <div class="flex items-center col-span-2">
           <VaSwitch off-color="#919191" v-model="form.priority" label="Marcar como prioridade"
             style="--va-switch-checker-background-color: #292929;" />
         </div>
 
         <!-- Botões de Ação -->
-        <div class="flex justify-end space-x-2">
+        <div class="flex justify-end space-x-3 col-start-2">
           <va-button type="button" color="secondary" @click="onCanceled" preset="secondary" hover-behavior="opacity"
             :hover-opacity="0.4">
             Cancelar
@@ -121,8 +123,4 @@ export default {
 };
 </script>
 
-<style>
-.va-modal__dialog{
-  background-color: aqua;
-}
-</style>
+<style></style>
