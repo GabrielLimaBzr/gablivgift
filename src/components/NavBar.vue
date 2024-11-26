@@ -34,7 +34,7 @@ const search = ref('');
 </script>
 <style>
 .header {
-    background: var(--va-bg-custom);
+    background: var(--va-custom-bg);
     border-radius: 50px;
     backdrop-filter: blur(6px);
 }

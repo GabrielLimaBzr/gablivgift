@@ -5,7 +5,7 @@
       desesjos!</p>
 
     <div class="p-2 m-5 grid grid-cols-3 gap-3 justify-stretch">
-      <VaSelect v-model="value" :options="options" label="Ordernar por:" class="col-span-1 w-[150px]" color="primary"> 
+      <VaSelect v-model="value" :options="options" label="Ordernar por:" class="col-span-1 w-[150px]" color="primary">
         <template #content="{ value }">
           <span class="textOption">
             {{ value }}
@@ -13,7 +13,8 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueP" :options="adcionadorPor" label="Adicionado por:" class="col-span-1 w-[150px]" color="primary"> 
+      <VaSelect v-model="valueP" :options="adcionadorPor" label="Adicionado por:" class="col-span-1 w-[150px]"
+        color="primary">
         <template #content="{ value }">
           <span class="textOption">
             {{ value }}
@@ -21,7 +22,7 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueZ" :options="precoAte" label="Preço:" class="col-span-1 w-[150px]" color="primary"> 
+      <VaSelect v-model="valueZ" :options="precoAte" label="Preço:" class="col-span-1 w-[150px]" color="primary">
         <template #content="{ value }">
           <span class="textOption">
             {{ value }}
@@ -47,17 +48,20 @@
       <Card></Card>
       <Card></Card>
     </div>
-    <button class="add-button" @click="onAdd">
+    <button class="add-button" @click="openModal">
       <VaIcon class="w-full" name="redeem" size="2rem" />
       <span> + Presente</span>
     </button>
+    <FormPresenteModal :is-active="showModal" @canceled="closeModal"  />
   </div>
 </template>
+
 <script>
 import Card from '@/components/Card.vue';
+import FormPresenteModal from '@/components/FormPresenteModal.vue';
 
 export default {
-  components: { Card },
+  components: { Card, FormPresenteModal },
   name: "Chips",
   data() {
     return {
@@ -80,21 +84,27 @@ export default {
       valueZ: "Tudo",
       value: "Data",
       valueP: "Todos",
+      showModal: false,
     };
   },
   methods: {
-    addNewOption(newOption) {
-      this.precoAte = [...this.precoAte, newOption];
+    openModal() {
+      this.showModal = true;
+    },
+
+    closeModal() {
+      this.showModal = false;
     },
   },
-};
-
+}
 
 </script>
 <style scoped>
 .fixed-size {
-  width: 100%; /* Garante que cada select ocupe o mesmo espaço dentro de sua coluna */
-  max-width: 300px; /* Ajuste conforme necessário para o tamanho desejado */
+  width: 100%;
+  /* Garante que cada select ocupe o mesmo espaço dentro de sua coluna */
+  max-width: 300px;
+  /* Ajuste conforme necessário para o tamanho desejado */
   display: flex;
   flex-direction: column;
 }
