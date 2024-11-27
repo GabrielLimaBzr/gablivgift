@@ -13,6 +13,10 @@ import { SpeedInsights } from '@vercel/speed-insights/vue';
   box-sizing: border-box;
 }
 
+.border{
+  border: solid greenyellow 1px;
+}
+
 .va-select-dropdown__options-wrapper{
   background-color: #404040 !important;
   backdrop-filter: blur(var(--blur));

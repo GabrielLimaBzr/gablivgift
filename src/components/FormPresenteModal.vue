@@ -45,12 +45,12 @@
         </div>
 
         <!-- Botões de Ação -->
-        <div class="flex justify-end space-x-3 col-start-2">
-          <va-button size="large" type="button" color="secondary" @click="onCanceled" preset="secondary" hover-behavior="opacity"
+        <div class="flex justify-end space-x-3 col-span-2">
+          <va-button class="w-full" size="large" type="button" color="secondary" @click="onCanceled" preset="secondary" hover-behavior="opacity"
             :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button size="large" type="submit" color="primary">
+          <va-button class="w-full" size="large" type="submit" color="primary">
             Salvar
           </va-button>
         </div>
