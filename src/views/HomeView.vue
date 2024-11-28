@@ -32,7 +32,9 @@
     </div>
 
     <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 p-2 md:px-1 sm:px-6">
-      <Card></Card>
+      <div v-for="(item, index) in savedItems" :key="index">
+        <Card :item="item" />
+      </div>
       <Card></Card>
       <Card></Card>
       <Card></Card>
@@ -52,7 +54,7 @@
       <VaIcon class="w-full" name="redeem" size="2rem" />
       <span> + Presente</span>
     </button>
-    <FormPresenteModal :is-active="showModal" @canceled="closeModal"  />
+    <FormPresenteModal :is-active="showModal" @canceled="closeModal" />
   </div>
 </template>
 
@@ -85,6 +87,7 @@ export default {
       value: "Data",
       valueP: "Todos",
       showModal: false,
+      savedItems: [],
     };
   },
   methods: {
@@ -95,6 +98,14 @@ export default {
     closeModal() {
       this.showModal = false;
     },
+  },
+
+  mounted() {
+    // Restaurar a lista de itens salvos do localStorage, se existirem
+    const cachedList = localStorage.getItem('formItems');
+    if (cachedList) {
+      this.savedItems = JSON.parse(cachedList);
+    }
   },
 }
 

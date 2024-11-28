@@ -1,21 +1,38 @@
 <template>
-    <a href="#" class="card">
+    <a href="#" class="card" v-if="item">
+      <div class="card__image-container">
+        <img :src="item.image" :alt="item.title" class="card__img" />
+      </div>
+
+      <div class="card__footer">
+        <span>{{ item.title }}</span>
+        <span>{{ item.estimatedPrice }}</span>
+      </div>
+    </a>
+
+    <a href="#" class="card" v-else>
       <div class="card__image-container">
         <img
           src="https://images.unsplash.com/photo-1526297003708-f5a1c2c9c6e7?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjI0OTY1ODM&ixlib=rb-1.2.1&q=80"
           alt="balloon with an emoji face" class="card__img">
       </div>
+
       <div class="card__footer">
-        <span>Awesome speedy card</span>
-        <span>2 minutes!</span>
+        <span>Title</span>
+        <span>Preço Estimado</span>
       </div>
     </a>
 </template>
 
 <script>
 export default {
-
-}
+  props: {
+    item: {
+      type: Object,
+      required: false,
+    },
+  },
+};
 </script>
 
 <style>

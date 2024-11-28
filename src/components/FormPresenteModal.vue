@@ -50,7 +50,7 @@
             :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button class="w-full" size="large" type="submit" color="primary">
+          <va-button class="w-full" size="large" type="submit" color="primary" @click="saveForm">
             Salvar
           </va-button>
         </div>
@@ -86,6 +86,7 @@ export default {
         'Outros',
       ],
       priceMask: 'R$ #.##0,00',
+      savedItems: [],
     };
   },
   computed: {
@@ -104,7 +105,6 @@ export default {
       this.showModal = newVal;
     },
     showModal: function (newVal) {
-      // Emitir eventos para o componente pai quando a modal for fechada
       if (!newVal) {
         this.$emit('canceled');
       }
@@ -112,13 +112,42 @@ export default {
   },
   methods: {
     onConfirmed() {
-      // Emitir evento para o componente pai quando a ação for confirmada
       this.$emit('confirmed');
     },
     onCanceled() {
-      // Emitir evento para o componente pai quando a ação for cancelada
       this.$emit('canceled');
-    }
+      this.resetForm();
+    },
+
+    saveForm() {
+      this.savedItems.push({ ...this.form });
+
+      localStorage.setItem('formItems', JSON.stringify(this.savedItems));
+
+      // Limpar o formulário para um novo item
+      this.resetForm();
+
+      // Emitir evento para notificar o componente pai
+      this.$emit('confirmed', this.savedItems);
+    },
+
+    resetForm() {
+      // Limpa os dados do formulário
+      this.form = {
+        title: '',
+        description: '',
+        image: '',
+        estimatedPrice: '',
+        category: '',
+        priority: false,
+      };
+    },
+
+    clearSavedItems() {
+      // Limpa a lista de itens salvos e o localStorage
+      this.savedItems = [];
+      localStorage.removeItem('formItems');
+    },
   },
 };
 </script>
