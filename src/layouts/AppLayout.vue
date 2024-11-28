@@ -7,7 +7,7 @@
             </div>
             <footer class="app-footer mt-5">
                 <div class="flex space-x-2 h-6 w-6">
-                    <img class="w-full rounded" src="../../gift.ico" alt="LoG">
+                    <img class="w-full rounded" src="../assets/gift.ico" alt="LoG">
                     <p>GabLivGifts</p>
                 </div>
                 <p>&copy; {{ new Date().getFullYear() }} GabLivGifts. Todos os direitos reservados.</p>
