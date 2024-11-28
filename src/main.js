@@ -11,7 +11,6 @@ const app = createApp(App)
 
 app.use(router)
 
-
 app.use(createVuestic({
     config: {
         colors: {

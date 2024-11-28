@@ -1,10 +1,17 @@
 <template>
     <div class="layout effect">
         <div class="lay-cont p-4 pt-14">
-            <NavBar/>
+            <NavBar />
             <div>
                 <router-view />
             </div>
+            <footer class="app-footer mt-5">
+                <div class="flex space-x-2 h-6 w-6">
+                    <img class="w-full rounded" src="../../gift.ico" alt="LoG">
+                    <p>GabLivGifts</p>
+                </div>
+                <p>&copy; {{ new Date().getFullYear() }} GabLivGifts. Todos os direitos reservados.</p>
+            </footer>
         </div>
     </div>
 </template>
@@ -16,6 +23,15 @@ import NavBar from '@/components/NavBar.vue';
 </script>
 
 <style>
+.app-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    color: #6c757d;
+    border: 1px solid #e9ecef29;
+    border-radius: var(--border-radius);
+}
+
 .layout {
     background-color: rgba(14, 14, 14, 0.72);
     display: flex;
@@ -32,6 +48,7 @@ import NavBar from '@/components/NavBar.vue';
     width: 100%;
     max-width: 1000px;
 }
+
 @keyframes hero-gradient-animation {
     0% {
         --x-0: 83%;

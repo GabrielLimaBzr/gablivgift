@@ -51,7 +51,7 @@
       <Card></Card>
     </div>
     <button class="add-button" @click="openModal">
-      <VaIcon class="w-full" name="redeem" size="2rem" />
+      <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
       <span> + Presente</span>
     </button>
     <FormPresenteModal :is-active="showModal" @canceled="closeModal" />
@@ -111,6 +111,10 @@ export default {
 
 </script>
 <style scoped>
+.img{
+  width: 30px !important;
+}
+
 .fixed-size {
   width: 100%;
   /* Garante que cada select ocupe o mesmo espaço dentro de sua coluna */

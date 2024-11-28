@@ -4,20 +4,23 @@
     <div class="p-2">
       <h2 class="text-xl font-semibold mb-4 flex content-center">
         <VaIcon class="mr-2" name="redeem" size="1.5rem" /> Adicionar Presente
-        
+
       </h2>
-      
+
       <va-form ref="form" class="space-y-4 grid grid-cols-2 gap-4">
         <!-- Campo Título -->
         <div class="col-span-2">
           <va-input v-model="form.title" label="Título" placeholder="Digite o título do presente" required
-            class="w-full" />
+            class="w-full" :rules="[(v) => v.length > 3 || `Coloque um título`]" />
         </div>
 
         <!-- Campo Descrição -->
         <div class="col-span-2">
-          <va-textarea v-model="form.description" label="Descrição" placeholder="Descreva o presente, inclua links etc."
-            required rows="4" class="w-full" />
+          <va-textarea max-length="100" v-model="form.description" label="Descrição"
+            placeholder="Descreva o presente, inclua links etc." required rows="4" class="w-full" required-mark :rules="[
+              (v) => v && v.length > 0 || 'Coloque alguma descrição',
+              (v) => v && v.length < 100,
+            ]" />
         </div>
 
         <!-- Campo Imagem -->
@@ -28,8 +31,10 @@
 
         <!-- Campo Preço Estimado -->
         <div>
-          <va-input v-model="form.estimatedPrice" label="Preço Estimado" placeholder="Insira o preço estimado"
-            :mask="priceMask" required class="w-full" />
+          <va-input v-model="form.estimatedPrice" label="Preço Estimado" placeholder="Insira o preço estimado" v-moeda 
+          required class="w-full">
+          </va-input>
+
         </div>
 
         <!-- Campo Categoria -->
@@ -46,8 +51,8 @@
 
         <!-- Botões de Ação -->
         <div class="flex justify-end space-x-3 col-span-2">
-          <va-button class="w-full" size="large" type="button" color="secondary" @click="onCanceled" preset="secondary" hover-behavior="opacity"
-            :hover-opacity="0.4">
+          <va-button class="w-full" size="large" type="button" color="secondary" @click="onCanceled" preset="secondary"
+            hover-behavior="opacity" :hover-opacity="0.4">
             Cancelar
           </va-button>
           <va-button class="w-full" size="large" type="submit" color="primary" @click="saveForm">
@@ -59,8 +64,14 @@
   </va-modal>
 </template>
 
+<style>
+.va-message-list__message {
+  color: var(--va-secondary) !important;
+}
+</style>
 
 <script>
+
 export default {
   data() {
     return {
@@ -85,7 +96,6 @@ export default {
         'Brinquedos',
         'Outros',
       ],
-      priceMask: 'R$ #.##0,00',
       savedItems: [],
     };
   },
@@ -151,7 +161,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>
