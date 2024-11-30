@@ -5,12 +5,12 @@
             <div>
                 <router-view />
             </div>
-            <footer class="app-footer mt-5">
-                <div class="flex space-x-2 h-6 w-6">
-                    <img class="w-full rounded" src="../assets/gift.ico" alt="LoG">
-                    <p>GabLivGifts</p>
+            <footer class="app-footer mt-10 mb-10 grid justify-center">
+                <div class="flex space-x-2 h-6 w-full justify-center">
+                    <img class="w-6 rounded" src="../assets/gift.ico" alt="LoG">
+                    <p class="text-sm">GabLivGifts</p>
                 </div>
-                <p>&copy; {{ new Date().getFullYear() }} GabLivGifts. Todos os direitos reservados.</p>
+                <p class="text-sm">&copy; {{ new Date().getFullYear() }} GabLivGifts. Todos os direitos reservados.</p>
             </footer>
         </div>
     </div>
@@ -24,8 +24,6 @@ import NavBar from '@/components/NavBar.vue';
 
 <style>
 .app-footer {
-    display: flex;
-    justify-content: space-between;
     padding: 0.5rem;
     color: #6c757d;
     border: 1px solid #e9ecef29;
