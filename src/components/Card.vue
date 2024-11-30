@@ -1,7 +1,8 @@
 <template>
     <a href="#" class="card" v-if="item">
       <div class="card__image-container">
-        <img :src="item.image" :alt="item.title" class="card__img" />
+        <img v-if="item.image" :src="item.image" :alt="item.title" class="card__img" />
+        <img src="../assets/giftsha.png" :alt="item.title" class="card__img" />
       </div>
 
       <div class="card__footer">
