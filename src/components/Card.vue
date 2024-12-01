@@ -1,28 +1,36 @@
 <template>
-    <a href="#" class="card" v-if="item">
-      <div class="card__image-container">
-        <img v-if="item.image" :src="item.image" :alt="item.title" class="card__img" />
-        <img src="../assets/giftsha.png" :alt="item.title" class="card__img" />
-      </div>
+  <div class="card shadow-md" v-if="item">
+    <div class="card__image-container">
+      <span v-if="item.priority" class="priority drop-shadow-lg">🔥</span>
+      <img v-if="item.image" :src="item.image" :alt="item.title" class="card__img" />
+      <img src="../assets/giftsha.png" :alt="item.title" class="card__img" />
+    </div>
 
-      <div class="card__footer">
+    <div class="card__footer grid grid-cols-2 gap-1">
+      <div class="card__title col-span-2">
         <span>{{ item.title }}</span>
-        <span>{{ item.estimatedPrice }}</span>
       </div>
-    </a>
+      <div class="card__price col-span-2">
+        <span>R$ {{ item.estimatedPrice ? item.estimatedPrice : "0,00"  }}</span>
+      </div>
+      <div class="card__details">
+        <span>Em: {{ item.addedDate ? item.addedDate : "dd/MM/yyyy" }}</span>
+      </div>
+    </div>
+  </div>
 
-    <a href="#" class="card" v-else>
-      <div class="card__image-container">
-        <img
-          src="https://images.unsplash.com/photo-1526297003708-f5a1c2c9c6e7?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjI0OTY1ODM&ixlib=rb-1.2.1&q=80"
-          alt="balloon with an emoji face" class="card__img">
-      </div>
+  <div class="card shadow-md" v-else>
+    <div class="card__image-container">
+      <img
+        src="https://images.unsplash.com/photo-1526297003708-f5a1c2c9c6e7?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjI0OTY1ODM&ixlib=rb-1.2.1&q=80"
+        alt="balloon with an emoji face" class="card__img">
+    </div>
 
-      <div class="card__footer">
-        <span>Title</span>
-        <span>Preço Estimado</span>
-      </div>
-    </a>
+    <div class="card__footer">
+      <span>Title</span>
+      <span>Preço Estimado</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -37,16 +45,13 @@ export default {
 </script>
 
 <style>
-
 .card {
   --blur: 16px;
   width: 100%;
   aspect-ratio: 4 / 3;
   position: relative;
   border-radius: var(--border-radius);
-  overflow: hidden;
   color: var(--va-text-inverted);
-  transform: translateZ(0);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -55,45 +60,73 @@ export default {
 
 .card__image-container {
   width: 100%;
-  height: 100%;
+  height: 90%;
   overflow: hidden;
-  border-radius: var(--border-radius);
-  border: solid 3px hsla(0, 0%, 100%, 0.318);
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  position: relative;
+  cursor: pointer;
 }
 
 .card__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  overflow: hidden;
   transition: transform 0.3s ease;
 }
 
-.card:hover .card__img {
-  transform: scale(1.1); /* Aplica um leve zoom na imagem */
+.card__img:hover {
+  transform: scale(1.06);
+  /* Aplica um leve zoom na imagem */
 }
 
 .card__footer {
-  padding: 1rem;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  padding: 0.2rem 1rem 0.4rem 1rem;
   width: 100%;
-  background:  var(--va-custom-bg);
+  background: var(--va-custom-bg);
   backdrop-filter: blur(var(--blur));
-  height: 30%;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  border-top: solid 3px var(--va-primary);
+  color: var(--va-text-inverted);
+  /* Espaço entre os elementos */
+}
+
+/* Estilo do título e do ícone de prioridade */
+.card__title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  white-space: nowrap;
+  /* Garante que o texto fique em uma única linha */
+  overflow: hidden;
+  /* Esconde o texto que ultrapassa a largura da div */
+  text-overflow: ellipsis;
+}
+
+.priority {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  font-size: 1.5rem;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  border-bottom-left-radius:  var(--border-radius);
-  border-bottom-right-radius:  var(--border-radius);
-  z-index: 1; /* Mantém o footer acima da imagem */
+  z-index: 2;
+  /* Garante que fique acima da imagem */
 }
 
-.card__footer span:nth-of-type(1) {
-  font-size: calc(var(--size) * 0.065);
+/* Estilo das informações adicionais */
+.card__details {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.158);
+  font-weight: lighter;
 }
 
-.card__footer span:nth-of-type(2) {
-  font-size: calc(var(--size) * 0.035);
+/* Estilo do preço */
+.card__price {
+  font-size: 1rem;
+  color: var(--va-highlight);
+  font-weight: normal;
 }
 </style>

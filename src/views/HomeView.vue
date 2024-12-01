@@ -35,20 +35,9 @@
       <div v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
+      <div v-for="(item, index) in 9" :key="index">
+        <Card/>
+      </div>
     </div>
     <button class="add-button" @click="openModal">
       <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">

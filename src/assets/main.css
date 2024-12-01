@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --va-font-family: 'Source Sans Pro', sans-serif;
   --border-radius: .8rem;
 }
 

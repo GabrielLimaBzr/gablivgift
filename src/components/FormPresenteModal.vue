@@ -45,7 +45,7 @@
 
         <!-- Campo Prioridade -->
         <div class="flex items-center col-span-2">
-          <VaSwitch off-color="#919191" v-model="form.priority" label="Marcar como prioridade"
+          <VaSwitch off-color="#919191" v-model="form.priority" label="Marcar como prioridade 🔥"
             style="--va-switch-checker-background-color: #292929;" />
         </div>
 
