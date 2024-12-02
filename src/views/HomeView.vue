@@ -31,12 +31,12 @@
       </VaSelect>
     </div>
 
-    <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 p-2 md:px-1 sm:px-6">
+    <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
       <div v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
       <div v-for="(item, index) in 9" :key="index">
-        <Card/>
+        <Card :item="item"/>
       </div>
     </div>
     <button class="add-button" @click="openModal">

@@ -1,34 +1,25 @@
 <template>
-  <div class="card shadow-md" v-if="item">
+  <div class="card shadow-md">
     <div class="card__image-container">
-      <span v-if="item.priority" class="priority drop-shadow-lg">🔥</span>
+      <span v-show="item.priority" class="priority drop-shadow-lg">🔥</span>
       <img v-if="item.image" :src="item.image" :alt="item.title" class="card__img" />
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" />
     </div>
 
     <div class="card__footer grid grid-cols-2 gap-1">
       <div class="card__title col-span-2">
-        <span>{{ item.title }}</span>
+        <span>{{ item.title ? item.title : "Sem titulo" }}</span>
       </div>
-      <div class="card__price col-span-2">
-        <span>R$ {{ item.estimatedPrice ? item.estimatedPrice : "0,00"  }}</span>
+      <div class="card__price col-span-2 flex
+      justify-between">
+        <span>R$ {{ item.estimatedPrice ? item.estimatedPrice : "0,00" }}</span>
+        <VaChip v-show="item.category" size="small" square>
+          {{item.category}}
+        </VaChip>
       </div>
       <div class="card__details">
-        <span>Em: {{ item.addedDate ? item.addedDate : "dd/MM/yyyy" }}</span>
+        <span>Em: {{ item.addedDate ? item.addedDate : "dd/MM/yyyy HH:mm" }}</span>
       </div>
-    </div>
-  </div>
-
-  <div class="card shadow-md" v-else>
-    <div class="card__image-container">
-      <img
-        src="https://images.unsplash.com/photo-1526297003708-f5a1c2c9c6e7?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjI0OTY1ODM&ixlib=rb-1.2.1&q=80"
-        alt="balloon with an emoji face" class="card__img">
-    </div>
-
-    <div class="card__footer">
-      <span>Title</span>
-      <span>Preço Estimado</span>
     </div>
   </div>
 </template>
@@ -95,7 +86,7 @@ export default {
 
 /* Estilo do título e do ícone de prioridade */
 .card__title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
   white-space: nowrap;
   /* Garante que o texto fique em uma única linha */
@@ -118,8 +109,8 @@ export default {
 
 /* Estilo das informações adicionais */
 .card__details {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.158);
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.37);
   font-weight: lighter;
 }
 
