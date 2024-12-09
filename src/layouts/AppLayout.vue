@@ -1,11 +1,11 @@
 <template>
     <div class="layout effect">
-        <div class="lay-cont p-4 pt-14">
+        <div class="lay-cont p-4 pt-14 h-full">
             <NavBar />
-            <div>
+            <div class="h-full">
                 <router-view />
             </div>
-            <footer class="app-footer mt-10 mb-10 grid justify-center">
+            <footer class="app-footer mt-10 mb-1 grid justify-center">
                 <div class="flex space-x-2 h-6 w-full justify-center">
                     <img class="w-6 rounded" src="../assets/gift.ico" alt="LoG">
                     <p class="text-sm">GabLivGifts</p>
@@ -35,7 +35,8 @@ import NavBar from '@/components/NavBar.vue';
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100dvh;
+    height: 100vh;
+    min-height: 100vh;
     align-items: center;
     background-color: rgb(109, 109, 109)
 }

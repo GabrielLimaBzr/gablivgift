@@ -35,9 +35,6 @@
       <div v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
-      <div v-for="(item, index) in 9" :key="index">
-        <Card :item="item"/>
-      </div>
     </div>
     <button class="add-button" @click="openModal">
       <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
@@ -140,7 +137,7 @@ export default {
   display: flex;
   flex-direction: column;
   position: fixed;
-  bottom: 6%;
+  bottom: 7%;
   left: 50%;
   transform: translateX(-50%);
   background: hsla(0, 0%, 80%, 0.563);

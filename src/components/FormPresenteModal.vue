@@ -23,16 +23,10 @@
             ]" />
         </div>
 
-        <!-- Campo Imagem -->
-        <div class="col-span-2">
-          <va-input v-model="form.image" label="Imagem (URL)" placeholder="Insira o link da imagem" type="url" required
-            class="w-full" />
-        </div>
-
         <!-- Campo Preço Estimado -->
         <div>
-          <va-input v-model="form.estimatedPrice" label="Preço Estimado" placeholder="Insira o preço estimado" v-moeda 
-          required class="w-full">
+          <va-input v-model="form.estimatedPrice" label="Preço Estimado" placeholder="Insira o preço estimado"
+            required class="w-full">
           </va-input>
 
         </div>
@@ -41,6 +35,18 @@
         <div>
           <va-select v-model="form.category" :options="categories" label="Categoria"
             placeholder="Selecione uma categoria" required class="w-full" />
+        </div>
+
+        <!-- Campo Imagem -->
+        <div class="col-span-2">
+          <VaFileUpload 
+            dropZoneText="Arraste sua imagem para fazer upload ou" 
+            v-model="form.image" 
+            dropzone 
+            file-types="jpg,png" 
+            fileIncorrectMessage="O tipo de arquivo está incorreto"
+            type="single"
+            uploadButtonText="Carregar Imagem"/>
         </div>
 
         <!-- Campo Prioridade -->
@@ -79,7 +85,7 @@ export default {
       form: {
         title: '',
         description: '',
-        image: '',
+        image: {},
         estimatedPrice: '',
         category: '',
         priority: false,
@@ -133,12 +139,17 @@ export default {
       this.savedItems.push({ ...this.form });
 
       localStorage.setItem('formItems', JSON.stringify(this.savedItems));
+      console.log(this.form);
 
       // Limpar o formulário para um novo item
       this.resetForm();
 
+      
+      
+
       // Emitir evento para notificar o componente pai
       this.$emit('confirmed', this.savedItems);
+
     },
 
     resetForm() {
@@ -146,7 +157,7 @@ export default {
       this.form = {
         title: '',
         description: '',
-        image: '',
+        image: {},
         estimatedPrice: '',
         category: '',
         priority: false,

@@ -1,7 +1,7 @@
 <template>
   <div class="card shadow-md">
     <div class="card__image-container">
-      <span v-show="item.priority" class="priority drop-shadow-lg">🔥</span>
+      <span v-if="item.priority" class="priority drop-shadow-lg">🔥</span>
       <img v-if="item.image" :src="item.image" :alt="item.title" class="card__img" />
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" />
     </div>
