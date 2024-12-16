@@ -14,7 +14,7 @@
       justify-between">
         <span>R$ {{ item.estimatedPrice ? item.estimatedPrice : "0,00" }}</span>
         <VaChip v-show="item.category" size="small" square>
-          {{item.category}}
+          {{ getCategoryLabel(item.category) }}
         </VaChip>
       </div>
       <div class="card__details">
@@ -32,6 +32,28 @@ export default {
       required: false,
     },
   },
+  data() {
+    return {
+      categories: [
+        { label: 'Eletrônicos', value: 1 },
+        { label: 'Roupas', value: 2 },
+        { label: 'Decoração', value: 3 },
+        { label: 'Livros', value: 4 },
+        { label: 'Jogos', value: 5 },
+        { label: 'Utensílios Domésticos', value: 6 },
+        { label: 'Viagens', value: 7 },
+        { label: 'Experiências', value: 8 },
+        { label: 'Outros', value: 9 },
+        { label: 'Brinquedos', value: 10 },
+      ],
+    }
+  },
+  methods: {
+    getCategoryLabel(value) {
+      const category = this.categories.find(cat => cat.value === value);
+      return category ? category.label : 'Desconhecido'; // Retorna 'Desconhecido' se não encontrar
+    }
+  }
 };
 </script>
 

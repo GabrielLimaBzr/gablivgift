@@ -25,28 +25,23 @@
 
         <!-- Campo Preço Estimado -->
         <div>
-          <va-input v-model="form.estimatedPrice" label="Preço Estimado" placeholder="Insira o preço estimado"
-            required class="w-full">
+          <va-input v-model="form.estimatedPrice" label="Preço Estimado" placeholder="Insira o preço estimado" required
+            class="w-full">
           </va-input>
 
         </div>
 
         <!-- Campo Categoria -->
         <div>
-          <va-select v-model="form.category" :options="categories" label="Categoria"
+          <VaSelect v-model="catValue" :options="categories" label="Categoria" text-by="label" track-by="value"
             placeholder="Selecione uma categoria" required class="w-full" />
         </div>
 
         <!-- Campo Imagem -->
         <div class="col-span-2">
-          <VaFileUpload 
-            dropZoneText="Arraste sua imagem para fazer upload ou" 
-            v-model="form.image" 
-            dropzone 
-            file-types="jpg,png" 
-            fileIncorrectMessage="O tipo de arquivo está incorreto"
-            type="single"
-            uploadButtonText="Carregar Imagem"/>
+          <VaFileUpload dropZoneText="Arraste sua imagem para fazer upload ou" v-model="file" dropzone
+            file-types="jpg,png" fileIncorrectMessage="O tipo de arquivo está incorreto" type="single"
+            uploadButtonText="Carregar Imagem" />
         </div>
 
         <!-- Campo Prioridade -->
@@ -61,7 +56,7 @@
             hover-behavior="opacity" :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button class="w-full" size="large" type="submit" color="primary" @click="saveForm">
+          <va-button class="w-full" size="large" type="submit" color="primary" @click="prepareSave">
             Salvar
           </va-button>
         </div>
@@ -78,31 +73,36 @@
 
 <script>
 
+import axios from 'axios';
 export default {
   data() {
+    const categories = [
+      { label: 'Eletrônicos', value: 1 },
+      { label: 'Roupas', value: 2 },
+      { label: 'Decoração', value: 3 },
+      { label: 'Livros', value: 4 },
+      { label: 'Jogos', value: 5 },
+      { label: 'Utensílios Domésticos', value: 6 },
+      { label: 'Viagens', value: 7 },
+      { label: 'Experiências', value: 8 },
+      { label: 'Outros', value: 9 },
+      { label: 'Brinquedos', value: 10 },
+    ];
+
     return {
       showModal: false,
       form: {
         title: '',
         description: '',
-        image: {},
+        image: null,
         estimatedPrice: '',
-        category: '',
+        category: 9,
         priority: false,
       },
-      categories: [
-        'Eletrônicos',
-        'Roupas',
-        'Decoração',
-        'Livros',
-        'Jogos',
-        'Utensílios Domésticos',
-        'Viagens',
-        'Experiências',
-        'Brinquedos',
-        'Outros',
-      ],
+      categories,
       savedItems: [],
+      file: [],
+      catValue: categories[8]
     };
   },
   computed: {
@@ -127,6 +127,11 @@ export default {
     },
   },
   methods: {
+    test(valor) {
+      console.log(valor);
+      onsole.log(valor.target.value)
+    },
+
     onConfirmed() {
       this.$emit('confirmed');
     },
@@ -135,19 +140,14 @@ export default {
       this.resetForm();
     },
 
-    saveForm() {
+    saveState() {
       this.savedItems.push({ ...this.form });
 
       localStorage.setItem('formItems', JSON.stringify(this.savedItems));
       console.log(this.form);
 
-      // Limpar o formulário para um novo item
       this.resetForm();
 
-      
-      
-
-      // Emitir evento para notificar o componente pai
       this.$emit('confirmed', this.savedItems);
 
     },
@@ -157,11 +157,12 @@ export default {
       this.form = {
         title: '',
         description: '',
-        image: {},
+        image: '',
         estimatedPrice: '',
         category: '',
         priority: false,
       };
+      this.file = []
     },
 
     clearSavedItems() {
@@ -169,6 +170,41 @@ export default {
       this.savedItems = [];
       localStorage.removeItem('formItems');
     },
+
+    async saveForm() {
+        this.form.category = this.catValue.value;
+      this.saveState();
+    },
+
+    prepareFormData() {
+      this.formData = new FormData();
+      this.formData.append('file', this.file);
+      this.formData.append('upload_preset', 'pre-gifts');
+    },
+
+    async prepareSave() {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fileContents = reader.result;
+        this.prepareFormData();
+        axios
+          .post(`https://api.cloudinary.com/v1_1/dv8vjjalo/upload`, this.formData)
+          .then((response) => {
+            this.results = response.data;
+            console.log('public_id', this.results.public_id);
+            this.form.image = this.results.secure_url;
+            this.saveForm();
+          })
+          .catch((error) => { console.error('Error uploading image:', error); });
+      };
+      if (this.file && this.file.name) {
+        reader.readAsDataURL(this.file);
+      } else {
+        this.saveForm();
+      }
+    },
+
+
   },
 };
 </script>
