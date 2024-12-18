@@ -1,76 +1,57 @@
 <template>
   <div class="flex h-screen bg-gray-100">
     <!-- Lado Esquerdo com Texto ou Logo -->
-    <div class="flex-1 flex flex-col items-center justify-center text-white your_css_selector_here">
-      <h1 class="text-4xl font-bold">Bem-vindo ao GabLivGifts 🎁</h1>
-      <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma imensa lista de
-        desesjos!</p>
+    <div class="flex-1 flex flex-col items-center justify-center text-white your_css_selector_here p-5">
+      <div class="flex flex-col gap-10 justify-center items-center lg:flex-row">
 
-      <div class="w-1/3 shadow-lg px-5 py-8 flex flex-col justify-center mt-4 rounded-md"
-        style="background-color: var(--va-background-secondary);">
-        <div class="mb-6 text-center">
-          <h1 class="text-2xl font-bold"> {{ activeTab === 'login' ? 'Login' : 'Cadastro' }}</h1>
-          <h2 class="font-100">
-            {{ activeTab === 'login' ? 'Bem vindo de volta 👋' : 'Crie sua conta e comece adicionar seus presentes' }}
-          </h2>
+        <div class="max-w-[400px] flex flex-col justify-center align-center">
+          <h1 class="title text-center">Bem-vindo ao GabLivGifts 🎁</h1>
+          <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma imensa lista de
+            desesjos!</p>
         </div>
 
-        <!-- Formulário de Login -->
-        <VaForm ref="formRef" v-if="activeTab === 'login'" @submit.prevent="loginSub">
-          <VaInput v-model="loginForm.email" label="Email" placeholder="Coloque seu email" required class="w-full"
-            :rules="[validateEmail]">
-            <template #prependInner>
-              <VaIcon name="mail" color="secondary" />
-            </template>
-          </VaInput>
 
-          <VaSpacer class="my-5"> </VaSpacer>
+        <!-- Card Responsivo -->
+        <div class="w-full max-w-sm shadow-lg rounded-lg p-6"
+          style="background-color: var(--va-background-secondary);">
+          <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold">
+              {{ activeTab === 'login' ? 'Login' : 'Cadastro' }}
+            </h1>
+            <p class="text-gray-600">
+              {{ activeTab === 'login' ? 'Bem-vindo de volta 👋' : 'Crie sua conta e comece a adicionar seus presentes'
+              }}
+            </p>
+          </div>
 
-          <VaInput v-model="loginForm.password" label="Senha" type="password" placeholder="Senha" required
-            class="w-full" :rules="[(v) => (v && v.length > 0) || `Senha Inválida`]">
-            <template #prependInner>
-              <VaIcon name="lock" color="secondary" />
-            </template>
-          </VaInput>
+          <!-- Formulário de Login -->
+          <VaForm ref="formRef" v-if="activeTab === 'login'" @submit.prevent="loginSub">
+            <VaInput v-model="loginForm.email" label="Email" placeholder="Digite seu email" required class="w-full mb-4"
+              :rules="[validateEmail]" />
+            <VaInput v-model="loginForm.password" label="Senha" type="password" placeholder="Digite sua senha" required
+              class="w-full mb-4" :rules="[(v) => (v && v.length > 0) || 'Senha inválida']" />
+            <va-button class="w-full" size="large" type="submit" color="primary" :disabled="!isValid">
+              Entrar
+            </va-button>
+          </VaForm>
 
-          <VaSpacer class="my-5"> </VaSpacer>
-
-          <va-button class="w-full mt-2" size="large" type="submit" color="primary" :disabled="!isValid"
-            @click="validate() && loginSub()">
-            Entrar
-          </va-button>
-        </VaForm>
-
-        <!-- Formulário de Cadastro -->
-        <form v-if="activeTab === 'register'" @submit.prevent="registerSub">
-          <div class="mb-4">
-            <label class="block text-gray-600 mb-1">Nome</label>
+          <!-- Formulário de Cadastro -->
+          <form v-if="activeTab === 'register'" @submit.prevent="registerSub">
             <input v-model="registerForm.name" type="text" placeholder="Digite seu nome"
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-          </div>
-
-          <div class="mb-4">
-            <label class="block text-gray-600 mb-1">E-mail</label>
+              class="w-full px-4 py-2 border rounded-md mb-4" />
             <input v-model="registerForm.email" type="email" placeholder="Digite seu e-mail"
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-          </div>
-
-          <div class="mb-4">
-            <label class="block text-gray-600 mb-1">Senha</label>
+              class="w-full px-4 py-2 border rounded-md mb-4" />
             <input v-model="registerForm.password" type="password" placeholder="Crie uma senha"
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-          </div>
-
-          <va-button class="w-full" size="large" type="submit" color="primary">
-            Cadastrar
-          </va-button>
-        </form>
+              class="w-full px-4 py-2 border rounded-md mb-4" />
+            <va-button class="w-full" size="large" type="submit" color="primary">
+              Cadastrar
+            </va-button>
+          </form>
+        </div>
       </div>
     </div>
-
-    <!-- Lado Direito com Formulário -->
-
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -113,7 +94,7 @@ function validateEmail(valor: string) {
 
 .title {
   color: rgba(228, 228, 228, 0.77);
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   line-height: 2.25rem;
   font-weight: 800;
 }
