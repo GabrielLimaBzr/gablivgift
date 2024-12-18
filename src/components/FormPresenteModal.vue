@@ -148,8 +148,7 @@ export default {
 
       this.resetForm();
 
-      this.$emit('confirmed', this.savedItems);
-
+      this.showModal = false;
     },
 
     resetForm() {
