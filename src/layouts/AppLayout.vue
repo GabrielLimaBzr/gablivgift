@@ -1,8 +1,8 @@
 <template>
     <div class="layout effect">
-        <div class="lay-cont p-4 pt-14 h-full">
-            <NavBar />
-            <div class="h-full">
+        <NavBar />
+        <div class="lay-cont p-4 pt-14 min-h-full">
+            <div style="min-height: 85vh;">
                 <router-view />
             </div>
             <Footer/>
@@ -18,7 +18,7 @@ import Footer from '@/components/Footer.vue';
 
 </script>
 
-<style>
+<style scoped>
 .app-footer {
     padding: 0.5rem;
     color: #6c757d;
@@ -28,13 +28,13 @@ import Footer from '@/components/Footer.vue';
 
 .layout {
     background-color: rgba(14, 14, 14, 0.72);
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     min-height: 100vh;
     align-items: center;
-    background-color: rgb(109, 109, 109)
+    background-color: rgb(109, 109, 109);
+    display: flex;
+    flex-direction: column;
 }
 
 .lay-cont {
@@ -42,6 +42,8 @@ import Footer from '@/components/Footer.vue';
     flex-direction: column;
     width: 100%;
     max-width: 1000px;
+    height: 100%;
+    justify-content: space-around;
 }
 
 @keyframes hero-gradient-animation {

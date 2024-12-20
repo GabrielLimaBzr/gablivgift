@@ -13,3 +13,14 @@ a {
 body {
   margin: 0;
 }
+
+.va-message-list__message {
+  color: var(--va-secondary) !important;
+}
+
+@media (max-width: 576px) {
+  .va-modal--mobile-fullscreen .va-modal__dialog {
+      margin: 0 !important;
+      border-radius: 0;
+  }
+}

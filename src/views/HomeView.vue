@@ -36,6 +36,7 @@
         <Card :item="item" />
       </div>
     </div>
+    
     <button class="add-button" @click="openModal">
       <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
       <span> + Presente</span>

@@ -40,7 +40,7 @@
         <!-- Campo Imagem -->
         <div class="col-span-2">
           <VaFileUpload dropZoneText="Arraste sua imagem para fazer upload ou" v-model="file" dropzone
-            file-types="jpg,png" fileIncorrectMessage="O tipo de arquivo está incorreto" type="single"
+            file-types="jpg,png, jpeg" fileIncorrectMessage="O tipo de arquivo está incorreto" type="single"
             uploadButtonText="Carregar Imagem" />
         </div>
 
@@ -56,7 +56,8 @@
             hover-behavior="opacity" :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button class="w-full" size="large" type="submit" color="primary" @click="prepareSave">
+          <va-button :loading="laoding" :disabled="laoding" class="w-full" size="large" type="submit" color="primary"
+            @click="prepareSave">
             Salvar
           </va-button>
         </div>
@@ -65,11 +66,7 @@
   </va-modal>
 </template>
 
-<style>
-.va-message-list__message {
-  color: var(--va-secondary) !important;
-}
-</style>
+<style></style>
 
 <script>
 
@@ -102,7 +99,8 @@ export default {
       categories,
       savedItems: [],
       file: [],
-      catValue: categories[8]
+      catValue: categories[8],
+      laoding: false,
     };
   },
   computed: {
@@ -141,15 +139,21 @@ export default {
     },
 
     saveState() {
-      this.savedItems.push({ ...this.form });
+      // Recupera os itens existentes do localStorage
+      const existingItems = JSON.parse(localStorage.getItem('formItems')) || [];
 
-      localStorage.setItem('formItems', JSON.stringify(this.savedItems));
+      // Adiciona o novo formulário à lista existente
+      existingItems.push({ ...this.form });
+
+      // Atualiza o localStorage com a lista atualizada
+      localStorage.setItem('formItems', JSON.stringify(existingItems));
+
       console.log(this.form);
 
+      // Reseta o formulário e oculta o modal
       this.resetForm();
-
-      this.showModal = false;
     },
+
 
     resetForm() {
       // Limpa os dados do formulário
@@ -171,7 +175,7 @@ export default {
     },
 
     async saveForm() {
-        this.form.category = this.catValue.value;
+      this.form.category = this.catValue.value;
       this.saveState();
     },
 
@@ -182,6 +186,7 @@ export default {
     },
 
     async prepareSave() {
+      this.loading = true;
       const reader = new FileReader();
       reader.onload = () => {
         this.fileContents = reader.result;
@@ -197,10 +202,17 @@ export default {
           .catch((error) => { console.error('Error uploading image:', error); });
       };
       if (this.file && this.file.name) {
-        reader.readAsDataURL(this.file);
+        if (this.file.size < 5000000 && this.file.type.startsWith('image/')) { // 5MB max and image files only
+          reader.readAsDataURL(this.file);
+        } else {
+          alert('Arquivo inválido. Escolha uma imagem de até 5MB.');
+        }
       } else {
         this.saveForm();
       }
+
+      this.loading = false;
+      this.showModal = false;
     },
 
 
