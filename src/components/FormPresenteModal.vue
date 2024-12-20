@@ -56,7 +56,7 @@
             hover-behavior="opacity" :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button :loading="laoding" :disabled="laoding" class="w-full" size="large" type="submit" color="primary"
+          <va-button :loading="loading" :disabled="loading" class="w-full" size="large" type="submit" color="primary"
             @click="prepareSave">
             Salvar
           </va-button>
@@ -100,7 +100,7 @@ export default {
       savedItems: [],
       file: [],
       catValue: categories[8],
-      laoding: false,
+      loading: false,
     };
   },
   computed: {
@@ -187,34 +187,55 @@ export default {
 
     async prepareSave() {
       this.loading = true;
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.fileContents = reader.result;
-        this.prepareFormData();
-        axios
-          .post(`https://api.cloudinary.com/v1_1/dv8vjjalo/upload`, this.formData)
-          .then((response) => {
-            this.results = response.data;
-            console.log('public_id', this.results.public_id);
-            this.form.image = this.results.secure_url;
-            this.saveForm();
-          })
-          .catch((error) => { console.error('Error uploading image:', error); });
-      };
-      if (this.file && this.file.name) {
-        if (this.file.size < 5000000 && this.file.type.startsWith('image/')) { // 5MB max and image files only
-          reader.readAsDataURL(this.file);
-        } else {
-          alert('Arquivo inválido. Escolha uma imagem de até 5MB.');
-        }
-      } else {
-        this.saveForm();
+
+      if (!this.file || !this.file.name) {
+        await this.saveForm();
+        this.loading = false;
+        this.showModal = false;
+        return;
       }
 
-      this.loading = false;
-      this.showModal = false;
-    },
+      if (this.file.size >= 5000000 || !this.file.type.startsWith('image/')) {
+        alert('Arquivo inválido. Escolha uma imagem de até 5MB.');
+        this.loading = false;
+        return;
+      }
 
+      try {
+        const reader = new FileReader();
+
+        reader.onload = async () => {
+          this.fileContents = reader.result;
+
+          try {
+            this.prepareFormData();
+
+            const response = await axios.post(`https://api.cloudinary.com/v1_1/dv8vjjalo/upload`, this.formData);
+
+            this.results = response.data;
+            console.log('public_id', this.results.public_id);
+
+            this.form.image = this.results.secure_url;
+
+            await this.saveForm();
+          } catch (error) {
+            console.error('Erro ao enviar a imagem para o Cloudinary:', error);
+            alert('Erro ao enviar a imagem. Tente novamente mais tarde.');
+          } finally {
+            this.loading = false;
+            this.showModal = false;
+          }
+        };
+
+        // Iniciar a leitura do arquivo
+        reader.readAsDataURL(this.file);
+      } catch (error) {
+        console.error('Erro ao processar o arquivo:', error);
+        alert('Erro ao processar o arquivo. Tente novamente mais tarde.');
+        this.loading = false;
+        this.showModal = false;
+      }
+    }
 
   },
 };
