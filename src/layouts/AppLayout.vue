@@ -19,12 +19,6 @@ import Footer from '@/components/Footer.vue';
 </script>
 
 <style scoped>
-.app-footer {
-    padding: 0.5rem;
-    color: #6c757d;
-    border: 1px solid #e9ecef29;
-    border-radius: var(--border-radius);
-}
 
 .layout {
     background-color: rgba(14, 14, 14, 0.72);

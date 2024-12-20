@@ -1,8 +1,8 @@
 <template>
-    <div class="app-footer mt-10 mb-1 grid justify-center">
+    <div class="app-footer mt-10 mb-1 grid justify-center w-full">
         <div class="flex space-x-2 h-6 w-full justify-center">
             <img class="w-6 rounded" src="../assets/gift.ico" alt="LoG">
-            <p class="text-sm">GabLivGifts</p>
+            <p class="text-sm text-center">GabLivGifts</p>
         </div>
         <p class="text-sm">&copy; {{ new Date().getFullYear() }} GabLivGifts. Todos os direitos reservados.</p>
     </div>

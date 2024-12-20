@@ -25,7 +25,7 @@ const router = createRouter({
     },
     {
       path: "/:catchAll(.*)",
-      redirect: { name: "gift" },
+      redirect: { name: "auth" },
     },
   ],
 });

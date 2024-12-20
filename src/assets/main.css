@@ -22,5 +22,7 @@ body {
   .va-modal--mobile-fullscreen .va-modal__dialog {
       margin: 0 !important;
       border-radius: 0;
+      min-width: 30vh !important;
+      min-height: 30vh !important;
   }
 }
