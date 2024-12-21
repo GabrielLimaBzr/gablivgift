@@ -3,7 +3,7 @@
   <div class="layout your_css_selector_here ">
     <div class="p-4 w-full flex flex-col items-center" style="margin-top: 10%;">
 
-      <div class="flex-1 flex flex-col items-center justify-center text-white p-2 max-w-[000px] w-full">
+      <div class="flex-1 flex flex-col items-center justify-center text-white p-2 max-w-[800px] w-full">
         <div class="flex flex-col gap-10 justify-center items-center lg:flex-row w-full">
 
           <div class="flex flex-col justify-center align-center w-full max-w-[400px]">
