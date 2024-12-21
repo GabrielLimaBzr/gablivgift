@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AppLayout from '../layouts/AppLayout.vue'
-import AuthView from "@/views/AuthView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,10 +23,22 @@ const router = createRouter({
     },
     {
       path: "/:catchAll(.*)",
-      redirect: { name: "auth" },
+      redirect: { name: "gift" },
     },
   ],
 });
 
+function isAuthenticated() {
+  localStorage.setItem('authToken', 'valor')
+  const token = localStorage.getItem('authToken');
+  console.log(token);
+  
+  return token;
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'auth' && !isAuthenticated()) next({ name: 'auth' })
+    else next()
+});
 
 export default router;
