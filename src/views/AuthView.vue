@@ -27,8 +27,7 @@
             </div>
 
             <!-- Formulário de Login -->
-            <VaForm ref="formRef" v-if="activeTab === 'login'" @submit.prevent="loginSub"
-              class="flex flex-col gap-6">
+            <VaForm ref="formRef" v-if="activeTab === 'login'" @submit.prevent="loginSub" class="flex flex-col gap-6">
 
               <VaInput v-model="loginForm.email" label="Email" placeholder="Digite seu email" required
                 class="col-span-1" :rules="[validateEmail]" />
@@ -53,18 +52,31 @@
               </VaButton>
             </VaForm>
 
-            <!-- Formulário de Cadastro -->
-            <form v-if="activeTab === 'register'" @submit.prevent="registerSub">
-              <input v-model="registerForm.name" type="text" placeholder="Digite seu nome"
-                class="w-full px-4 py-2 border rounded-md mb-4" />
-              <input v-model="registerForm.email" type="email" placeholder="Digite seu e-mail"
-                class="w-full px-4 py-2 border rounded-md mb-4" />
-              <input v-model="registerForm.password" type="password" placeholder="Crie uma senha"
-                class="w-full px-4 py-2 border rounded-md mb-4" />
-              <va-button class="w-full" size="large" type="submit" color="primary">
-                Cadastrar
-              </va-button>
-            </form>
+            <!-- Formulário de Registro -->
+            <VaForm ref="formRef" v-if="activeTab === 'register'" @submit.prevent="registerSub"
+              class="flex flex-col gap-6">
+
+              <VaInput v-model="registerForm.name" label="Nome" placeholder="Digite seu nome" required class="w-full"
+                :rules="[(v) => (v && v.length > 0) || 'Nome é obrigatório']" />
+
+              <VaInput v-model="registerForm.email" label="Email" placeholder="Digite seu email" required class="w-full"
+                :rules="[validateEmail]" />
+
+              <VaInput v-model="registerForm.password" label="Senha" type="password" placeholder="Crie uma senha"
+                required class="w-full"
+                :rules="[(v) => (v && v.length >= 6) || 'A senha deve ter no mínimo 6 caracteres']" />
+
+              <div>
+                <VaButton class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid">
+                  Cadastrar
+                </VaButton>
+              </div>
+
+              <VaButton class="justify-self-center" preset="plainOpacity" size="small" @click="activeTab = 'login'">
+                Já possui uma conta? Login
+              </VaButton>
+            </VaForm>
+
           </div>
         </div>
 
