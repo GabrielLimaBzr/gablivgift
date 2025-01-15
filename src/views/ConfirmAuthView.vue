@@ -69,7 +69,7 @@ export default {
     const validateEmailToken = async (token) => {
       try {
         // Exemplo de chamada à API para validar o token
-        const response = await fetch(`http://localhost:433/gabliv/api/v1/verify-email?token=${token}`, {
+        const response = await fetch(`http://localhost:433/gabliv/api/v1/auth/verify-email?token=${token}`, {
           method: 'GET',
         });
 

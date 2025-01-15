@@ -40,7 +40,7 @@
                   Entrar
                 </va-button>
 
-                <VaButton class="justify-self-start font-normal" preset="plainOpacity" size="small" color="#575757">
+                <VaButton class="justify-self-start font-normal" preset="plainOpacity" size="small" color="#7e7e7e">
                   Esqueceu a senha?
                 </VaButton>
               </div>
