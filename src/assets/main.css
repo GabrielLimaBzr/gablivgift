@@ -26,3 +26,28 @@ body {
       min-height: 30vh !important;
   }
 }
+
+.title {
+  color: rgba(228, 228, 228, 0.77);
+  font-size: 1.575rem;
+  line-height: 2.25rem;
+  font-weight: 800;
+}
+
+.sub {
+  color: rgba(255, 255, 255, 0.59);
+  text-align: center;
+}
+
+.fra {
+  color: aliceblue;
+  line-height: 2.25rem;
+  padding: 3px;
+  border-bottom: solid 1px var(--va-primary);
+}
+
+.your_css_selector_here {
+  background-color: hsla(277.5, 20%, 7%, 1);
+  background-image: radial-gradient(circle at 83% 8%, hsla(344.8387096774194, 76%, 52%, 0.35) 13.2209727561817%, transparent 57.79527252984263%), radial-gradient(circle at 83% 77%, hsla(277.50000000000006, 18%, 7%, 0) 13.2209727561817%, transparent 57.79527252984263%), radial-gradient(circle at 16% 80%, hsla(221.5853522805607, 71%, 60%, 0.35) 10.524512369218554%, transparent 41.41081577193815%);
+  background-blend-mode: normal, normal, normal;
+}

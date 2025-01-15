@@ -20,7 +20,7 @@
               <h1 class="text-2xl font-bold">
                 {{ activeTab === 'login' ? 'Login' : 'Cadastro' }}
               </h1>
-              <p class="text-[#575757]">
+              <p class="text-[#7e7e7e]">
                 {{ activeTab === 'login' ? loginText : registerText
                 }}
               </p>
@@ -53,8 +53,8 @@
             </VaForm>
 
             <!-- Formulário de Registro -->
-            <VaForm ref="formRef" v-if="activeTab === 'register'" @submit.prevent="registerSub"
-              class="flex flex-col gap-6">
+            <VaForm ref="formRef" v-if="activeTab === 'register' && !emailConfirmationMessage"
+              @submit.prevent="registerSub" class="flex flex-col gap-6">
 
               <VaInput v-model="registerForm.name" label="Nome" placeholder="Digite seu nome" required class="w-full"
                 :rules="[(v) => (v && v.length > 0) || 'Nome é obrigatório']" />
@@ -75,7 +75,14 @@
               <VaButton class="justify-self-center" preset="plainOpacity" size="small" @click="activeTab = 'login'">
                 Já possui uma conta? Login
               </VaButton>
+
             </VaForm>
+
+            <VaAlert v-model="emailConfirmationMessage" class="mb-6" color="#0f5132">
+              Um e-mail de confirmação foi enviado para <strong>{{ registerForm.email }}</strong> Verifique sua caixa
+              de
+              entrada.
+            </VaAlert>
 
           </div>
         </div>
@@ -98,8 +105,9 @@ import Footer from '@/components/Footer.vue';
 import { reactive, ref } from 'vue';
 import { useForm } from 'vuestic-ui';
 
-const { isValid, validate } = useForm('formRef')
+const { isValid } = useForm('formRef')
 
+const emailConfirmationMessage = ref(false);
 const activeTab = ref('login');
 
 const loginText = ref('Bem-vindo de volta 👋');
@@ -117,7 +125,11 @@ const registerForm = reactive({
 });
 
 const loginSub = () => alert('Form Login submitted!')
-const registerSub = () => alert('Form Register submitted!')
+
+function registerSub() {
+  alert('Form Register submitted!');
+  emailConfirmationMessage.value = true;
+}
 
 function validateEmail(valor: string) {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expressão regular para validar email
@@ -125,34 +137,7 @@ function validateEmail(valor: string) {
 }
 </script>
 
-<style>
-/* Personalize ainda mais se necessário */
-
-.your_css_selector_here {
-  background-color: hsla(277.5, 20%, 7%, 1);
-  background-image: radial-gradient(circle at 83% 8%, hsla(344.8387096774194, 76%, 52%, 0.35) 13.2209727561817%, transparent 57.79527252984263%), radial-gradient(circle at 83% 77%, hsla(277.50000000000006, 18%, 7%, 0) 13.2209727561817%, transparent 57.79527252984263%), radial-gradient(circle at 16% 80%, hsla(221.5853522805607, 71%, 60%, 0.35) 10.524512369218554%, transparent 41.41081577193815%);
-  background-blend-mode: normal, normal, normal;
-}
-
-.title {
-  color: rgba(228, 228, 228, 0.77);
-  font-size: 1.5rem;
-  line-height: 2.25rem;
-  font-weight: 800;
-}
-
-.sub {
-  color: rgba(255, 255, 255, 0.59);
-  text-align: center;
-}
-
-.fra {
-  color: aliceblue;
-  line-height: 2.25rem;
-  padding: 3px;
-  border-bottom: solid 1px var(--va-primary);
-}
-
+<style scoped>
 .layout {
   width: 100%;
   height: 100%;

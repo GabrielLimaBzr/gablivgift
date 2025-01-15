@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import("@/views/AuthView.vue"),
     },
     {
+      name: "confirm",
+      path: "/verify-email",
+      component: () => import("@/views/ConfirmAuthView.vue"),
+    },
+    {
       name: "gift",
       path: "/gift",
       component: () => import("@/layouts/AppLayout.vue"),
@@ -29,7 +34,6 @@ const router = createRouter({
 });
 
 function isAuthenticated() {
-  localStorage.setItem('authToken', 'valor')
   const token = localStorage.getItem('authToken');
   console.log(token);
   
@@ -37,7 +41,7 @@ function isAuthenticated() {
 }
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'auth' && !isAuthenticated()) next({ name: 'auth' })
+  if (to.name !== 'auth' && isAuthenticated()) next({ name: 'auth' })
     else next()
 });
 

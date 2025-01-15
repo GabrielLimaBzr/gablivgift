@@ -115,25 +115,6 @@ export default {
   color: var(--va-text-inverted) !important;
 }
 
-.title {
-  color: rgba(228, 228, 228, 0.77);
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  font-weight: 800;
-}
-
-.sub {
-  color: rgba(255, 255, 255, 0.59);
-  text-align: center;
-}
-
-.fra {
-  color: aliceblue;
-  line-height: 2.25rem;
-  padding: 3px;
-  border-bottom: solid 1px var(--va-primary);
-}
-
 .add-button {
   display: flex;
   flex-direction: column;
