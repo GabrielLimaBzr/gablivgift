@@ -2,7 +2,7 @@
   <div class="card shadow-md">
     <div class="card__image-container">
       <span v-if="item.priority" class="priority drop-shadow-lg">🔥</span>
-      <img v-if="item.image" :src="item.image" :alt="item.title" class="card__img" />
+      <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.title" class="card__img" />
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" />
     </div>
 
@@ -18,7 +18,7 @@
         </VaChip>
       </div>
       <div class="card__details">
-        <span>Em: {{ item.addedDate ? item.addedDate : "dd/MM/yyyy HH:mm" }}</span>
+        <span>Em: {{ item.createdAt ? item.createdAt : "dd/MM/yyyy HH:mm" }}</span>
       </div>
     </div>
   </div>

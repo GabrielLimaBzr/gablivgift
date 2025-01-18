@@ -98,7 +98,7 @@ export default {
             }
           }
         );
-        this.savedItems = response.data;
+        this.savedItems = response.data.gifts;
       } catch (error) {
         console.error(error);
       }
