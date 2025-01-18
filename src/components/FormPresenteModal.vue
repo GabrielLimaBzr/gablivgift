@@ -91,7 +91,7 @@ export default {
       form: {
         title: '',
         description: '',
-        image: null,
+        imageUrl: null,
         estimatedPrice: '',
         category: 9,
         priority: false,
@@ -139,18 +139,18 @@ export default {
     },
 
     saveState() {
-      // Recupera os itens existentes do localStorage
-      const existingItems = JSON.parse(localStorage.getItem('formItems')) || [];
-
-      // Adiciona o novo formulário à lista existente
-      existingItems.push({ ...this.form });
-
-      // Atualiza o localStorage com a lista atualizada
-      localStorage.setItem('formItems', JSON.stringify(existingItems));
-
-      console.log(this.form);
-
-      // Reseta o formulário e oculta o modal
+      /*    // Recupera os itens existentes do localStorage
+         const existingItems = JSON.parse(localStorage.getItem('formItems')) || [];
+   
+         // Adiciona o novo formulário à lista existente
+         existingItems.push({ ...this.form });
+   
+         // Atualiza o localStorage com a lista atualizada
+         localStorage.setItem('formItems', JSON.stringify(existingItems));
+   
+         console.log(this.form);
+   
+         // Reseta o formulário e oculta o modal */
       this.resetForm();
     },
 
@@ -160,7 +160,7 @@ export default {
       this.form = {
         title: '',
         description: '',
-        image: '',
+        imageUrl: '',
         estimatedPrice: '',
         category: '',
         priority: false,
@@ -176,8 +176,28 @@ export default {
 
     async saveForm() {
       this.form.category = this.catValue.value;
-      this.saveState();
+
+      try {
+        // Envia a requisição POST com o corpo JSON usando Axios
+        const response = await axios.post('https://gablivgift-ws.onrender.com/gabliv/api/v1/gift/create-gift', this.form, {
+          headers: {
+            'Content-Type': 'application/json', // Define que estamos enviando JSON
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Adiciona o token JWT se necessário
+          }
+        });
+
+        // Verifica se a resposta foi bem-sucedida
+        if (response.status === 200) {
+          this.saveState(); // Chama o método saveState após a resposta bem-sucedida
+        } else {
+          // Caso a resposta seja um erro
+          console.error('Erro ao salvar o presente:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Erro ao enviar requisição:', error);
+      }
     },
+
 
     prepareFormData() {
       this.formData = new FormData();
@@ -215,7 +235,7 @@ export default {
             this.results = response.data;
             console.log('public_id', this.results.public_id);
 
-            this.form.image = this.results.secure_url;
+            this.form.imageUrl = this.results.secure_url;
 
             await this.saveForm();
           } catch (error) {
@@ -224,6 +244,7 @@ export default {
           } finally {
             this.loading = false;
             this.showModal = false;
+            this.$router.push({ name: 'gift' });
           }
         };
 
