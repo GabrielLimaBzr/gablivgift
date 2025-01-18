@@ -18,7 +18,7 @@
         </VaChip>
       </div>
       <div class="card__details">
-        <span>Em: {{ item.createdAt ? item.createdAt : "dd/MM/yyyy HH:mm" }}</span>
+        <span>Em: {{ item.createdAt ? formatDate(item.createdAt) : "dd/MM/yyyy HH:mm" }}</span>
       </div>
     </div>
   </div>
@@ -52,6 +52,13 @@ export default {
     getCategoryLabel(value) {
       const category = this.categories.find(cat => cat.value === value);
       return category ? category.label : 'Desconhecido'; // Retorna 'Desconhecido' se não encontrar
+    },
+
+
+    formatDate(date) {
+      if (!date) return "dd/MM/yyyy HH:mm"; // Retorna o formato padrão se a data não estiver presente
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+      return new Date(date).toLocaleDateString('pt-BR', options); // Formata para o formato brasileiro
     }
   }
 };
