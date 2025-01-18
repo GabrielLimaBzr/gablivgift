@@ -64,7 +64,7 @@
 
               <VaInput v-model="registerForm.password" label="Senha" type="password" placeholder="Crie uma senha"
                 required class="w-full"
-                :rules="[(v) => (v && v.length >= 6) || 'A senha deve ter no mínimo 6 caracteres']" />
+                :rules="[(v) => (v && v.length >= 8) || 'A senha deve ter no mínimo 8 caracteres']" />
 
               <div>
                 <VaButton class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid">
