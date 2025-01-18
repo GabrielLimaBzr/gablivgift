@@ -49,6 +49,7 @@
 <script>
 import Card from '@/components/Card.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
+import axios from 'axios';
 
 export default {
   components: { Card, FormPresenteModal },
