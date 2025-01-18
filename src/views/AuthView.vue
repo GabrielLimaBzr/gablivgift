@@ -56,7 +56,7 @@
             <VaForm ref="formRef" v-if="activeTab === 'register' && !emailConfirmationMessage"
               @submit.prevent="registerSub" class="flex flex-col gap-6">
 
-              <VaInput v-model="registerForm.name" label="Nome" placeholder="Digite seu nome" required class="w-full"
+              <VaInput v-model="registerForm.fullName" label="Nome" placeholder="Digite seu nome" required class="w-full"
                 :rules="[(v) => (v && v.length > 0) || 'Nome é obrigatório']" />
 
               <VaInput v-model="registerForm.email" label="Email" placeholder="Digite seu email" required class="w-full"
@@ -101,6 +101,7 @@
 
 <script setup lang="ts">
 import Footer from '@/components/Footer.vue';
+import router from '@/router';
 
 import { reactive, ref } from 'vue';
 import { useForm } from 'vuestic-ui';
@@ -119,16 +120,54 @@ const loginForm = reactive({
 });
 
 const registerForm = reactive({
-  name: '',
+  fullName: '',
   email: '',
   password: '',
 });
 
-const loginSub = () => alert('Form Login submitted!')
+function loginSub() {
+
+  // Envia os dados de login para o backend
+  fetch('https://gablivgift-ws.onrender.com/gabliv/api/v1/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginForm),
+  })
+    .then(response => response.json())
+    .then(data => {
+      const { message, token, user } = data;
+
+      // Armazena o token e os dados do usuário no localStorage
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      console.log('Login bem-sucedido!', message);
+      router.push({ name: 'gift' });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
 
 function registerSub() {
-  alert('Form Register submitted!');
-  emailConfirmationMessage.value = true;
+  // Envia os dados para o backend
+  fetch('https://gablivgift-ws.onrender.com/gabliv/api/v1/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(registerForm),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    emailConfirmationMessage.value = true;
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 }
 
 function validateEmail(valor: string) {

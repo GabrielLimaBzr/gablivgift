@@ -13,6 +13,7 @@
     "@vuestic/ag-grid-theme": "^1.1.4",
     "@vuestic/tailwind": "^0.1.5",
     "axios": "^1.7.9",
+    "jwt-decode": "^4.0.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3",
     "vuestic-ui": "^1.9.0"

@@ -16,6 +16,7 @@ const router = createRouter({
     {
       name: "gift",
       path: "/gift",
+      meta: { requiresAuth: true },
       component: () => import("@/layouts/AppLayout.vue"),
       redirect: { name: "home" },
       children: [
@@ -35,14 +36,43 @@ const router = createRouter({
 
 function isAuthenticated() {
   const token = localStorage.getItem('authToken');
-  console.log(token);
+  console.info(token);
   
   return token;
 }
 
+// Middleware para verificar autenticação
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'auth' && isAuthenticated()) next({ name: 'auth' })
-    else next()
+  const token = localStorage.getItem('authToken');
+
+  // Verifica se a rota requer autenticação
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!token) {
+      // Redireciona para a página de login se o token não existir
+      next({name: 'auth'});
+    } else {
+      try {
+        // Decodifica e valida o token
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+
+        if (decodedToken.exp < currentTime) {
+          // Token expirado
+          localStorage.removeItem('authToken');
+          next({name: 'auth'});
+        } else {
+          // Token válido
+          next();
+        }
+      } catch (error) {
+        console.error('Token inválido:', error);
+        localStorage.removeItem('authToken');
+        next({name: 'auth'});
+      }
+    }
+  } else {
+    next(); // Permite acesso a rotas públicas
+  }
 });
 
 export default router;
