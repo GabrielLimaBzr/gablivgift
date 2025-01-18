@@ -31,12 +31,13 @@
       </VaSelect>
     </div>
 
-    <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
+    <div
+      class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
       <div v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
     </div>
-    
+
     <button class="add-button" @click="openModal">
       <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
       <span> + Presente</span>
@@ -85,20 +86,36 @@ export default {
     closeModal() {
       this.showModal = false;
     },
+
+    // get list gifts 
+    async getGifts() {
+      try {
+        const response = await axios.get("https://gablivgift-ws.onrender.com/gabliv/api/v1/gift/gifts",
+          {
+            headers: {
+              'Content-Type': 'application/json', // Define que estamos enviando JSON
+              'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Adiciona o token JWT se necessário
+            }
+          }
+        );
+        this.savedItems = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+
   },
 
   mounted() {
     // Restaurar a lista de itens salvos do localStorage, se existirem
-    const cachedList = localStorage.getItem('formItems');
-    if (cachedList) {
-      this.savedItems = JSON.parse(cachedList);
-    }
+    this.getGifts();
   },
 }
 
 </script>
 <style scoped>
-.img{
+.img {
   width: 30px !important;
 }
 
