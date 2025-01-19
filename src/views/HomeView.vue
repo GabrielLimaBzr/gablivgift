@@ -42,7 +42,7 @@
       <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
       <span> + Presente</span>
     </button>
-    <FormPresenteModal :is-active="showModal" @canceled="closeModal" />
+    <FormPresenteModal :is-active="showModal" @canceled="closeModal" @confirmed="handleConfirmed" />
   </div>
 </template>
 
@@ -88,13 +88,19 @@ export default {
       this.showModal = false;
     },
 
+    handleConfirmed() {
+      this.getGifts();
+      // Lógica que você deseja executar quando o evento "confirmed" for capturado
+      console.log('Evento confirmado capturado!');
+    },
+
     // get list gifts 
     async getGifts() {
       try {
         const response = await axios.get("https://gablivgift-ws.onrender.com/gabliv/api/v1/gift/gifts",
           {
             headers: {
-              'Content-Type': 'application/json', 
+              'Content-Type': 'application/json',
               'Authorization': `Bearer ${localStorage.getItem('authToken')}`
             }
           }

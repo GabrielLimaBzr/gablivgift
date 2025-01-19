@@ -189,6 +189,7 @@ export default {
         // Verifica se a resposta foi bem-sucedida
         if (response.status === 200) {
           this.saveState(); // Chama o método saveState após a resposta bem-sucedida
+          this.onConfirmed() ;
         } else {
           // Caso a resposta seja um erro
           console.error('Erro ao salvar o presente:', response.statusText);
