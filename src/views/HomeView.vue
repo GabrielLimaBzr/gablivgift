@@ -33,7 +33,18 @@
 
     <div
       class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
-      <div v-for="(item, index) in savedItems" :key="index">
+      <VaSkeletonGroup v-if="isLoading">
+        <VaCard>
+          <VaSkeleton variant="squared" height="120px" />
+          <VaCardContent class="flex items-center">
+            <VaSkeleton variant="text"  :lines="2" />
+          </VaCardContent>
+          <VaCardActions class="flex justify-end">
+            <VaSkeleton class="mr-2" variant="rounded" inline width="64px" height="32px" />
+          </VaCardActions>
+        </VaCard>
+      </VaSkeletonGroup>
+      <div v-else v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
     </div>
@@ -49,11 +60,10 @@
 <script>
 import Card from '@/components/Card.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
-import axios from 'axios';
+import giftService from '@service/giftService';
 
 export default {
   components: { Card, FormPresenteModal },
-  name: "Chips",
   data() {
     return {
       adcionadorPor: [
@@ -90,32 +100,20 @@ export default {
 
     handleConfirmed() {
       this.getGifts();
-      // Lógica que você deseja executar quando o evento "confirmed" for capturado
       console.log('Evento confirmado capturado!');
     },
 
-    // get list gifts 
-    async getGifts() {
-      try {
-        const response = await axios.get("https://gablivgift-ws.onrender.com/gabliv/api/v1/gift/gifts",
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            }
-          }
-        );
-        this.savedItems = response.data.gifts;
-      } catch (error) {
-        console.error(error);
-      }
+    async geGifts() {
+      this.isLoading = true;
+      const gifts = await giftService.getGifts();
+      this.savedItems = gifts;
+      this.isLoading = false;
     },
 
 
   },
 
   mounted() {
-    // Restaurar a lista de itens salvos do localStorage, se existirem
     this.getGifts();
   },
 }
@@ -128,9 +126,7 @@ export default {
 
 .fixed-size {
   width: 100%;
-  /* Garante que cada select ocupe o mesmo espaço dentro de sua coluna */
   max-width: 300px;
-  /* Ajuste conforme necessário para o tamanho desejado */
   display: flex;
   flex-direction: column;
 }
