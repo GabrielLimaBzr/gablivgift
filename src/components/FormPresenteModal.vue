@@ -92,7 +92,7 @@ export default {
         title: '',
         description: '',
         imageUrl: null,
-        estimatedPrice: '',
+        estimatedPrice: 0,
         category: 9,
         priority: false,
       },
