@@ -87,6 +87,7 @@ export default {
       valueP: "Todos",
       showModal: false,
       savedItems: [],
+      isLoading: false,
     };
   },
   methods: {
