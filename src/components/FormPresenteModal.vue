@@ -56,7 +56,7 @@
             hover-behavior="opacity" :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button :loading="loading" :disabled="loading" class="w-full" size="large" type="submit" color="primary"
+          <va-button :loading="loading" class="w-full" size="large" type="submit" color="primary" :disabled="loading || !form.title || !form.description"
             @click="prepareSave">
             Salvar
           </va-button>
