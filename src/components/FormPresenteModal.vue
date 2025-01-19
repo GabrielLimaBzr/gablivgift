@@ -187,7 +187,7 @@ export default {
         });
 
         // Verifica se a resposta foi bem-sucedida
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.saveState(); // Chama o método saveState após a resposta bem-sucedida
           this.onConfirmed() ;
         } else {
