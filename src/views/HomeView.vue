@@ -94,8 +94,8 @@ export default {
         const response = await axios.get("https://gablivgift-ws.onrender.com/gabliv/api/v1/gift/gifts",
           {
             headers: {
-              'Content-Type': 'application/json', // Define que estamos enviando JSON
-              'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Adiciona o token JWT se necessário
+              'Content-Type': 'application/json', 
+              'Authorization': `Bearer ${localStorage.getItem('authToken')}`
             }
           }
         );

@@ -125,8 +125,11 @@ const registerForm = reactive({
   password: '',
 });
 
+const loading = ref(false);
+
 function loginSub() {
 
+  loading.value = true;
   // Envia os dados de login para o backend
   fetch('https://gablivgift-ws.onrender.com/gabliv/api/v1/auth/login', {
     method: 'POST',
@@ -145,6 +148,7 @@ function loginSub() {
 
       console.log('Login bem-sucedido!', message);
       router.push({ name: 'gift' });
+      loading.value = false;
     })
     .catch(error => {
       console.error('Error:', error);

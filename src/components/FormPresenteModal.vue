@@ -176,13 +176,13 @@ export default {
 
     async saveForm() {
       this.form.category = this.catValue.value;
+      this.form.estimatedPrice = parseFloat(this.form.estimatedPrice);
 
       try {
-        // Envia a requisição POST com o corpo JSON usando Axios
         const response = await axios.post('https://gablivgift-ws.onrender.com/gabliv/api/v1/gift/create-gift', this.form, {
           headers: {
-            'Content-Type': 'application/json', // Define que estamos enviando JSON
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Adiciona o token JWT se necessário
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
           }
         });
 
@@ -212,6 +212,7 @@ export default {
         await this.saveForm();
         this.loading = false;
         this.showModal = false;
+        this.$router.push({ name: 'gift' });
         return;
       }
 
