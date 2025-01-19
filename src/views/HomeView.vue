@@ -37,7 +37,7 @@
         <VaCard>
           <VaSkeleton variant="squared" height="120px" />
           <VaCardContent class="flex items-center">
-            <VaSkeleton variant="text"  :lines="2" />
+            <VaSkeleton variant="text" :lines="2" />
           </VaCardContent>
           <VaCardActions class="flex justify-end">
             <VaSkeleton class="mr-2" variant="rounded" inline width="64px" height="32px" />
@@ -60,7 +60,7 @@
 <script>
 import Card from '@/components/Card.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
-import {getAllGifts}  from '@/services/giftService';
+import { getAllGifts } from '@/services/giftService';
 
 export default {
   components: { Card, FormPresenteModal },
@@ -103,11 +103,15 @@ export default {
       console.log('Evento confirmado capturado!');
     },
 
-    async geGifts() {
+    async getGifts() {
       this.isLoading = true;
-      const gifts = await giftService.getAllGifts();
-      this.savedItems = gifts;
-      this.isLoading = false;
+      try {
+        this.savedItems = await getAllGifts();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoading = false;
+      }
     },
 
 

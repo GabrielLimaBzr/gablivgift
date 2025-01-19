@@ -36,7 +36,7 @@
                 required class="w-full" :rules="[(v) => (v && v.length > 0) || 'Senha inválida']" />
 
               <div>
-                <va-button class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid">
+                <va-button class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid" :loading="loading">
                   Entrar
                 </va-button>
 
