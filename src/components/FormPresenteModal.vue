@@ -160,9 +160,9 @@ export default {
       this.form = {
         title: '',
         description: '',
-        imageUrl: '',
-        estimatedPrice: '',
-        category: '',
+        imageUrl: null,
+        estimatedPrice: 0,
+        category: 9,
         priority: false,
       };
       this.file = []
