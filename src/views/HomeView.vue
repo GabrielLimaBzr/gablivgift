@@ -33,7 +33,8 @@
 
     <div
       class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
-      <VaSkeletonGroup v-if="isLoading">
+      <div v-if="isLoading">
+        <VaSkeletonGroup>
         <VaCard>
           <VaSkeleton variant="squared" height="120px" />
           <VaCardContent class="flex items-center">
@@ -44,6 +45,8 @@
           </VaCardActions>
         </VaCard>
       </VaSkeletonGroup>
+      </div>
+      
       <div v-else v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
