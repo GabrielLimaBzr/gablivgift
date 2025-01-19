@@ -60,7 +60,7 @@
 <script>
 import Card from '@/components/Card.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
-import giftService from '@service/giftService';
+import {getAllGifts}  from '@/services/giftService';
 
 export default {
   components: { Card, FormPresenteModal },
@@ -105,7 +105,7 @@ export default {
 
     async geGifts() {
       this.isLoading = true;
-      const gifts = await giftService.getGifts();
+      const gifts = await giftService.getAllGifts();
       this.savedItems = gifts;
       this.isLoading = false;
     },
