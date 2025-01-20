@@ -2,8 +2,8 @@
   <div class="card shadow-md">
     <div class="card__image-container">
       <span v-if="item.priority" class="priority drop-shadow-lg">🔥</span>
-      <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.title" class="card__img" />
-      <img src="../assets/giftsha.png" :alt="item.title" class="card__img" />
+      <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.title" class="card__img" loading="lazy" />
+      <img src="../assets/giftsha.png" :alt="item.title" class="card__img" loading="lazy" />
     </div>
 
     <div class="card__footer grid grid-cols-2 gap-1">

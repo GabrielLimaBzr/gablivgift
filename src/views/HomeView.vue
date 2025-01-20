@@ -34,9 +34,9 @@
     <div
       class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
       <div v-if="isLoading">
-        <VaSkeletonGroup>
+        <VaSkeletonGroup animation="wave">
           <VaCard>
-            <VaSkeleton variant="squared" height="120px" />
+            <VaSkeleton color="#7e7e7e" variant="squared" height="120px" />
             <VaCardContent class="flex items-center">
               <VaSkeleton variant="text" :lines="2" />
             </VaCardContent>
@@ -165,6 +165,7 @@ export default {
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 1000;
 }
 
 .add-button:hover {
