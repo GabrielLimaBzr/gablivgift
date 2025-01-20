@@ -1,12 +1,12 @@
 <template>
   <div class="card shadow-md">
-    <div class="card__image-container">
+    <div class="card__image-container" @click="toggleDescription">
       <span v-if="item.priority" class="priority drop-shadow-lg">🔥</span>
       <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.title" class="card__img" loading="lazy" />
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" loading="lazy" />
     </div>
 
-    <div class="card__footer grid grid-cols-2 gap-1">
+    <div v-if="activeTab != 'description'" class="card__footer grid grid-cols-2 gap-1">
       <div class="card__title col-span-2">
         <span>{{ item.title ? item.title : "Sem titulo" }}</span>
       </div>
@@ -21,6 +21,11 @@
         <span>Em: {{ item.createdAt ? formatDate(item.createdAt) : "dd/MM/yyyy HH:mm" }}</span>
       </div>
     </div>
+    <div v-else class="card__footer grid grid-cols-2 gap-1">
+      <VaScrollContainer vertical class="max-h-20 col-span-2">
+        <p class="break-words font-medium text-xs">{{ item.description ? item.description : "Sem descrição" }}</p>
+      </VaScrollContainer>
+    </div>
   </div>
 </template>
 
@@ -34,6 +39,7 @@ export default {
   },
   data() {
     return {
+      activeTab: 'info',
       categories: [
         { label: 'Eletrônicos', value: 1 },
         { label: 'Roupas', value: 2 },
@@ -59,16 +65,22 @@ export default {
       if (!date) return "dd/MM/yyyy HH:mm"; // Retorna o formato padrão se a data não estiver presente
       const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
       return new Date(date).toLocaleDateString('pt-BR', options); // Formata para o formato brasileiro
-    }
+    },
+
+    toggleDescription() {
+      this.activeTab = this.activeTab === 'info' ? 'description' : 'info';
+    },
   }
 };
 </script>
 
 <style>
+
 .card {
   --blur: 16px;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 300px;
+  aspect-ratio: 3 / 2;
   position: relative;
   border-radius: var(--border-radius);
   color: var(--va-text-inverted);
@@ -80,7 +92,7 @@ export default {
 
 .card__image-container {
   width: 100%;
-  height: 90%;
+  height: 100%;
   overflow: hidden;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
@@ -110,6 +122,7 @@ export default {
   border-bottom-right-radius: var(--border-radius);
   border-top: solid 3px var(--va-primary);
   color: var(--va-text-inverted);
+  height: 45%;
   /* Espaço entre os elementos */
 }
 
@@ -140,7 +153,7 @@ export default {
 .card__details {
   font-size: 0.6rem;
   color: rgba(255, 255, 255, 0.37);
-  font-weight: lighter;
+  font-weight: bolder;
 }
 
 /* Estilo do preço */

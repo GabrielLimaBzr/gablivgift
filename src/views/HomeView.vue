@@ -103,13 +103,25 @@ export default {
     },
 
     handleConfirmed() {
+      localStorage.removeItem('gifts');
       this.getGifts();
       console.log('Evento confirmado capturado!');
     },
 
     async getGifts() {
-      try {
+      try { 
+        const cacheKey = 'gifts';
+        const cachedItems = localStorage.getItem('gifts');
+        if (cachedItems) {
+          const {data, timestamp} = JSON.parse(cachedItems);
+          const isCacheValid = Date.now() - timestamp < 300000;
+          if (isCacheValid) {
+            this.savedItems = data;
+            return;
+          }
+        }
         this.savedItems = await getAllGifts();
+        localStorage.setItem(cacheKey, JSON.stringify({data: this.savedItems, timestamp: Date.now()}));
       } catch (error) {
         console.error(error);
       } finally {
