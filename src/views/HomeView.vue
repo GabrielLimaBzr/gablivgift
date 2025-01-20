@@ -114,7 +114,7 @@ export default {
         const cachedItems = localStorage.getItem('gifts');
         if (cachedItems) {
           const {data, timestamp} = JSON.parse(cachedItems);
-          const isCacheValid = Date.now() - timestamp < 300000;
+          const isCacheValid = Date.now() - timestamp < 180000;
           if (isCacheValid) {
             this.savedItems = data;
             return;

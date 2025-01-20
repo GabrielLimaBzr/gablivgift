@@ -23,7 +23,7 @@
     </div>
     <div v-else class="card__footer grid grid-cols-2 gap-1">
       <VaScrollContainer vertical class="max-h-20 col-span-2">
-        <p class="break-words font-medium text-xs">{{ item.description ? item.description : "Sem descrição" }}</p>
+        <p class="break-words font-medium text-sm">{{ item.description ? item.description : "Sem descrição" }}</p>
       </VaScrollContainer>
     </div>
   </div>
