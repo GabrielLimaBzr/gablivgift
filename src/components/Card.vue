@@ -12,7 +12,7 @@
       </div>
       <div class="card__price col-span-2 flex
       justify-between">
-        <span class="text-sm font-light">{{ getPriceLabel(item.estimatedPrice)}}</span>
+        <span style="max-width: 60%;" class="text-sm font-light">{{ getPriceLabel(item.estimatedPrice)}}</span>
         <VaChip v-show="item.category" size="small" square>
           {{ getCategoryLabel(item.category) }}
         </VaChip>
@@ -56,8 +56,8 @@ export default {
       estimatePrices: [
       { label: 'Mimo ', price: 'Mimo (até R$ 50)', value: 1 },
       { label: 'Detalhes que encatam', price: 'Detalhes que encatam (R$ 50 a R$ 100)', value: 2 },
-      { label: 'Gestos marcantes', price: 'Detalhes que encatam (R$ 100 a R$ 300)', value: 3 },
-      { label: 'Supresa inesquecíveis', price: 'Detalhes que encatam (R$ 300 a R$ 500)', value: 4 },
+      { label: 'Gestos marcantes', price: 'Gestos marcantes (R$ 100 a R$ 300)', value: 3 },
+      { label: 'Supresa inesquecíveis', price: 'Supresa inesquecíveis (R$ 300 a R$ 500)', value: 4 },
       { label: 'É o meu sonho!', price: 'É o meu sonho! (acima de R$ 500)', value: 5 },
     ],
     }
