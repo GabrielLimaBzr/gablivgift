@@ -48,7 +48,7 @@
         </VaSkeletonGroup>
       </div>
 
-      <div v-else v-for="(item, index) in savedItems" :key="index">
+      <div v-else v-for="(item, index) in savedItems.slice().reverse()" :key="index">
         <Card :item="item" />
       </div>
     </div>
@@ -158,6 +158,7 @@ export default {
 
 .textOption {
   color: var(--va-text-inverted) !important;
+  font-size: 0.8rem;
 }
 
 .add-button {
