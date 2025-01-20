@@ -6,13 +6,13 @@
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" loading="lazy" />
     </div>
 
-    <div v-if="activeTab != 'description'" class="card__footer grid grid-cols-2 gap-1">
+    <div v-if="activeTab != 'description'" class="card__footer grid grid-cols-2">
       <div class="card__title col-span-2">
         <span>{{ item.title ? item.title : "Sem titulo" }}</span>
       </div>
       <div class="card__price col-span-2 flex
       justify-between">
-        <span>R$ {{ item.estimatedPrice ? item.estimatedPrice : "0,00" }}</span>
+        <span class="text-sm font-light">{{ getPriceLabel(item.estimatePrice)}}</span>
         <VaChip v-show="item.category" size="small" square>
           {{ getCategoryLabel(item.category) }}
         </VaChip>
@@ -23,7 +23,7 @@
     </div>
     <div v-else class="card__footer grid grid-cols-2 gap-1">
       <VaScrollContainer vertical class="max-h-20 col-span-2">
-        <p class="break-words font-medium text-sm">{{ item.description ? item.description : "Sem descrição" }}</p>
+        <p class="break-words font-medium text-md">{{ item.description ? item.description : "Sem descrição" }}</p>
       </VaScrollContainer>
     </div>
   </div>
@@ -52,9 +52,24 @@ export default {
         { label: 'Outros', value: 9 },
         { label: 'Brinquedos', value: 10 },
       ],
+
+      estimatePrices: [
+      { label: 'Mimo ', price: 'Mimo = (até R$ 50)', value: 1 },
+      { label: 'Detalhes que encatam', price: 'Detalhes que encatam = (R$ 50 a R$ 100)', value: 2 },
+      { label: 'Gestos marcantes', price: 'Detalhes que encatam = (R$ 100 a R$ 300)', value: 3 },
+      { label: 'Supresa inesquecíveis', price: 'Detalhes que encatam = (R$ 300 a R$ 500)', value: 4 },
+      { label: 'É o meu sonho!', price: 'É o meu sonho! = (acima de R$ 500)', value: 5 },
+    ],
     }
   },
   methods: {
+    getPriceLabel(value) {
+      const price = this.estimatePrices.find(price => price.value === value);
+      return price ? price.price : 'Sem valor'; // Retorna 'Desconhecido' se não encontrar
+    },
+
+
+
     getCategoryLabel(value) {
       const category = this.categories.find(cat => cat.value === value);
       return category ? category.label : 'Desconhecido'; // Retorna 'Desconhecido' se não encontrar

@@ -10,25 +10,23 @@
       <va-form ref="form" class="space-y-4 grid grid-cols-2 gap-4">
         <!-- Campo Título -->
         <div class="col-span-2">
-          <va-input v-model="form.title" label="Título" placeholder="Digite o título do presente" required
+          <va-input v-model="form.title" label="Título *" placeholder="Digite o título do presente" required
             class="w-full" :rules="[(v) => v.length > 3 || `Coloque um título`]" />
         </div>
 
         <!-- Campo Descrição -->
         <div class="col-span-2">
-          <va-textarea max-length="100" v-model="form.description" label="Descrição"
+          <va-textarea max-length="500" v-model="form.description" label="Descrição"
             placeholder="Descreva o presente, inclua links etc." required rows="4" class="w-full" required-mark :rules="[
               (v) => v && v.length > 0 || 'Coloque alguma descrição',
-              (v) => v && v.length < 100,
+              (v) => v && v.length < 500,
             ]" />
         </div>
 
         <!-- Campo Preço Estimado -->
         <div>
-          <va-input v-model="form.estimatedPrice" label="Preço Estimado" placeholder="Insira o preço estimado" required
-            class="w-full">
-          </va-input>
-
+          <VaSelect v-model="priceValue" :options="estimatePrices" label="Preço Estimado" text-by="label"
+            track-by="value" placeholder="Selecione um preço estimado" required class="w-full" :messages="[priceValue.price]"/>
         </div>
 
         <!-- Campo Categoria -->
@@ -66,7 +64,8 @@
   </va-modal>
 </template>
 
-<style></style>
+<style>
+</style>
 
 <script>
 
@@ -86,6 +85,14 @@ export default {
       { label: 'Brinquedos', value: 10 },
     ];
 
+    const estimatePrices = [
+      { label: 'Mimo ', price: 'Mimo = (até R$ 50)', value: 1 },
+      { label: 'Detalhes que encatam', price: 'Detalhes que encatam = (R$ 50 a R$ 100)', value: 2 },
+      { label: 'Gestos marcantes', price: 'Detalhes que encatam = (R$ 100 a R$ 300)', value: 3 },
+      { label: 'Supresa inesquecíveis', price: 'Detalhes que encatam = (R$ 300 a R$ 500)', value: 4 },
+      { label: 'É o meu sonho!', price: 'É o meu sonho! = (acima de R$ 500)', value: 5 },
+    ];
+
     return {
       showModal: false,
       form: {
@@ -97,16 +104,13 @@ export default {
         priority: false,
       },
       categories,
+      estimatePrices,
       savedItems: [],
       file: [],
       catValue: categories[8],
+      priceValue: estimatePrices[0],
       loading: false,
     };
-  },
-  computed: {
-    currentTab() {
-      return this.tabs.find(({ title }) => title === this.tabIndex);
-    },
   },
   props: {
     isActive: {
@@ -132,28 +136,12 @@ export default {
 
     onConfirmed() {
       this.$emit('confirmed');
+      this.resetForm();
     },
     onCanceled() {
       this.$emit('canceled');
       this.resetForm();
     },
-
-    saveState() {
-      /*    // Recupera os itens existentes do localStorage
-         const existingItems = JSON.parse(localStorage.getItem('formItems')) || [];
-   
-         // Adiciona o novo formulário à lista existente
-         existingItems.push({ ...this.form });
-   
-         // Atualiza o localStorage com a lista atualizada
-         localStorage.setItem('formItems', JSON.stringify(existingItems));
-   
-         console.log(this.form);
-   
-         // Reseta o formulário e oculta o modal */
-      this.resetForm();
-    },
-
 
     resetForm() {
       // Limpa os dados do formulário
@@ -176,6 +164,7 @@ export default {
 
     async saveForm() {
       this.form.category = this.catValue.value;
+      this.form.estimatedPrice = this.priceValue.value;
       this.form.estimatedPrice = parseFloat(this.form.estimatedPrice);
 
       try {
@@ -186,12 +175,9 @@ export default {
           }
         });
 
-        // Verifica se a resposta foi bem-sucedida
         if (response.status === 201) {
-          this.saveState(); // Chama o método saveState após a resposta bem-sucedida
           this.onConfirmed() ;
         } else {
-          // Caso a resposta seja um erro
           console.error('Erro ao salvar o presente:', response.statusText);
         }
       } catch (error) {

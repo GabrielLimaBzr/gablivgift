@@ -22,10 +22,11 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueZ" :options="precoAte" label="Preço:" class="col-span-1 w-[150px]" color="primary">
+      <VaSelect v-model="valueZ" :options="precoAte" label="Preço Estimado:" class="col-span-1 w-[150px]" color="primary"
+        text-by="label" track-by="value">
         <template #content="{ value }">
           <span class="textOption">
-            {{ value }}
+            {{ value.label }}
           </span>
         </template>
       </VaSelect>
@@ -41,7 +42,7 @@
               <VaSkeleton color="#3E3E3E" variant="text" :lines="2" />
             </VaCardContent>
             <VaCardActions class="flex justify-end">
-              <VaSkeleton color="#3E3E3E"  class="mr-2" variant="rounded" inline width="64px" height="32px" />
+              <VaSkeleton color="#3E3E3E" class="mr-2" variant="rounded" inline width="64px" height="32px" />
             </VaCardActions>
           </VaCard>
         </VaSkeletonGroup>
@@ -65,6 +66,14 @@ import Card from '@/components/Card.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
 import { getAllGifts } from '@/services/giftService';
 
+const precoAteList = [
+  { label: 'até R$ 50', value: 1 },
+  { label: 'R$ 50 a R$ 100', value: 2 },
+  { label: 'R$ 100 a R$ 300', value: 3 },
+  { label: 'R$ 300 a R$ 500', value: 4 },
+  { label: 'acima de R$ 500', value: 5 },
+];
+
 export default {
   components: { Card, FormPresenteModal },
   data() {
@@ -78,14 +87,9 @@ export default {
         "Data",
         "Categoria"
       ],
-      precoAte: [
-        "Tudo",
-        "Até 25",
-        "Até 50",
-        "Até 100",
-        "Apartir de 200"
-      ],
-      valueZ: "Tudo",
+
+      precoAte: precoAteList,
+      valueZ: precoAteList[0],
       value: "Data",
       valueP: "Todos",
       showModal: false,
@@ -109,11 +113,11 @@ export default {
     },
 
     async getGifts() {
-      try { 
+      try {
         const cacheKey = 'gifts';
         const cachedItems = localStorage.getItem('gifts');
         if (cachedItems) {
-          const {data, timestamp} = JSON.parse(cachedItems);
+          const { data, timestamp } = JSON.parse(cachedItems);
           const isCacheValid = Date.now() - timestamp < 180000;
           if (isCacheValid) {
             this.savedItems = data;
@@ -121,7 +125,7 @@ export default {
           }
         }
         this.savedItems = await getAllGifts();
-        localStorage.setItem(cacheKey, JSON.stringify({data: this.savedItems, timestamp: Date.now()}));
+        localStorage.setItem(cacheKey, JSON.stringify({ data: this.savedItems, timestamp: Date.now() }));
       } catch (error) {
         console.error(error);
       } finally {
