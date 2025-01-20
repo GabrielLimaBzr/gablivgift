@@ -33,15 +33,15 @@
 
     <div
       class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
-      <div v-if="isLoading">
+      <div v-if="isLoading" v-for="n in 3" :key="n">
         <VaSkeletonGroup animation="wave">
           <VaCard>
             <VaSkeleton color="#7e7e7e" variant="squared" height="120px" />
             <VaCardContent class="flex items-center">
-              <VaSkeleton variant="text" :lines="2" />
+              <VaSkeleton color="#3E3E3E" variant="text" :lines="2" />
             </VaCardContent>
             <VaCardActions class="flex justify-end">
-              <VaSkeleton class="mr-2" variant="rounded" inline width="64px" height="32px" />
+              <VaSkeleton color="#3E3E3E"  class="mr-2" variant="rounded" inline width="64px" height="32px" />
             </VaCardActions>
           </VaCard>
         </VaSkeletonGroup>
