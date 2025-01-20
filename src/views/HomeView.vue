@@ -35,18 +35,18 @@
       class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 p-2 md:px-1  sm:px-6">
       <div v-if="isLoading">
         <VaSkeletonGroup>
-        <VaCard>
-          <VaSkeleton variant="squared" height="120px" />
-          <VaCardContent class="flex items-center">
-            <VaSkeleton variant="text" :lines="2" />
-          </VaCardContent>
-          <VaCardActions class="flex justify-end">
-            <VaSkeleton class="mr-2" variant="rounded" inline width="64px" height="32px" />
-          </VaCardActions>
-        </VaCard>
-      </VaSkeletonGroup>
+          <VaCard>
+            <VaSkeleton variant="squared" height="120px" />
+            <VaCardContent class="flex items-center">
+              <VaSkeleton variant="text" :lines="2" />
+            </VaCardContent>
+            <VaCardActions class="flex justify-end">
+              <VaSkeleton class="mr-2" variant="rounded" inline width="64px" height="32px" />
+            </VaCardActions>
+          </VaCard>
+        </VaSkeletonGroup>
       </div>
-      
+
       <div v-else v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
@@ -90,7 +90,7 @@ export default {
       valueP: "Todos",
       showModal: false,
       savedItems: [],
-      isLoading: false,
+      isLoading: true,
     };
   },
   methods: {
@@ -108,7 +108,6 @@ export default {
     },
 
     async getGifts() {
-      this.isLoading = true;
       try {
         this.savedItems = await getAllGifts();
       } catch (error) {
@@ -122,7 +121,9 @@ export default {
   },
 
   mounted() {
-    this.getGifts();
+    setTimeout(() => {
+      this.getGifts();
+    }, 0)
   },
 }
 
