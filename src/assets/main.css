@@ -4,6 +4,9 @@
 
 :root {
   --border-radius: .8rem;
+  --va-menu-item-hover-opacity: 0.6;
+  --va-menu-padding-x:	12px;
+  --va-menu-padding-y:	8px;
 }
 
 a {

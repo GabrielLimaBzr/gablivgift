@@ -63,25 +63,23 @@ export default {
     }
   },
   methods: {
-    getPriceLabel(value) {
-      console.log(value);
-      
+    getPriceLabel(value) {      
       const price = this.estimatePrices.find(price => price.value === value);
-      return price ? price.price : 'Sem valor'; // Retorna 'Desconhecido' se não encontrar
+      return price ? price.price : 'Sem valor';
     },
 
 
 
     getCategoryLabel(value) {
       const category = this.categories.find(cat => cat.value === value);
-      return category ? category.label : 'Desconhecido'; // Retorna 'Desconhecido' se não encontrar
+      return category ? category.label : 'Desconhecido';
     },
 
 
     formatDate(date) {
-      if (!date) return "dd/MM/yyyy HH:mm"; // Retorna o formato padrão se a data não estiver presente
+      if (!date) return "dd/MM/yyyy HH:mm"; 
       const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-      return new Date(date).toLocaleDateString('pt-BR', options); // Formata para o formato brasileiro
+      return new Date(date).toLocaleDateString('pt-BR', options);
     },
 
     toggleDescription() {
@@ -127,7 +125,6 @@ export default {
 
 .card__img:hover {
   transform: scale(1.06);
-  /* Aplica um leve zoom na imagem */
 }
 
 .card__footer {
@@ -140,17 +137,13 @@ export default {
   border-top: solid 3px var(--va-primary);
   color: var(--va-text-inverted);
   height: 45%;
-  /* Espaço entre os elementos */
 }
 
-/* Estilo do título e do ícone de prioridade */
 .card__title {
   font-size: 1.2rem;
   font-weight: bold;
   white-space: nowrap;
-  /* Garante que o texto fique em uma única linha */
   overflow: hidden;
-  /* Esconde o texto que ultrapassa a largura da div */
   text-overflow: ellipsis;
 }
 
@@ -163,17 +156,14 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 2;
-  /* Garante que fique acima da imagem */
 }
 
-/* Estilo das informações adicionais */
 .card__details {
   font-size: 0.6rem;
   color: rgba(255, 255, 255, 0.37);
   font-weight: bolder;
 }
 
-/* Estilo do preço */
 .card__price {
   font-size: 1rem;
   color: var(--va-highlight);
