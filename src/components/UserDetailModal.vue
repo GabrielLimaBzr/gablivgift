@@ -21,7 +21,7 @@
                 <VaDivider />
             </div>
 
-            <div v-if="item.couple.id" class="grid grid-cols-3 gap-4">
+            <div v-if="item.couple" class="grid grid-cols-3 gap-4">
                 <div>
                     <va-input v-model="item.couple.id" label="Codigo Perfil" inner-label :disabled="true" class="w-full" />
                 </div>
