@@ -126,6 +126,8 @@ async function loginSub() {
   loading.value = true;
   try {
     const response = await loginUser(loginForm);
+    console.log('response', response);
+
     if (response) {
       throw new Error('Falha no login. Verifique suas credenciais.');
     }
@@ -150,6 +152,8 @@ async function registerSub() {
   loading.value = true;
   try {
     const response = await registerUser(registerForm);
+    console.log('response', response);
+    
     if (response) {
       throw new Error('Falha no login. Verifique suas credenciais.');
     }
