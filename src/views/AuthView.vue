@@ -132,13 +132,12 @@ async function loginSub() {
       throw new Error('Falha no login. Verifique suas credenciais.');
     }
 
-    const data = await response.json();
-    const { message, token, user } = data;
+    const data = response;
 
-    localStorage.setItem('authToken', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('authToken', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
 
-    console.log('Login bem-sucedido!', message);
+    console.log('Login bem-sucedido!', data.message);
 
     router.push({ name: 'gift' });
   } catch (error) {
