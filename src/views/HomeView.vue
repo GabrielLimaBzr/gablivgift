@@ -22,8 +22,8 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueZ" :options="precoAte" label="Preço Estimado:" class="col-span-1 w-[150px]" color="primary"
-        text-by="label" track-by="value">
+      <VaSelect v-model="valueZ" :options="precoAte" label="Preço Estimado:" class="col-span-1 w-[150px]"
+        color="primary" text-by="label" track-by="value">
         <template #content="{ value }">
           <span class="textOption">
             {{ value.label }}
@@ -52,10 +52,10 @@
         <div v-if="savedItems" v-for="(item, index) in savedItems.slice().reverse()" :key="index">
           <Card :item="item" />
         </div>
-        <div>
-          <h1>Adicione um novo presente!</h1>
+        <div class="col-span-3 w-full flex justify-center items-center">
+          <h1 class="text-2xl font-bold text-white p-4 rounded-lg shadow-lg">Adicione um novo presente!</h1>
         </div>
-        
+
       </div>
     </div>
 
