@@ -22,25 +22,38 @@
                     </template>
                     <div class="z-40">
                         <VaMenuList>
-                            <VaMenuItem @selected="alert" icon="account_circle">
+                            <VaMenuItem @selected="openPerfilModal()" icon="account_circle">
                                 Perfil
                             </VaMenuItem>
-                            <VaMenuItem @selected="exitApp()"
-                            icon="exit_to_app">
+
+                            <VaMenuItem @selected="exitApp()" icon="exit_to_app">
                                 Sair
                             </VaMenuItem>
                         </VaMenuList>
                     </div>
                 </VaButtonDropdown>
+                <UserDetailModal @canceled="closePerfilModal()" :is-active="showModal" :item="perfil" />
             </div>
         </div>
+
     </header>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import UserDetailModal from './UserDetailModal.vue';
 
-const alert = (...args) => window.alert(...args)
+const perfil = ref(JSON.parse(localStorage.getItem('user')));
+
+const openPerfilModal = () => {
+    showModal.value = true;
+}
+
+const closePerfilModal = () => {
+    showModal.value = false;
+}
+
+const showModal = ref(false);
 
 const exitApp = () => {
     window.localStorage.removeItem('authToken');
@@ -52,7 +65,6 @@ const search = ref('');
 </script>
 
 <style>
-
 .header {
     background: var(--va-custom-bg);
     border-radius: var(--border-radius);
