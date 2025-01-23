@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vercel/speed-insights": "^1.1.0",
     "@vuestic/ag-grid-theme": "^1.1.4",
     "@vuestic/tailwind": "^0.1.5",
     "axios": "^1.7.9",
