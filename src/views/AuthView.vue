@@ -36,7 +36,8 @@
                 required class="w-full" :rules="[(v) => (v && v.length > 0) || 'Senha inválida']" />
 
               <div>
-                <va-button class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid" :loading="loading">
+                <va-button class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid"
+                  :loading="loading">
                   Entrar
                 </va-button>
 
@@ -56,8 +57,8 @@
             <VaForm ref="formRef" v-if="activeTab === 'register' && !emailConfirmationMessage"
               @submit.prevent="registerSub" class="flex flex-col gap-6">
 
-              <VaInput v-model="registerForm.fullName" label="Nome" placeholder="Digite seu nome" required class="w-full"
-                :rules="[(v) => (v && v.length > 0) || 'Nome é obrigatório']" />
+              <VaInput v-model="registerForm.fullName" label="Nome" placeholder="Digite seu nome" required
+                class="w-full" :rules="[(v) => (v && v.length > 0) || 'Nome é obrigatório']" />
 
               <VaInput v-model="registerForm.email" label="Email" placeholder="Digite seu email" required class="w-full"
                 :rules="[validateEmail]" />
@@ -67,7 +68,7 @@
                 :rules="[(v) => (v && v.length >= 8) || 'A senha deve ter no mínimo 8 caracteres']" />
 
               <div>
-                <VaButton class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid">
+                <VaButton class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid" :loading="loading">
                   Cadastrar
                 </VaButton>
               </div>
@@ -91,18 +92,12 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
 </template>
 
 <script setup lang="ts">
 import Footer from '@/components/Footer.vue';
 import router from '@/router';
-
+import { loginUser, registerUser } from '@/services/authService';
 import { reactive, ref } from 'vue';
 import { useForm } from 'vuestic-ui';
 
@@ -127,52 +122,48 @@ const registerForm = reactive({
 
 const loading = ref(false);
 
-function loginSub() {
-
+async function loginSub() {
   loading.value = true;
-  // Envia os dados de login para o backend
-  fetch('https://gablivgift-ws.onrender.com/gabliv/api/v1/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(loginForm),
-  })
-    .then(response => response.json())
-    .then(data => {
-      const { message, token, user } = data;
+  try {
+    const response = await loginUser(loginForm);
+    if (response) {
+      throw new Error('Falha no login. Verifique suas credenciais.');
+    }
 
-      // Armazena o token e os dados do usuário no localStorage
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('user', JSON.stringify(user));
+    const data = await response.json();
+    const { message, token, user } = data;
 
-      console.log('Login bem-sucedido!', message);
-      router.push({ name: 'gift' });
-      loading.value = false;
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('user', JSON.stringify(user));
+
+    console.log('Login bem-sucedido!', message);
+
+    router.push({ name: 'gift' });
+  } catch (error) {
+    console.error('Erro no login:', error);
+  } finally {
+    loading.value = false;
+  }
 }
 
-function registerSub() {
-  // Envia os dados para o backend
-  fetch('https://gablivgift-ws.onrender.com/gabliv/api/v1/auth/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(registerForm),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
+async function registerSub() {
+  loading.value = true;
+  try {
+    const response = await registerUser(registerForm);
+    if (response) {
+      throw new Error('Falha no login. Verifique suas credenciais.');
+    }
+    console.log('response', response);
+
     emailConfirmationMessage.value = true;
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+
+  } catch (error) {
+    console.error('Erro no register:', error);
+  } finally {
+    loading.value = false;
+  }
 }
+
 
 function validateEmail(valor: string) {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expressão regular para validar email

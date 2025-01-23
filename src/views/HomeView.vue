@@ -22,8 +22,8 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueZ" :options="precoAte" label="Preço Estimado:" class="col-span-1 w-[150px]" color="primary"
-        text-by="label" track-by="value">
+      <VaSelect v-model="valueZ" :options="precoAte" label="Preço Estimado:" class="col-span-1 w-[150px]"
+        color="primary" text-by="label" track-by="value">
         <template #content="{ value }">
           <span class="textOption">
             {{ value.label }}
@@ -48,16 +48,23 @@
         </VaSkeletonGroup>
       </div>
 
-      <div v-else v-for="(item, index) in savedItems.slice().reverse()" :key="index">
+      <!-- Renderizar itens salvos -->
+      <div v-else-if="savedItems && savedItems.length > 0" v-for="(item, index) in [...savedItems].reverse()"
+        :key="index">
         <Card :item="item" />
       </div>
-    </div>
 
-    <button class="add-button" @click="openModal">
-      <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
-      <span> + Presente</span>
-    </button>
-    <FormPresenteModal :is-active="showModal" @canceled="closeModal" @confirmed="handleConfirmed" />
+      <!-- Mensagem quando não há itens -->
+      <div v-else class="w-full flex justify-center items-center col-span-3">
+        <h1 class="text-2xl font-bold text-white p-4 rounded-lg shadow-lg">Adicione um novo presente!</h1>
+      </div>
+
+      <button class="add-button" @click="openModal">
+        <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
+        <span> + Presente</span>
+      </button>
+      <FormPresenteModal :is-active="showModal" @canceled="closeModal" @confirmed="handleConfirmed" />
+    </div>
   </div>
 </template>
 

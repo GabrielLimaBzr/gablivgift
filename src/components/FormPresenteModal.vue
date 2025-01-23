@@ -68,8 +68,8 @@
 </style>
 
 <script>
+import { uploadImageGift, createGift } from '@/services/giftService';
 
-import axios from 'axios';
 export default {
   data() {
     const categories = [
@@ -144,7 +144,6 @@ export default {
     },
 
     resetForm() {
-      // Limpa os dados do formulário
       this.form = {
         title: '',
         description: '',
@@ -156,24 +155,13 @@ export default {
       this.file = []
     },
 
-    clearSavedItems() {
-      // Limpa a lista de itens salvos e o localStorage
-      this.savedItems = [];
-      localStorage.removeItem('formItems');
-    },
-
     async saveForm() {
       this.form.category = this.catValue.value;
       this.form.estimatedPrice = this.priceValue.value;
       this.form.estimatedPrice = parseFloat(this.form.estimatedPrice);
 
       try {
-        const response = await axios.post('https://gablivgift-ws.onrender.com/gabliv/api/v1/gift/create-gift', this.form, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-          }
-        });
+        const response = await createGift(this.form);
 
         if (response.status === 201) {
           this.onConfirmed() ;
@@ -189,7 +177,6 @@ export default {
     prepareFormData() {
       this.formData = new FormData();
       this.formData.append('file', this.file);
-      this.formData.append('upload_preset', 'pre-gifts');
     },
 
     async prepareSave() {
@@ -218,12 +205,11 @@ export default {
           try {
             this.prepareFormData();
 
-            const response = await axios.post(`https://api.cloudinary.com/v1_1/dv8vjjalo/upload`, this.formData);
+            const public_url = await uploadImageGift(this.formData);
 
-            this.results = response.data;
-            console.log('public_id', this.results.public_id);
+            console.log('public_url', public_url);
 
-            this.form.imageUrl = this.results.secure_url;
+            this.form.imageUrl = public_url;
 
             await this.saveForm();
           } catch (error) {
