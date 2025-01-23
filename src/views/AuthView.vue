@@ -128,7 +128,7 @@ async function loginSub() {
     const response = await loginUser(loginForm);
     console.log('response', response);
 
-    if (response) {
+    if (!response) {
       throw new Error('Falha no login. Verifique suas credenciais.');
     }
 
@@ -154,7 +154,7 @@ async function registerSub() {
     const response = await registerUser(registerForm);
     console.log('response', response);
     
-    if (response) {
+    if (!response) {
       throw new Error('Falha no login. Verifique suas credenciais.');
     }
     console.log('response', response);
