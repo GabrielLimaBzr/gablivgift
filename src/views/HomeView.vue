@@ -48,8 +48,14 @@
         </VaSkeletonGroup>
       </div>
 
-      <div v-else v-for="(item, index) in savedItems.slice().reverse()" :key="index">
-        <Card :item="item" />
+      <div v-else>
+        <div v-if="savedItems" v-for="(item, index) in savedItems.slice().reverse()" :key="index">
+          <Card :item="item" />
+        </div>
+        <div>
+          <h1>Adicione um novo presente!</h1>
+        </div>
+        
       </div>
     </div>
 
