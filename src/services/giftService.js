@@ -19,6 +19,23 @@ export async function getAllGifts() {
   }
 }
 
+export async function getGiftByFilter(query) {
+  try {
+    const endpoint = apiBaseUrl + '/filter?'+ query;
+    const response = await axios.get(endpoint, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      }
+    });
+
+    return response.data.gifts;
+  } catch (error) {
+    console.error("Erro chamada api: ", error);
+    return null
+  }
+}
+
 export async function uploadImageGift(formData) {
   try {
     const endpoint = apiBaseUrl + '/upload';

@@ -5,15 +5,16 @@
       desesjos!</p>
 
     <div class="p-2 m-5 grid grid-cols-3 gap-3 justify-stretch">
-      <VaSelect v-model="value" :options="options" label="Ordernar por:" class="col-span-1 w-[150px]" color="primary">
+      <VaSelect v-model="ordenarValue" :options="ordenarPor" label="Ordernar por:" class="col-span-1 w-[150px]"
+        color="primary" text-by="label" track-by="label">
         <template #content="{ value }">
           <span class="textOption">
-            {{ value }}
+            {{ value.label }}
           </span>
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueP" :options="adcionadorPor" label="Adicionado por:" class="col-span-1 w-[150px]"
+      <VaSelect v-model="adcionadoValue" :options="adcionadorPor" label="Adicionado por:" class="col-span-1 w-[150px]"
         color="primary">
         <template #content="{ value }">
           <span class="textOption">
@@ -22,7 +23,7 @@
         </template>
       </VaSelect>
 
-      <VaSelect v-model="valueZ" :options="precoAte" label="Preço Estimado:" class="col-span-1 w-[150px]"
+      <VaSelect v-model="precoValue" :options="precoAte" label="Preço Estimado:" class="col-span-1 w-[150px]"
         color="primary" text-by="label" track-by="value">
         <template #content="{ value }">
           <span class="textOption">
@@ -71,9 +72,10 @@
 <script>
 import Card from '@/components/Card.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
-import { getAllGifts } from '@/services/giftService';
+import { getGiftByFilter } from '@/services/giftService';
 
 const precoAteList = [
+  { label: 'Qualquer Valor', value: 0 },
   { label: 'até R$ 50', value: 1 },
   { label: 'R$ 50 a R$ 100', value: 2 },
   { label: 'R$ 100 a R$ 300', value: 3 },
@@ -81,27 +83,30 @@ const precoAteList = [
   { label: 'acima de R$ 500', value: 5 },
 ];
 
+const ordenarPorList = [
+  { label: 'Mais recentes', value: 'createdAt', direction: 'desc' },
+  { label: 'Mais antigos', value: 'createdAt', direction: 'asc' },
+  { label: 'Categoria', value: 'category', direction: 'desc' },
+
+];
+
 export default {
   components: { Card, FormPresenteModal },
   data() {
     return {
-      adcionadorPor: [
-        "Todos",
-        "Livia",
-        "Gabriel"
-      ],
-      options: [
-        "Data",
-        "Categoria"
-      ],
+      adcionadorPor: ['Todos'],
+      adcionadoValue: 'Todos',
+
+      ordenarPor: ordenarPorList,
+      ordenarValue: ordenarPorList[0],
 
       precoAte: precoAteList,
-      valueZ: precoAteList[0],
-      value: "Data",
-      valueP: "Todos",
+      precoValue: precoAteList[0],
+
       showModal: false,
       savedItems: [],
-      isLoading: true,
+      isLoading: false,
+      userDetail: null,
     };
   },
   methods: {
@@ -119,24 +124,90 @@ export default {
       console.log('Evento confirmado capturado!');
     },
 
+
+    carregarAdcionadores() {
+      try {
+        const userData = JSON.parse(localStorage.getItem("user"));
+
+        if (userData) {
+          this.userDetail = userData;
+          const adicionadores = [userData.fullName];
+
+          if (userData.couple && userData.couple.user) {
+            adicionadores.push(userData.couple.user.fullName);
+          }
+
+          this.adcionadorPor.push(...adicionadores);
+        }
+        console.log("Adicionadores carregados com sucesso!", this.adcionadorPor);
+
+      } catch (error) {
+        console.error("Erro ao carregar os adicionadores:", error);
+      }
+    },
+
+
+    async getFilter() {
+      try {
+        this.isLoading = true;
+
+        const queryParams = new URLSearchParams();
+
+        // Filtros dinâmicos para a URL
+        if (this.precoValue !== null && this.precoValue.value !== 0) {
+          queryParams.append("estimatedPrice", this.precoValue.value);
+        }
+
+        if (this.adcionadoValue === "Todos" && this.userDetail.couple) {
+          queryParams.append("coupleId", this.userDetail.couple.id);
+        } else if (this.adcionadoValue !== "Todos" && this.adcionadoValue) {
+          if (this.adcionadoValue === this.userDetail.fullName) {
+            queryParams.append("userId", this.userDetail.id);
+          } else {
+            queryParams.append("userId", this.userDetail.couple.user.id);
+          }
+        } else {
+          queryParams.append("userId", this.userDetail.id);
+        }
+
+
+        if (this.ordenarValue !== null) {
+          queryParams.append("orderBy", this.ordenarValue.value);
+          queryParams.append("orderDirection", this.ordenarValue.direction);
+        }
+
+        queryParams.append("page", 1);
+
+        console.log(queryParams.toString());
+        const response = await getGiftByFilter(queryParams.toString());
+        this.savedItems = response;
+        this.saveCache();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    saveCache() {
+      const cacheKey = 'gifts';
+      localStorage.setItem(cacheKey, JSON.stringify({ data: this.savedItems, timestamp: Date.now() }));
+    },
+
     async getGifts() {
       try {
-        const cacheKey = 'gifts';
         const cachedItems = localStorage.getItem('gifts');
         if (cachedItems) {
           const { data, timestamp } = JSON.parse(cachedItems);
-          const isCacheValid = Date.now() - timestamp < 18000000;
+          const isCacheValid = Date.now() - timestamp < 180000;
           if (isCacheValid) {
             this.savedItems = data;
             return;
           }
         }
-        this.savedItems = await getAllGifts();
-        localStorage.setItem(cacheKey, JSON.stringify({ data: this.savedItems, timestamp: Date.now() }));
+        await this.getFilter();
       } catch (error) {
         console.error(error);
-      } finally {
-        this.isLoading = false;
       }
     },
 
@@ -145,8 +216,32 @@ export default {
 
   mounted() {
     setTimeout(() => {
+      this.carregarAdcionadores();
       this.getGifts();
     }, 0)
+  },
+
+  watch: {
+    ordenarValue: {
+      handler() {
+        this.getFilter();
+      },
+      deep: true,
+    },
+
+    precoValue: {
+      handler() {
+        this.getFilter();
+      },
+      deep: true,
+    },
+
+    adcionadoValue: {
+      handler() {
+        this.getFilter();
+      },
+      deep: true,
+    },
   },
 }
 
