@@ -58,6 +58,7 @@ const showModal = ref(false);
 const exitApp = () => {
     window.localStorage.removeItem('authToken');
     window.localStorage.removeItem('gifts');
+    window.localStorage.removeItem('user');
     window.location.href = '/auth';
 }
 
