@@ -56,7 +56,7 @@
 
       <!-- Mensagem quando não há itens -->
       <div v-else class="w-full flex justify-center items-center col-span-3">
-        <h1 class="text-2xl font-bold text-white p-4 rounded-lg shadow-lg">Adicione um novo presente!</h1>
+        <h1 class="text-1xl font-thin text-white p-4">Adicione um novo presente!</h1>
       </div>
 
       <button class="add-button" @click="openModal">
@@ -125,7 +125,7 @@ export default {
         const cachedItems = localStorage.getItem('gifts');
         if (cachedItems) {
           const { data, timestamp } = JSON.parse(cachedItems);
-          const isCacheValid = Date.now() - timestamp < 180000;
+          const isCacheValid = Date.now() - timestamp < 18000000;
           if (isCacheValid) {
             this.savedItems = data;
             return;

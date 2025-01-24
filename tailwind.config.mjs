@@ -7,9 +7,9 @@ export default {
     extend: {},
     screens: {
       xs: '0px',
-      sm: '400px',
-      md: '635px',
-      lg: '992px',
+      sm: '200px',
+      md: '536px',
+      lg: '794px',
       xl: '1200px',
     },
   },

@@ -2,7 +2,6 @@
 </script>
 
 <template>
-  <SpeedInsights />
   <RouterView></RouterView>
 </template>
 
@@ -11,11 +10,11 @@
   box-sizing: border-box;
 }
 
-.border{
+.border {
   border: solid greenyellow 1px;
 }
 
-.va-select-dropdown__options-wrapper{
+.va-select-dropdown__options-wrapper {
   background-color: #404040 !important;
   backdrop-filter: blur(var(--blur));
   color: var(--va-text-inverted);

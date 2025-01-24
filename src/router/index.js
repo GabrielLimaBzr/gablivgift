@@ -17,7 +17,7 @@ const router = createRouter({
     {
       name: "gift",
       path: "/gift",
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: false },
       component: () => import("@/layouts/AppLayout.vue"),
       redirect: { name: "home" },
       children: [

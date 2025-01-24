@@ -16,7 +16,7 @@
             </div>
 
             <div class="flex-none h-6 w-6">
-                <VaButtonDropdown class="w-full" preset="plain" color="textInverted" hide-icon placement="bottom-left">
+                <VaButtonDropdown class="w-full" preset="plain" color="textInverted" hide-icon placement="left-bottom">
                     <template #label>
                         <VaIcon class="w-full mb-3" name="settings" size="large" />
                     </template>
@@ -73,7 +73,8 @@ const search = ref('');
 }
 
 .va-menu-list {
-    min-width: 130px;
+    max-width: 100px !important;
+    min-width: 100px !important;
 }
 
 .va-input-wrapper__size-keeper {
@@ -90,5 +91,6 @@ const search = ref('');
 
 .va-dropdown__content {
     z-index: 1000 !important;
+    max-width: 120px;
 }
 </style>
