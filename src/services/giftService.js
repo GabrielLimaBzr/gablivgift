@@ -29,7 +29,7 @@ export async function getGiftByFilter(query) {
       }
     });
 
-    return response.data.gifts;
+    return response.data;
   } catch (error) {
     console.error("Erro chamada api: ", error);
     return null

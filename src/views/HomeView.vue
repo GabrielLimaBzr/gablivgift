@@ -50,22 +50,29 @@
       </div>
 
       <!-- Renderizar itens salvos -->
-      <div v-else-if="savedItems && savedItems.length > 0" v-for="(item, index) in [...savedItems].reverse()"
-        :key="index">
+      <div v-else-if="savedItems && savedItems.length > 0" v-for="(item, index) in savedItems" :key="index">
         <Card :item="item" />
       </div>
+
+
 
       <!-- Mensagem quando não há itens -->
       <div v-else class="w-full flex justify-center items-center col-span-3">
         <h1 class="text-1xl font-thin text-white p-4">Adicione um novo presente!</h1>
       </div>
-
-      <button class="add-button" @click="openModal">
-        <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
-        <span> + Presente</span>
-      </button>
-      <FormPresenteModal :is-active="showModal" @canceled="closeModal" @confirmed="handleConfirmed" />
     </div>
+
+
+    <div class="w-full flex justify-center flex-col items-center col-span-3" v-if="totalItems > 0">
+      <h1 class="text-1xl font-thin text-white p-4">{{ `Total de Presente(s): ${totalItems}` }}</h1>
+      <VaPagination @clicl="console.log(currentPage)" v-model="currentPage" :pages="totalPages" />
+    </div>
+
+    <button class="add-button" @click="openModal">
+      <img class="w-full rounded img" src="../assets/logo.svg" alt="LoG">
+      <span> + Presente</span>
+    </button>
+    <FormPresenteModal :is-active="showModal" @canceled="closeModal" @confirmed="handleConfirmed" />
   </div>
 </template>
 
@@ -84,8 +91,8 @@ const precoAteList = [
 ];
 
 const ordenarPorList = [
-  { label: 'Mais recentes', value: 'createdAt', direction: 'asc' },
-  { label: 'Mais antigos', value: 'createdAt', direction: 'desc' },
+  { label: 'Mais recentes', value: 'createdAt', direction: 'desc' },
+  { label: 'Mais antigos', value: 'createdAt', direction: 'asc' },
   { label: 'Categoria', value: 'category', direction: 'desc' },
 
 ];
@@ -107,6 +114,10 @@ export default {
       savedItems: [],
       isLoading: false,
       userDetail: null,
+
+      currentPage: 1,
+      totalItems: 0,
+      totalPages: 0,
     };
   },
   methods: {
@@ -139,7 +150,6 @@ export default {
 
           this.adcionadorPor.push(...adicionadores);
         }
-        console.log("Adicionadores carregados com sucesso!", this.adcionadorPor);
 
       } catch (error) {
         console.error("Erro ao carregar os adicionadores:", error);
@@ -176,11 +186,16 @@ export default {
           queryParams.append("orderDirection", this.ordenarValue.direction);
         }
 
-        queryParams.append("page", 1);
+        queryParams.append("page", this.currentPage);
 
         console.log(queryParams.toString());
         const response = await getGiftByFilter(queryParams.toString());
-        this.savedItems = response;
+        this.savedItems = response.gifts;
+        this.totalItems = response.total;
+        this.totalPages = response.totalPages;
+        console.log(response);
+
+
         this.saveCache();
       } catch (error) {
         console.error(error);
@@ -191,17 +206,20 @@ export default {
 
     saveCache() {
       const cacheKey = 'gifts';
-      localStorage.setItem(cacheKey, JSON.stringify({ data: this.savedItems, timestamp: Date.now() }));
+      localStorage.setItem(cacheKey, JSON.stringify({ data: this.savedItems, timestamp: Date.now(), currentPage: this.currentPage, totalPages: this.totalPages, totalItems: this.totalItems }));
     },
 
     async getGifts() {
       try {
         const cachedItems = localStorage.getItem('gifts');
         if (cachedItems) {
-          const { data, timestamp } = JSON.parse(cachedItems);
+          const { data, timestamp, currentPage, totalItems, totalPages } = JSON.parse(cachedItems);
           const isCacheValid = Date.now() - timestamp < 180000;
           if (isCacheValid) {
             this.savedItems = data;
+            this.currentPage = currentPage;
+            this.totalItems = totalItems;
+            this.totalPages = totalPages;
             return;
           }
         }
@@ -237,6 +255,13 @@ export default {
     },
 
     adcionadoValue: {
+      handler() {
+        this.getFilter();
+      },
+      deep: true,
+    },
+
+    currentPage: {
       handler() {
         this.getFilter();
       },
