@@ -84,8 +84,8 @@ const precoAteList = [
 ];
 
 const ordenarPorList = [
-  { label: 'Mais recentes', value: 'createdAt', direction: 'desc' },
-  { label: 'Mais antigos', value: 'createdAt', direction: 'asc' },
+  { label: 'Mais recentes', value: 'createdAt', direction: 'asc' },
+  { label: 'Mais antigos', value: 'createdAt', direction: 'desc' },
   { label: 'Categoria', value: 'category', direction: 'desc' },
 
 ];
