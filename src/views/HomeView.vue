@@ -195,9 +195,13 @@ export default {
         const cacheKey = `filter_${queryParams.toString()}`;
         const cachedItems = sessionStorage.getItem(cacheKey);
 
+        const cacheTime = import.meta.env.VITE_CACHE_TIMING || 180000;
+        console.log("Tempo de cache:", cacheTime);
+        
+
         if (cachedItems) {
           const { data, timestamp, currentPage, totalItems, totalPages } = JSON.parse(cachedItems);
-          const isCacheValid = Date.now() - timestamp < 180000;
+          const isCacheValid = Date.now() - timestamp < cacheTime;
 
           if (isCacheValid) {
             console.info("Cache válido, carregando dados salvos...");
