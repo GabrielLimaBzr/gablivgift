@@ -39,7 +39,7 @@
         <!-- Campo Imagem -->
         <div class="col-span-2">
           <VaAlert border="left" border-color="secondary" v-model="isCloseableAlertVisible" closeable class="mb-3" dense color="#6775c1">
-            💡Dica: Use imagem com proporção 4:3 para melhor visualização do seu presente!
+            <span class="text-base lg:text-base md:text-sm sm:text-xs">💡Dica: Use imagem com proporção 4:3 para melhor visualização do seu presente!</span>
           </VaAlert>
           <VaFileUpload dropZoneText="Arraste sua imagem para fazer upload ou" v-model="file" dropzone
             file-types="jpg,png, jpeg" fileIncorrectMessage="O tipo de arquivo está incorreto" type="single"
