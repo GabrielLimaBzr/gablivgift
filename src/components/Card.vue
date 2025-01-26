@@ -6,14 +6,14 @@
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" loading="lazy" />
     </div>
 
-    <div v-if="activeTab != 'description'" class="card__footer grid grid-cols-2">
-      <div class="card__title col-span-2">
+    <div v-if="activeTab != 'description'" class="card__footer grid grid-cols-2 gap-1">
+      <div class="card__title col-span-2 mb-1">
         <span>{{ item.title ? item.title : "Sem titulo" }}</span>
       </div>
       <div class="card__price col-span-2 flex
-      justify-between">
+      justify-between items-center gap-3">
         <span style="max-width: 60%;" class="text-sm font-light">{{ getPriceLabel(item.estimatedPrice)}}</span>
-        <VaChip v-show="item.category" size="small" square>
+        <VaChip v-show="item.category" size="" class="truncate">
           {{ getCategoryLabel(item.category) }}
         </VaChip>
       </div>
@@ -90,6 +90,10 @@ export default {
 </script>
 
 <style>
+.va-chip--small {
+  font-size: 0.7rem;
+  max-height: 100%;
+}
 
 .card {
   --blur: 16px;

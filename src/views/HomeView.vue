@@ -94,6 +94,8 @@ const ordenarPorList = [
   { label: 'Mais recentes', value: 'createdAt', direction: 'desc' },
   { label: 'Mais antigos', value: 'createdAt', direction: 'asc' },
   { label: 'Categoria', value: 'category', direction: 'desc' },
+  { label: 'Prioridade', value: 'priority', direction: 'desc' },
+
 
 ];
 
