@@ -1,12 +1,13 @@
 <template>
   <div class="flex flex-col justify-center w-full items-center py-10">
     <h1 class="title">GabLivGifts</h1>
-    <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma imensa lista de
+    <p class="sub p-2 md:px-1  sm:px-6">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma
+      imensa lista de
       desesjos!</p>
 
-    <div class="p-2 m-5 grid grid-cols-3 gap-3 justify-stretch">
-      <VaSelect v-model="ordenarValue" :options="ordenarPor" label="Ordernar por:" class="col-span-1 w-[150px]"
-        color="primary" text-by="label" track-by="label">
+    <div class="my-5 grid grid-cols-3 gap-3 p-2 md:px-1 sm:px-6">
+      <VaSelect v-model="ordenarValue" :options="ordenarPor" label="Ordernar por:" class="col-span-1" color="primary"
+        text-by="label" track-by="label">
         <template #content="{ value }">
           <span class="textOption">
             {{ value.label }}
@@ -200,7 +201,7 @@ export default {
 
           if (isCacheValid) {
             console.info("Cache válido, carregando dados salvos...");
-            
+
             this.savedItems = data;
             this.currentPage = currentPage;
             this.totalItems = totalItems;
@@ -269,7 +270,7 @@ export default {
 }
 
 </script>
-<style scoped>
+<style>
 .img {
   width: 30px !important;
 }
@@ -329,5 +330,10 @@ export default {
     width: 80px;
     height: 80px;
   }
+
+  .va-select-option {
+    font-size: 0.8rem !important;
+  }
+
 }
 </style>
