@@ -196,7 +196,7 @@ export default {
 
         if (cachedItems) {
           const { data, timestamp, currentPage, totalItems, totalPages } = JSON.parse(cachedItems);
-          const isCacheValid = Date.now() - timestamp < 18000000;
+          const isCacheValid = Date.now() - timestamp < 180000;
 
           if (isCacheValid) {
             console.info("Cache válido, carregando dados salvos...");
