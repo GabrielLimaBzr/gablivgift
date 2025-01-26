@@ -126,7 +126,6 @@ async function loginSub() {
   loading.value = true;
   try {
     const response = await loginUser(loginForm);
-    console.log('response', response);
 
     if (!response) {
       throw new Error('Falha no login. Verifique suas credenciais.');
@@ -136,8 +135,6 @@ async function loginSub() {
 
     localStorage.setItem('authToken', data.token);
     localStorage.setItem('user', JSON.stringify(data.user));
-
-    console.log('Login bem-sucedido!', data.message);
 
     router.push({ name: 'gift' });
   } catch (error) {

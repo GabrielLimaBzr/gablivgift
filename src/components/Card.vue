@@ -7,20 +7,23 @@
     </div>
 
     <div v-if="activeTab != 'description'" class="card__footer grid grid-cols-2 gap-1">
-      <div class="card__title col-span-2 mb-1">
-        <span>{{ item.title ? item.title : "Sem titulo" }}</span>
+      <div class="col-span-2">
+        <span class="truncate font-bold text-lg">{{ item.title ? item.title : "Sem titulo" }}</span>
       </div>
+
       <div class="card__price col-span-2 flex
       justify-between items-center gap-3">
-        <span style="max-width: 60%;" class="text-sm font-light">{{ getPriceLabel(item.estimatedPrice)}}</span>
-        <VaChip v-show="item.category" size="" class="truncate">
+        <span style="width: 50%;" class="text-xs font-light">{{ getPriceLabel(item.estimatedPrice)}}</span>
+        <VaChip v-show="item.category" square size="small" class="truncate">
           {{ getCategoryLabel(item.category) }}
         </VaChip>
       </div>
+
       <div class="card__details">
         <span>Em: {{ item.createdAt ? formatDate(item.createdAt) : "dd/MM/yyyy HH:mm" }}</span>
       </div>
     </div>
+    
     <div v-else class="card__footer grid grid-cols-2 gap-1">
       <VaScrollContainer vertical class="max-h-20 col-span-2">
         <p class="break-words font-medium text-md">{{ item.description ? item.description : "Sem descrição" }}</p>
@@ -97,21 +100,17 @@ export default {
 
 .card {
   --blur: 16px;
-  width: 100%;
-  height: 300px;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 1 / 1;
   position: relative;
   border-radius: var(--border-radius);
   color: var(--va-text-inverted);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-width: 100%;
 }
 
 .card__image-container {
-  width: 100%;
-  height: 100%;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
@@ -132,7 +131,7 @@ export default {
 }
 
 .card__footer {
-  padding: 0.2rem 1rem 0.4rem 1rem;
+  padding: 0.4rem 0.8rem;
   width: 100%;
   background: var(--va-custom-bg);
   backdrop-filter: blur(var(--blur));
@@ -140,15 +139,7 @@ export default {
   border-bottom-right-radius: var(--border-radius);
   border-top: solid 3px var(--va-primary);
   color: var(--va-text-inverted);
-  height: 45%;
-}
-
-.card__title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  height: 110px;
 }
 
 .priority {

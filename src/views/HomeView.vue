@@ -190,15 +190,33 @@ export default {
 
         queryParams.append("page", this.currentPage);
 
-        console.log(queryParams.toString());
+        // Chave de cache baseada nos parâmetros
+        const cacheKey = `filter_${queryParams.toString()}`;
+        const cachedItems = sessionStorage.getItem(cacheKey);
+
+        if (cachedItems) {
+          const { data, timestamp, currentPage, totalItems, totalPages } = JSON.parse(cachedItems);
+          const isCacheValid = Date.now() - timestamp < 18000000;
+
+          if (isCacheValid) {
+            console.info("Cache válido, carregando dados salvos...");
+            
+            this.savedItems = data;
+            this.currentPage = currentPage;
+            this.totalItems = totalItems;
+            this.totalPages = totalPages;
+            return;
+          } else {
+            sessionStorage.removeItem(cacheKey);
+          }
+        }
+
         const response = await getGiftByFilter(queryParams.toString());
         this.savedItems = response.gifts;
         this.totalItems = response.total;
         this.totalPages = response.totalPages;
-        console.log(response);
 
-
-        this.saveCache();
+        this.saveCache(cacheKey);
       } catch (error) {
         console.error(error);
       } finally {
@@ -206,38 +224,16 @@ export default {
       }
     },
 
-    saveCache() {
-      const cacheKey = 'gifts';
-      localStorage.setItem(cacheKey, JSON.stringify({ data: this.savedItems, timestamp: Date.now(), currentPage: this.currentPage, totalPages: this.totalPages, totalItems: this.totalItems }));
+    saveCache(cacheKey) {
+      sessionStorage.setItem(cacheKey, JSON.stringify({ data: this.savedItems, timestamp: Date.now(), currentPage: this.currentPage, totalPages: this.totalPages, totalItems: this.totalItems }));
     },
-
-    async getGifts() {
-      try {
-        const cachedItems = localStorage.getItem('gifts');
-        if (cachedItems) {
-          const { data, timestamp, currentPage, totalItems, totalPages } = JSON.parse(cachedItems);
-          const isCacheValid = Date.now() - timestamp < 180000;
-          if (isCacheValid) {
-            this.savedItems = data;
-            this.currentPage = currentPage;
-            this.totalItems = totalItems;
-            this.totalPages = totalPages;
-            return;
-          }
-        }
-        await this.getFilter();
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
 
   },
 
   mounted() {
     setTimeout(() => {
       this.carregarAdcionadores();
-      this.getGifts();
+      this.getFilter();
     }, 0)
   },
 

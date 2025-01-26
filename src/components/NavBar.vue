@@ -56,9 +56,7 @@ const closePerfilModal = () => {
 const showModal = ref(false);
 
 const exitApp = () => {
-    window.localStorage.removeItem('authToken');
-    window.localStorage.removeItem('gifts');
-    window.localStorage.removeItem('user');
+    window.localStorage.clear();
     window.location.href = '/auth';
 }
 

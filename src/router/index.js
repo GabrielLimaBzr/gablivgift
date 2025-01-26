@@ -17,7 +17,7 @@ const router = createRouter({
     {
       name: "gift",
       path: "/gift",
-      meta: { requiresAuth: false },
+      meta: { requiresAuth: true },
       component: () => import("@/layouts/AppLayout.vue"),
       redirect: { name: "home" },
       children: [
@@ -35,12 +35,6 @@ const router = createRouter({
   ],
 });
 
-function isAuthenticated() {
-  const token = localStorage.getItem('authToken');
-  console.info(token);
-  
-  return token;
-}
 
 // Middleware para verificar autenticação
 router.beforeEach((to, from, next) => {

@@ -58,6 +58,7 @@ app.use(createVuestic({
             VaSkeletonGroup: true,
             VaDropdownContent: true,
             VaDropdown: true,
+            VaAlert: true,
         },
     }
 }));

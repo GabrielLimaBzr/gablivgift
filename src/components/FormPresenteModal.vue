@@ -26,7 +26,8 @@
         <!-- Campo Preço Estimado -->
         <div>
           <VaSelect v-model="priceValue" :options="estimatePrices" label="Preço Estimado" text-by="label"
-            track-by="value" placeholder="Selecione um preço estimado" required class="w-full" :messages="[priceValue.price]"/>
+            track-by="value" placeholder="Selecione um preço estimado" required class="w-full"
+            :messages="[priceValue.price]" />
         </div>
 
         <!-- Campo Categoria -->
@@ -37,6 +38,9 @@
 
         <!-- Campo Imagem -->
         <div class="col-span-2">
+          <VaAlert border="left" border-color="secondary" v-model="isCloseableAlertVisible" closeable class="mb-3" dense color="#6775c1">
+            💡Dica: Use imagem com proporção 4:3 para melhor visualização do seu presente!
+          </VaAlert>
           <VaFileUpload dropZoneText="Arraste sua imagem para fazer upload ou" v-model="file" dropzone
             file-types="jpg,png, jpeg" fileIncorrectMessage="O tipo de arquivo está incorreto" type="single"
             uploadButtonText="Carregar Imagem" />
@@ -54,8 +58,8 @@
             hover-behavior="opacity" :hover-opacity="0.4">
             Cancelar
           </va-button>
-          <va-button :loading="loading" class="w-full" size="large" type="submit" color="primary" :disabled="loading || !form.title || !form.description"
-            @click="prepareSave">
+          <va-button :loading="loading" class="w-full" size="large" type="submit" color="primary"
+            :disabled="loading || !form.title || !form.description" @click="prepareSave">
             Salvar
           </va-button>
         </div>
@@ -64,8 +68,7 @@
   </va-modal>
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 import { uploadImageGift, createGift } from '@/services/giftService';
@@ -94,6 +97,7 @@ export default {
     ];
 
     return {
+      isCloseableAlertVisible: true,
       showModal: false,
       form: {
         title: '',
@@ -164,7 +168,7 @@ export default {
         const response = await createGift(this.form);
 
         if (response.status === 201) {
-          this.onConfirmed() ;
+          this.onConfirmed();
         } else {
           console.error('Erro ao salvar o presente:', response.statusText);
         }
