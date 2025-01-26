@@ -29,7 +29,16 @@ app.use(createVuestic({
             VaScrollContainer: true,
             VaSelect: true,
             VaModal: true,
-            VaIcon: true,
+            VaIcon: {
+                sizesConfig: {
+                    defaultSize: 28,
+                    sizes: {
+                        small: 16,
+                        medium: 24,
+                        large: 32,
+                    },
+                },
+            },
             VaForm: true,
             VaInputWrapper: true,
             VaTextarea: true,
@@ -47,7 +56,8 @@ app.use(createVuestic({
             VaCardActions: true,
             VaPagination: true,
             VaSkeletonGroup: true,
-            
+            VaDropdownContent: true,
+            VaDropdown: true,
         },
     }
 }));

@@ -10,7 +10,7 @@
                 <VaInput class="w-full" v-model="search" placeholder="Procurar presente..." :clearable="true"
                     color="textInverted">
                     <template #prependInner>
-                        <VaIcon style="color: white !important;" color="textInverted" name="search"></VaIcon>
+                        <VaIcon  style="color: white !important;" color="textInverted" name="search"></VaIcon>
                     </template>
                 </VaInput>
             </div>
@@ -18,7 +18,7 @@
             <div class="flex-none h-6 w-6">
                 <VaButtonDropdown class="w-full" preset="plain" color="textInverted" hide-icon placement="left-bottom">
                     <template #label>
-                        <VaIcon class="w-full mb-3" name="settings" size="large" />
+                        <VaIcon class="w-full" name="settings" size="" />
                     </template>
                     <div class="z-40">
                         <VaMenuList>
