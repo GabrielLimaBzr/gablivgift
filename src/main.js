@@ -59,6 +59,7 @@ app.use(createVuestic({
             VaDropdownContent: true,
             VaDropdown: true,
             VaAlert: true,
+            VaToast: true,
         },
     }
 }));

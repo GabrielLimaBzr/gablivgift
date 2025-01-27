@@ -68,7 +68,8 @@
                 :rules="[(v) => (v && v.length >= 8) || 'A senha deve ter no mínimo 8 caracteres']" />
 
               <div>
-                <VaButton class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid" :loading="loading">
+                <VaButton class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid"
+                  :loading="loading">
                   Cadastrar
                 </VaButton>
               </div>
@@ -120,6 +121,10 @@ const registerForm = reactive({
   password: '',
 });
 
+import { useToast } from 'vuestic-ui';
+const { init, notify, close, closeAll } = useToast();
+
+
 const loading = ref(false);
 
 async function loginSub() {
@@ -128,28 +133,32 @@ async function loginSub() {
     const response = await loginUser(loginForm);
 
     if (!response) {
-      throw new Error('Falha no login. Verifique suas credenciais.');
+      init({ message: 'Não foi possível realizar o login' });
+      return;
     }
 
-    const data = response;
-
-    localStorage.setItem('authToken', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
+    // Login bem-sucedido
+    init({ message: 'Login Realizado com Sucesso!', color: 'success' });
+    localStorage.setItem('authToken', response.token);
+    localStorage.setItem('user', JSON.stringify(response.user));
 
     router.push({ name: 'gift' });
   } catch (error) {
+    // Mostra mensagem de erro para o usuário
+    init({ message: error.message, color: 'error' });
     console.error('Erro no login:', error);
   } finally {
     loading.value = false;
   }
 }
 
+
 async function registerSub() {
   loading.value = true;
   try {
     const response = await registerUser(registerForm);
     console.log('response', response);
-    
+
     if (!response) {
       throw new Error('Falha no login. Verifique suas credenciais.');
     }

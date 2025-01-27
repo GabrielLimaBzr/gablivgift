@@ -38,8 +38,10 @@
 
         <!-- Campo Imagem -->
         <div class="col-span-2">
-          <VaAlert border="left" border-color="secondary" v-model="isCloseableAlertVisible" closeable class="mb-3" dense color="#6775c1">
-            <span class="text-base lg:text-base md:text-sm sm:text-xs">💡Dica: Use imagem com proporção 4:3 para melhor visualização do seu presente!</span>
+          <VaAlert border="left" border-color="secondary" v-model="isCloseableAlertVisible" closeable class="mb-3" dense
+            color="#6775c1">
+            <span class="text-base lg:text-base md:text-sm sm:text-xs">💡Dica: Use imagem com proporção 4:3 para melhor
+              visualização do seu presente!</span>
           </VaAlert>
           <VaFileUpload dropZoneText="Arraste sua imagem para fazer upload ou" v-model="file" dropzone
             file-types="jpg,png, jpeg" fileIncorrectMessage="O tipo de arquivo está incorreto" type="single"
@@ -74,6 +76,7 @@
 import { uploadImageGift, createGift } from '@/services/giftService';
 
 export default {
+
   data() {
     const categories = [
       { label: 'Eletrônicos', value: 1 },
@@ -160,20 +163,27 @@ export default {
     },
 
     async saveForm() {
-      this.form.category = this.catValue.value;
-      this.form.estimatedPrice = this.priceValue.value;
-      this.form.estimatedPrice = parseFloat(this.form.estimatedPrice);
-
       try {
+        // Atribuição e transformação de valores do formulário
+        this.form.category = this.catValue.value;
+        this.form.estimatedPrice = parseFloat(this.priceValue.value);
+
+        // Envia o formulário para criação do presente
         const response = await createGift(this.form);
 
         if (response.status === 201) {
           this.onConfirmed();
+          this.$vaToast.init({ message: 'Presente Adicionado! 🥳', color: 'success' });
         } else {
           console.error('Erro ao salvar o presente:', response.statusText);
+          this.$vaToast.init({ message: 'Erro ao salvar o presente. Tente novamente.', color: 'error' });
         }
       } catch (error) {
         console.error('Erro ao enviar requisição:', error);
+        this.$vaToast.init({
+          message: 'Erro de comunicação com o servidor. Tente novamente mais tarde.',
+          color: 'error',
+        });
       }
     },
 
