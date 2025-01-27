@@ -52,7 +52,7 @@
 
       <!-- Renderizar itens salvos -->
       <div v-else-if="savedItems && savedItems.length > 0" v-for="(item, index) in savedItems" :key="index">
-        <Card :item="item" />
+        <Card :item="item" :profile="userDetail.id"/>
       </div>
 
 

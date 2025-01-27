@@ -6,6 +6,9 @@
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" loading="lazy" />
     </div>
 
+    <div v-if="item.userId !== profile" class="w-full" style="background-color: var(--va-primary); height: 4px;" />
+    <div v-else class="w-full" style="background-color: var(--va-secondary); height: 4px;" />
+
     <div v-if="activeTab != 'description'" class="card__footer grid grid-cols-2 gap-1">
       <div class="col-span-2">
         <span class="truncate font-bold text-lg">{{ item.title ? item.title : "Sem titulo" }}</span>
@@ -39,6 +42,10 @@ export default {
       type: Object,
       required: false,
     },
+    profile: {
+      type: Number,
+      required: false,
+    }
   },
   data() {
     return {
@@ -137,7 +144,6 @@ export default {
   backdrop-filter: blur(var(--blur));
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
-  border-top: solid 3px var(--va-primary);
   color: var(--va-text-inverted);
   height: 110px;
 }
