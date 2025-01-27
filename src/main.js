@@ -31,7 +31,7 @@ app.use(createVuestic({
             VaModal: true,
             VaIcon: {
                 sizesConfig: {
-                    defaultSize: 28,
+                    defaultSize: 16,
                     sizes: {
                         small: 16,
                         medium: 24,

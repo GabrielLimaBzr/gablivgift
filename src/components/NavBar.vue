@@ -18,7 +18,7 @@
             <div class="flex-none h-6 w-6">
                 <VaButtonDropdown class="w-full" preset="plain" color="textInverted" hide-icon placement="left-bottom">
                     <template #label>
-                        <VaIcon class="w-full" name="settings" size="" />
+                        <VaIcon class="w-full" name="settings" size="medium" />
                     </template>
                     <div class="z-40">
                         <VaMenuList>
