@@ -52,7 +52,7 @@
 
       <!-- Renderizar itens salvos -->
       <div v-else-if="savedItems && savedItems.length > 0" v-for="(item, index) in savedItems" :key="index">
-        <Card :item="item" :profile="userDetail.id"/>
+        <Card :item="item" :profile="userDetail.id" />
       </div>
 
 
@@ -80,7 +80,9 @@
 <script>
 import Card from '@/components/Card.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
+import { store } from '@/eventBus';
 import { getGiftByFilter } from '@/services/giftService';
+
 
 const precoAteList = [
   { label: 'Qualquer Valor', value: 0 },
@@ -101,6 +103,9 @@ const ordenarPorList = [
 ];
 
 export default {
+  setup() {
+    return {store};
+  },
   components: { Card, FormPresenteModal },
   data() {
     return {
@@ -121,6 +126,8 @@ export default {
       currentPage: 1,
       totalItems: 0,
       totalPages: 0,
+
+      search: "",
     };
   },
   methods: {
@@ -189,6 +196,10 @@ export default {
           queryParams.append("orderDirection", this.ordenarValue.direction);
         }
 
+        if(this.search.length > 2) {
+          queryParams.append("title", this.search); 
+        }
+
         queryParams.append("page", this.currentPage);
 
         // Chave de cache baseada nos parâmetros
@@ -197,7 +208,7 @@ export default {
 
         const cacheTime = import.meta.env.VITE_CACHE_TIMING || 180000;
         console.log("Tempo de cache:", cacheTime);
-        
+
 
         if (cachedItems) {
           const { data, timestamp, currentPage, totalItems, totalPages } = JSON.parse(cachedItems);
@@ -220,6 +231,11 @@ export default {
         this.savedItems = response.gifts;
         this.totalItems = response.total;
         this.totalPages = response.totalPages;
+
+        if(this.totalItems === 0) {
+          this.$vaToast.init({ message: 'Nenhum Presente Encontrado', color: 'info' });
+          return;
+        }
 
         this.saveCache(cacheKey);
       } catch (error) {
@@ -270,6 +286,18 @@ export default {
       },
       deep: true,
     },
+
+    'store.val': {
+      handler() {
+        this.search = store.val;
+        this.ordenarValue = ordenarPorList[0];
+        this.adcionadoValue = 'Todos';
+        this.precoValue = precoAteList[0];
+        this.getFilter();
+      },
+      deep: true,
+    },
+
   },
 }
 
