@@ -7,10 +7,20 @@
             </div>
 
             <div class="flex-grow">
-                <VaInput class="w-full" v-model="search" placeholder="Procurar presente..." :clearable="true"
-                    color="textInverted">
-                    <template #prependInner>
-                        <VaIcon  style="color: white !important;" color="textInverted" name="search"></VaIcon>
+                <VaInput class="w-full sea" v-model="search" placeholder="Digite pelo menos 3 letras para pesquisar..."
+                    @keydown.enter="emitSearch" :clearable="true" color="textInverted" :required="false"
+                    @clear="emitSearchClear">
+                    <template #append>
+                        <!-- Botão com texto para telas maiores -->
+                        <va-button class="hidden md:flex" :disabled="search.length <= 2 || search.length > 100" icon-right="search"
+                            size="medium" icon-color="#f32c42" @click="emitSearch">
+                            Pesquisar
+                        </va-button>
+
+                        <!-- Botão somente com ícone para telas menores -->
+                        <va-button class="px-2 md:hidden" :disabled="search.length <= 2 || search.length > 100" icon-right="search"
+                            size="" icon-color="#f32c42" @click="emitSearch">
+                        </va-button>
                     </template>
                 </VaInput>
             </div>
@@ -42,8 +52,13 @@
 <script setup>
 import { ref } from 'vue';
 import UserDetailModal from './UserDetailModal.vue';
+import { store } from '@/eventBus';
+import { useToast } from 'vuestic-ui'
+
 
 const perfil = ref(JSON.parse(localStorage.getItem('user')));
+
+const { init } = useToast()
 
 const openPerfilModal = () => {
     showModal.value = true;
@@ -60,35 +75,37 @@ const exitApp = () => {
     window.location.href = '/auth';
 }
 
-const search = ref('');
+const search = ref("")
+
+const emitSearchClear = () => {
+    store.val = search.value; // Atualiza o estado no EventBus
+}
+
+const emitSearch = () => {
+    if(search.value.length <= 2) {
+        init({ message: 'Digite pelo menos 3 caracteres', color: 'info' });
+        return;
+    }
+
+    if(search.value.length >= 100) {
+        init({ message: 'Muitos caracteres', color: 'info' });
+        return;
+    }
+    store.val = search.value; // Atualiza o estado no EventBus
+}
+
 </script>
 
-<style>
+<style scoped>
 .header {
     background: var(--va-custom-bg);
     border-radius: var(--border-radius);
     backdrop-filter: blur(6px);
 }
 
-.va-menu-list {
-    max-width: 100px !important;
-    min-width: 100px !important;
+.va-input-wrapper__field{
+    border-radius: 0px !important;
 }
 
-.va-input-wrapper__size-keeper {
-    width: 100%;
-}
 
-.va-input-wrapper__text input {
-    color: white;
-}
-
-.va-icon.va-icon {
-    color: white !important;
-}
-
-.va-dropdown__content {
-    z-index: 1000 !important;
-    max-width: 120px;
-}
 </style>

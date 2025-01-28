@@ -34,6 +34,28 @@ body {
   }
 }
 
+.va-menu-list {
+  max-width: 100px !important;
+  min-width: 100px !important;
+}
+
+.va-input-wrapper__size-keeper {
+  width: 100%;
+}
+
+.va-input-wrapper__text input {
+  color: white;
+}
+
+.va-icon.va-icon {
+  color: white !important;
+}
+
+.va-dropdown__content {
+  z-index: 1000 !important;
+  max-width: 120px;
+}
+
 .title {
   color: rgba(228, 228, 228, 0.77);
   font-size: 1.575rem;

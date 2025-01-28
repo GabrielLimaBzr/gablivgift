@@ -82,7 +82,7 @@ export async function createGift(gift) {
       } else if (error.request) {
           // Erro relacionado à ausência de resposta da API
           console.error('Erro de conexão com o servidor:', error.request);
-          throw new Error('Não foi possível conectar ao servidor. Verifique sua conexão.');
+          throw new Error('Não foi possível conectar ao servidor.');
       } else {
           // Outros erros inesperados
           console.error('Erro inesperado ao criar presente:', error.message);
