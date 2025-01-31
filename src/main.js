@@ -63,6 +63,7 @@ app.use(createVuestic({
                 offsetY: 100,
             },
             VaTabs: true,
+            VaInnerLoading: true,
         },
     }
 }));

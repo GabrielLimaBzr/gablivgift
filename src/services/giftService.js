@@ -79,6 +79,30 @@ export async function getUserByCode(code) {
   }
 }
 
+export async function getCoupleReciver(code) {
+  try {
+    const endpoint = `${apiBaseUrl}/getCoupleReciver`;
+    const response = await axios.get(endpoint, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const status = error.response.status;
+      console.log(status);
+
+      if (status === 404) {
+        return null;
+      }
+    }
+
+    console.error('Erro ao buscar usuário:', error);
+    throw error;
+  }
+}
 
 export async function solicitarVinculo(vinculoData) {
   try {

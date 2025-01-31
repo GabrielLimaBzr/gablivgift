@@ -116,7 +116,9 @@
 
                         <VaAlert border="left" border-color="secondary" v-model="isCloseableAlertVisible" closeable
                             class="mb-3" dense>
-                            <span class="text-base lg:text-base md:text-sm sm:text-xs">Após ACEITAR uma solicitção será necessário realizar login novamente.</span>
+                            <span class="text-base lg:text-base md:text-sm sm:text-xs">Após ACEITAR uma solicitção será
+                                necessário realizar
+                                login novamente.</span>
                         </VaAlert>
 
                         <div v-if="requestReceived.length === 0" class="text-gray-500 w-full flex justify-center">
@@ -126,9 +128,17 @@
                         <va-list v-else class="w-full">
                             <VaListLabel> Total de Solicitação: {{ requestReceived.length }} </VaListLabel>
 
+
+
                             <VaScrollContainer vertical style="max-height: 300px" class="p-2">
                                 <va-list-item v-for="request in requestReceived" :key="request.id"
                                     class="my-3 w-full rounded-md flex justify-between items-center py-1 px-2 border-[#292929] border-2 hover:bg-[#3e3e3e]">
+
+                                    <VaListItemSection avatar>
+                                        <VaInnerLoading v-if="recLoad" loading></VaInnerLoading>
+                                        <VaAvatar v-else size="small"> {{ request.sender.fullName.substring(0, 1) }}
+                                        </VaAvatar>
+                                    </VaListItemSection>
 
                                     <VaListItemSection>
                                         <VaListItemLabel>
@@ -140,7 +150,8 @@
                                         </VaListItemLabel>
                                     </VaListItemSection>
 
-                                    <VaListItemSection icon class="space-x-5">
+
+                                    <VaListItemSection icon class="space-x-5" v-if="!recLoad">
                                         <VaButton round icon="thumb_up" class="hidden" />
                                         <VaButton round icon="thumb_up" color="secondary"
                                             @click="responseSolic('aceitar', request)" />
@@ -151,6 +162,9 @@
                                 </va-list-item>
                             </VaScrollContainer>
                         </va-list>
+
+                        <VaInnerLoading v-if="recLoad" loading></VaInnerLoading>
+
                     </div>
                 </VaTabs>
 
@@ -173,7 +187,7 @@ const TABS = [
     { icon: "group_add", title: "Solicitações Recebidas" },
 ];
 
-import { getUserByCode, responderVinculo, solicitarVinculo } from '@/services/giftService';
+import { getUserByCode, responderVinculo, solicitarVinculo, getCoupleReciver } from '@/services/giftService';
 
 export default {
     props: {
@@ -201,6 +215,7 @@ export default {
             valueTab: TABS[0].title,
             requestReceived: [],
             isCloseableAlertVisible: true,
+            recLoad: false,
         };
     },
 
@@ -209,9 +224,16 @@ export default {
             this.showModal = value;
             if (this.showModal) {
                 this.restoreRequestSend();
-                this.restoreRequestReciver();
             }
         },
+        valueTab(value) {
+            this.recLoad = true
+
+            if (value === this.tabs[1].title) {
+                this.restoreRequestReciver();
+            }
+        }
+
     },
 
     methods: {
@@ -225,12 +247,33 @@ export default {
             this.resetForm();
         },
 
-        restoreRequestReciver() {
-            try {
-                this.requestReceived = JSON.parse(localStorage.getItem("requestReceived"));
+        async restoreRequestReciver() {
+            const cacheKey = "requestReceivedCache";
+            const cacheData = JSON.parse(sessionStorage.getItem(cacheKey));
+            const cacheTimeout = 10 * 1000; // 30 segundos
 
+            try {
+                if (cacheData && (Date.now() - cacheData.timestamp < cacheTimeout)) {
+                    // Recupera do cache se for válido
+                    this.requestReceived = cacheData.data;
+                    console.log("Recuperado do cache");
+                } else {
+                    // Faz a requisição à API se não houver cache válido
+                    const response = await getCoupleReciver();
+                    if (response) {
+                        this.requestReceived = response.requestReceived;
+
+                        // Atualiza o cache com timestamp
+                        sessionStorage.setItem(cacheKey, JSON.stringify({
+                            data: response.requestReceived,
+                            timestamp: Date.now()
+                        }));
+                    }
+                }
             } catch (error) {
                 console.error("Erro ao carregar os adicionadores:", error);
+            } finally {
+                this.recLoad = false;
             }
         },
 
@@ -281,14 +324,30 @@ export default {
             const result = await this.$vaModal.confirm({ title: "Confirme sua resposta", message: `Tem certeza de que deseja ${statusResp} a solicitação de ${reciver.sender.fullName} ?`, okText: "Sim", cancelText: "Cancelar", })
             if (result) {
                 try {
-                    this.loading = true;
-                    await responderVinculo({ status: statusResp === 'aceitar' ? 1 : 2 }, reciver.id);
-                    this.$vaToast.init({ message: `Solicitação ${statusResp} com sucesso!`, color: 'success' });
+                    this.recLoad = true;
+                    const response = await responderVinculo({ status: statusResp === 'aceitar' ? 1 : 2 }, reciver.id);
+                    this.$vaToast.init({ message: `Solicitação respondida com sucesso!`, color: 'success' });
+
+                    if (statusResp === 'recusar') {
+                        sessionStorage.removeItem("requestReceivedCache");
+                        this.requestReceived = this.requestReceived.filter(request => request.id !== reciver.id);
+                        this.restoreRequestReciver()
+                    } else {
+                        this.profileStorage = JSON.parse(localStorage.getItem("user"));
+                        if (this.profileStorage) {
+                            this.profileStorage.couple = response.couple;
+
+                            localStorage.setItem("user", JSON.stringify(this.profileStorage));
+                            this.$router.push({ path: "/home" }).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    }
                 } catch (error) {
                     console.error(error)
                     this.$vaToast.init({ message: 'Erro ao responder a solicitação. Tente novamente mais tarde', color: 'danger' });
                 } finally {
-                    this.loading = false;
+                    this.recLoad = false;
                 }
             }
         },
