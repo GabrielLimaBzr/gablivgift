@@ -80,3 +80,16 @@ body {
   background-image: radial-gradient(circle at 83% 8%, hsla(344.8387096774194, 76%, 52%, 0.35) 13.2209727561817%, transparent 57.79527252984263%), radial-gradient(circle at 83% 77%, hsla(277.50000000000006, 18%, 7%, 0) 13.2209727561817%, transparent 57.79527252984263%), radial-gradient(circle at 16% 80%, hsla(221.5853522805607, 71%, 60%, 0.35) 10.524512369218554%, transparent 41.41081577193815%);
   background-blend-mode: normal, normal, normal;
 }
+
+.va-tabs__content{
+  width: 100%;
+}
+
+.va-list-item-label{
+  color: white;
+  font-weight: bold;
+}
+
+.va-list-item-label--caption{
+  color: var(--va-secondary);
+}

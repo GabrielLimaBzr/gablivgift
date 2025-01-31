@@ -141,6 +141,8 @@ async function loginSub() {
     init({ message: 'Login Realizado com Sucesso!', color: 'success' });
     localStorage.setItem('authToken', response.token);
     localStorage.setItem('user', JSON.stringify(response.user));
+    localStorage.setItem('requestSent', JSON.stringify(response.requestSent));
+    localStorage.setItem('requestReceived', JSON.stringify(response.requestReceived));
 
     router.push({ name: 'gift' });
   } catch (error) {

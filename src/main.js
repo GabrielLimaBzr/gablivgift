@@ -62,6 +62,7 @@ app.use(createVuestic({
             VaToast: {
                 offsetY: 100,
             },
+            VaTabs: true,
         },
     }
 }));

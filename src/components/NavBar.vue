@@ -7,25 +7,24 @@
             </div>
 
             <div class="flex-grow">
-                <VaInput class="w-full sea" v-model="search" placeholder="Digite pelo menos 3 letras para pesquisar..."
-                    @keydown.enter="emitSearch" :clearable="true" color="textInverted" :required="false"
-                    @clear="emitSearchClear">
+                <VaInput class="w-full sea" v-model="search" @keydown.enter="emitSearch" :clearable="true"
+                    color="textInverted" :required="false" @clear="emitSearchClear" placeholder="Buscar Presente">
                     <template #append>
                         <!-- Botão com texto para telas maiores -->
-                        <va-button class="hidden md:flex" :disabled="search.length <= 2 || search.length > 100" icon-right="search"
-                            size="medium" icon-color="#f32c42" @click="emitSearch">
+                        <va-button class="hidden md:flex" :disabled="search.length <= 2 || search.length > 100"
+                            icon-right="search" size="medium" icon-color="#f32c42" @click="emitSearch">
                             Pesquisar
                         </va-button>
 
                         <!-- Botão somente com ícone para telas menores -->
-                        <va-button class="px-2 md:hidden" :disabled="search.length <= 2 || search.length > 100" icon-right="search"
-                            size="" icon-color="#f32c42" @click="emitSearch">
+                        <va-button class="px-1 md:hidden" :disabled="search.length <= 2 || search.length > 100"
+                            icon-right="search" icon-color="#f32c42" @click="emitSearch">
                         </va-button>
                     </template>
                 </VaInput>
             </div>
 
-            <div class="flex-none h-6 w-6">
+            <div class="flex h-6 w-6 items-center">
                 <VaButtonDropdown class="w-full" preset="plain" color="textInverted" hide-icon placement="left-bottom">
                     <template #label>
                         <VaIcon class="w-full" name="settings" size="medium" />
@@ -50,6 +49,7 @@
 </template>
 
 <script setup>
+
 import { ref } from 'vue';
 import UserDetailModal from './UserDetailModal.vue';
 import { store } from '@/eventBus';
@@ -82,12 +82,12 @@ const emitSearchClear = () => {
 }
 
 const emitSearch = () => {
-    if(search.value.length <= 2) {
+    if (search.value.length <= 2) {
         init({ message: 'Digite pelo menos 3 caracteres', color: 'info' });
         return;
     }
 
-    if(search.value.length >= 100) {
+    if (search.value.length >= 100) {
         init({ message: 'Muitos caracteres', color: 'info' });
         return;
     }
@@ -102,10 +102,4 @@ const emitSearch = () => {
     border-radius: var(--border-radius);
     backdrop-filter: blur(6px);
 }
-
-.va-input-wrapper__field{
-    border-radius: 0px !important;
-}
-
-
 </style>
