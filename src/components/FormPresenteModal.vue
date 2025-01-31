@@ -38,8 +38,8 @@
 
         <!-- Campo Imagem -->
         <div class="col-span-2">
-          <VaAlert border="left" border-color="secondary" v-model="isCloseableAlertVisible" closeable class="mb-3" dense
-            color="#6775c1">
+          <VaAlert v-model="isCloseableAlertVisible" closeable class="mb-3" dense
+            color="#525252">
             <span class="text-base lg:text-base md:text-sm sm:text-xs">💡Dica: Use imagem com proporção 4:3 para melhor
               visualização do seu presente!</span>
           </VaAlert>

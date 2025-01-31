@@ -17,7 +17,7 @@ app.use(createVuestic({
             variables: {
                 primary: "#f32c42",
                 secondary: "#36a8b3",
-                backgroundPrimary: "#525252",
+                backgroundPrimary: "#000000",
                 backgroundSecondary: "#292929",
                 customBg: "#2929296a"
             }

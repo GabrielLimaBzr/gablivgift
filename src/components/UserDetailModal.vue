@@ -214,7 +214,7 @@ export default {
             tabs: TABS,
             valueTab: TABS[0].title,
             requestReceived: [],
-            isCloseableAlertVisible: true,
+            isCloseableAlertVisible: false,
             recLoad: false,
         };
     },
