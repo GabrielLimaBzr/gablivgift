@@ -50,7 +50,7 @@
             </div>
 
             <div v-else>
-                <VaTabs v-model="valueTab" grow>
+                <VaTabs v-model="valueTab" grow @click:next="valueTab = tabs[1].title" @click:prev="valueTab = tabs[0].title">
                     <template #tabs>
                         <VaTab v-for="tab in tabs" :key="tab.title" :name="tab.title">
                             <VaIcon :name="tab.icon" size="small" class="mr-2" />
