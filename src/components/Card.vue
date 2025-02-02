@@ -16,7 +16,7 @@
 
       <div class="card__price col-span-2 flex
       justify-between items-center gap-3">
-        <span style="width: 50%;" class="text-xs font-light">{{ getPriceLabel(item.estimatedPrice)}}</span>
+        <span style="width: 50%;" class="text-xs font-light">{{ getPriceLabel(item.estimatedPrice) }}</span>
         <VaChip v-show="item.category" square size="small" class="truncate">
           {{ getCategoryLabel(item.category) }}
         </VaChip>
@@ -26,7 +26,7 @@
         <span>Em: {{ item.createdAt ? formatDate(item.createdAt) : "dd/MM/yyyy HH:mm" }}</span>
       </div>
     </div>
-    
+
     <div v-else class="card__footer grid grid-cols-2 gap-1">
       <VaScrollContainer vertical class="max-h-20 col-span-2">
         <p class="break-words font-medium text-md">{{ item.description ? item.description : "Sem descrição" }}</p>
@@ -53,27 +53,27 @@ export default {
       categories: [
         { label: 'Eletrônicos', value: 1 },
         { label: 'Roupas', value: 2 },
-        { label: 'Decoração', value: 3 },
+        { label: 'Cosméticos', value: 3 },
         { label: 'Livros', value: 4 },
         { label: 'Jogos', value: 5 },
-        { label: 'Utensílios Domésticos', value: 6 },
-        { label: 'Viagens', value: 7 },
+        { label: 'Coisas de Casa', value: 6 },
+        { label: 'Calçados', value: 7 },
         { label: 'Experiências', value: 8 },
         { label: 'Outros', value: 9 },
         { label: 'Brinquedos', value: 10 },
       ],
 
       estimatePrices: [
-      { label: 'Mimo ', price: 'Mimo (até R$ 50)', value: 1 },
-      { label: 'Detalhes que encatam', price: 'Detalhes que encatam (R$ 50 a R$ 100)', value: 2 },
-      { label: 'Gestos marcantes', price: 'Gestos marcantes (R$ 100 a R$ 300)', value: 3 },
-      { label: 'Supresa inesquecíveis', price: 'Supresa inesquecíveis (R$ 300 a R$ 500)', value: 4 },
-      { label: 'É o meu sonho!', price: 'É o meu sonho! (acima de R$ 500)', value: 5 },
-    ],
+        { label: 'Mimo ', price: 'Mimo (até R$ 50)', value: 1 },
+        { label: 'Detalhes que encatam', price: 'Detalhes que encatam (R$ 50 a R$ 100)', value: 2 },
+        { label: 'Gestos marcantes', price: 'Gestos marcantes (R$ 100 a R$ 300)', value: 3 },
+        { label: 'Supresa inesquecíveis', price: 'Supresa inesquecíveis (R$ 300 a R$ 500)', value: 4 },
+        { label: 'É o meu sonho!', price: 'É o meu sonho! (acima de R$ 500)', value: 5 },
+      ],
     }
   },
   methods: {
-    getPriceLabel(value) {      
+    getPriceLabel(value) {
       const price = this.estimatePrices.find(price => price.value === value);
       return price ? price.price : 'Sem valor';
     },
@@ -87,7 +87,7 @@ export default {
 
 
     formatDate(date) {
-      if (!date) return "dd/MM/yyyy HH:mm"; 
+      if (!date) return "dd/MM/yyyy HH:mm";
       const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
       return new Date(date).toLocaleDateString('pt-BR', options);
     },
