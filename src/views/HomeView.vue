@@ -1,12 +1,10 @@
 <template>
   <div class="flex flex-col justify-center w-full items-center py-10">
     <h1 class="title">GabLivGifts</h1>
-    <p class="sub p-2 md:px-1  sm:px-6">Aqui dividimos nossa lista de <span class="fra">presentes</span>, contem uma
-      imensa lista de
-      desesjos!</p>
+    <p class="sub p-2 md:px-1  sm:px-6">Aqui dividimos nossa lista de <span class="fra">presentes</span>, cque contém uma imensa lista de desejos!</p>
 
     <div class="my-5 grid grid-cols-3 gap-3 p-2 md:px-1 sm:px-6">
-      <VaSelect v-model="ordenarValue" :options="ordenarPor" label="Ordernar por:" class="col-span-1" color="primary"
+      <VaSelect v-model="ordenarValue" :options="ordenarPor" label="Ordenar por:" class="col-span-1" color="primary"
         text-by="label" track-by="label">
         <template #content="{ value }">
           <span class="textOption">
