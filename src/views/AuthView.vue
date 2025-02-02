@@ -8,7 +8,7 @@
 
           <div class="flex flex-col justify-center align-center w-full max-w-[400px]">
             <h1 class="title text-center">Bem-vindo ao GabLivGifts 🎁</h1>
-            <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, cque contém uma imensa lista de desejos!</p>
+            <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, que contém uma imensa lista de desejos!</p>
           </div>
 
 
