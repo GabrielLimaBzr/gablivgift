@@ -54,7 +54,8 @@ import { ref } from 'vue';
 import UserDetailModal from './UserDetailModal.vue';
 import { store } from '@/eventBus';
 import { useToast } from 'vuestic-ui'
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const perfil = ref(JSON.parse(localStorage.getItem('user')));
 
@@ -71,8 +72,9 @@ const closePerfilModal = () => {
 const showModal = ref(false);
 
 const exitApp = () => {
+    init({ message: 'Logout realizado.', color: 'info' });
     window.localStorage.clear();
-    window.location.href = '/auth';
+    router.push(`/auth/login`);
 }
 
 const search = ref("")

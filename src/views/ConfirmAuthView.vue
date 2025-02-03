@@ -53,9 +53,10 @@
 
 <script lang="ts">
 import Footer from '@/components/Footer.vue';
+import { verifyEmail } from '@/services/authService';
 
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   components: {
@@ -63,17 +64,18 @@ export default {
   },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const isConfirmed = ref(false);
     const error = ref('');
 
-    const validateEmailToken = async (token) => {
+    const validateEmailToken = async (token: string) => {
       try {
         // Exemplo de chamada à API para validar o token
-        const response = await fetch(`https://gablivgift-ws.onrender.com/gabliv/api/v1/auth/verify-email?token=${token}`, {
-          method: 'GET',
-        });
+        const response = await verifyEmail(token);
+        console.log(response);
+        
 
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error('Token inválido ou expirado.');
         }
 
@@ -84,11 +86,17 @@ export default {
     };
 
     onMounted(() => {
-      const token = route.query.token; // Obtém o token da URL
+      const token: string | string[] = route.query.token; // Obtém o token da URL
+      if (Array.isArray(token)) {
+        error.value = 'Token inválido.';
+        router.push('/auth/login');
+        return;
+      }
       if (token) {
         validateEmailToken(token);
       } else {
         error.value = 'Token não fornecido.';
+        router.push('/auth/login')
       }
     });
 

@@ -47,7 +47,7 @@
 
               <div></div>
 
-              <VaButton class="justify-self-center" preset="plainOpacity" size="small" @click="activeTab = 'register'">
+              <VaButton  color="secondary" class="justify-self-center" preset="plain" size="small" @click="navigateTo('register')">
                 Ainda não tem uma conta? Registrar
               </VaButton>
             </VaForm>
@@ -73,7 +73,7 @@
                 </VaButton>
               </div>
 
-              <VaButton class="justify-self-center" preset="plainOpacity" size="small" @click="activeTab = 'login'">
+              <VaButton color="secondary" class="justify-self-center" preset="plain" size="small" @click="navigateTo('login')">
                 Já possui uma conta? Login
               </VaButton>
 
@@ -96,15 +96,16 @@
 
 <script setup lang="ts">
 import Footer from '@/components/Footer.vue';
-import router from '@/router';
 import { loginUser, registerUser } from '@/services/authService';
 import { reactive, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useForm } from 'vuestic-ui';
-
+const route = useRoute();
+const router = useRouter();
 const { isValid } = useForm('formRef')
 
 const emailConfirmationMessage = ref(false);
-const activeTab = ref('login');
+const activeTab = ref(route.path.includes('register') ? 'register' : 'login');
 
 const loginText = ref('Bem-vindo de volta 👋');
 const registerText = ref('Crie sua conta e comece a adicionar seus presentes');
@@ -119,6 +120,11 @@ const registerForm = reactive({
   email: '',
   password: '',
 });
+
+const navigateTo = (tab) => {
+  activeTab.value = tab;
+  router.push(`/auth/${tab}`);
+};
 
 import { useToast } from 'vuestic-ui';
 const { init, notify, close, closeAll } = useToast();

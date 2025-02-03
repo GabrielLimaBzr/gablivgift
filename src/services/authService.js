@@ -47,3 +47,19 @@ export async function registerUser(registerData) {
         return null
     }
 }
+
+export async function verifyEmail(token) {
+    try {
+        const endpoint = apiBaseUrl + `/verify-email?token=${token}`;
+        const response = await axios.get(endpoint, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        return response;
+    } catch (error) {
+        console.error("Erro chamada api: ", error);
+        return error.response
+    }
+}

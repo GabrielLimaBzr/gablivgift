@@ -8,12 +8,24 @@ const router = createRouter({
       name: "auth",
       path: "/auth",
       component: () => import("@/views/AuthView.vue"),
+      children: [
+        {
+          path: "login",
+          name: "auth-login",
+        },
+        {
+          path: "register",
+          name: "auth-register",
+        },
+      ],
     },
+    
     {
       name: "confirm",
       path: "/verify-email",
       component: () => import("@/views/ConfirmAuthView.vue"),
     },
+
     {
       name: "gift",
       path: "/gift",
@@ -44,7 +56,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!token) {
       // Redireciona para a página de login se o token não existir
-      next({name: 'auth'});
+      next({ name: 'auth-login' });
     } else {
       try {
         // Decodifica e valida o token
@@ -54,7 +66,7 @@ router.beforeEach((to, from, next) => {
         if (decodedToken.exp < currentTime) {
           // Token expirado
           localStorage.removeItem('authToken');
-          next({name: 'auth'});
+          next({ name: 'auth-login' });
         } else {
           // Token válido
           next();
@@ -62,7 +74,7 @@ router.beforeEach((to, from, next) => {
       } catch (error) {
         console.error('Token inválido:', error);
         localStorage.removeItem('authToken');
-        next({name: 'auth'});
+        next({ name: 'auth-login' });
       }
     }
   } else {

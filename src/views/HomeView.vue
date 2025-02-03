@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col justify-center w-full items-center py-10">
     <h1 class="title">GabLivGifts</h1>
-    <p class="sub p-2 md:px-1  sm:px-6">Aqui dividimos nossa lista de <span class="fra">presentes</span>, que contém uma imensa lista de desejos!</p>
+    <p class="sub p-2 md:px-1  sm:px-6">Aqui dividimos nossa lista de <span class="fra">presentes</span>, que contém uma
+      imensa lista de desejos!</p>
 
     <div class="my-5 grid grid-cols-3 gap-3 p-2 md:px-1 sm:px-6">
       <VaSelect v-model="ordenarValue" :options="ordenarPor" label="Ordenar por:" class="col-span-1" color="primary"
@@ -102,7 +103,7 @@ const ordenarPorList = [
 
 export default {
   setup() {
-    return {store};
+    return { store };
   },
   components: { Card, FormPresenteModal },
   data() {
@@ -137,8 +138,16 @@ export default {
       this.showModal = false;
     },
 
+    resetFilter() {
+      this.search = "";
+      this.ordenarValue = ordenarPorList[0];
+      this.adcionadoValue = 'Todos';
+      this.precoValue = precoAteList[0];
+    },
+
     handleConfirmed() {
-      localStorage.removeItem('gifts');
+      sessionStorage.clear();
+      this.resetFilter();
       this.getGifts();
       console.log('Evento confirmado capturado!');
     },
@@ -194,8 +203,8 @@ export default {
           queryParams.append("orderDirection", this.ordenarValue.direction);
         }
 
-        if(this.search.length > 2) {
-          queryParams.append("title", this.search); 
+        if (this.search.length > 2) {
+          queryParams.append("title", this.search);
         }
 
         queryParams.append("page", this.currentPage);
@@ -230,7 +239,7 @@ export default {
         this.totalItems = response.total;
         this.totalPages = response.totalPages;
 
-        if(this.totalItems === 0) {
+        if (this.totalItems === 0) {
           this.$vaToast.init({ message: 'Nenhum Presente Encontrado', color: 'info' });
           return;
         }
