@@ -7,6 +7,11 @@
   --va-menu-item-hover-opacity: 0.6;
   --va-menu-padding-x:	12px;
   --va-menu-padding-y:	8px;
+
+  --bg-gea:#130e15;
+  --color-1: hsla(214, 100%, 54%, 0.212);
+  --color-2: hsla(350, 100%, 54%, 0.35);
+  --color-3: hsla(130, 67%, 50%, 0.1);
 }
 
 a {

@@ -21,12 +21,11 @@ import Footer from '@/components/Footer.vue';
 <style scoped>
 
 .layout {
-    background-color: rgba(14, 14, 14, 0.72);
+    background-color: hsla(277.5, 20%, 7%, 1);
     width: 100%;
     height: 100%;
     min-height: 100vh;
     align-items: center;
-    background-color: rgb(109, 109, 109);
     display: flex;
     flex-direction: column;
 }
@@ -42,76 +41,70 @@ import Footer from '@/components/Footer.vue';
 
 @keyframes hero-gradient-animation {
     0% {
-        --x-0: 83%;
-        --s-start-0: 13.2209727561817%;
-        --s-end-0: 57.79527252984263%;
-        --c-0: hsla(344.8387096774194, 76%, 52%, 0.35);
-        --y-0: 8%;
-        --x-1: 83%;
+        --c-0: var(--color-3);
+        --s-start-0: 4.332528137503798%;
+        --s-end-0: 46.687175781645685%;
+        --x-0: 37%;
+        --y-0: 74%;
         --s-start-1: 13.2209727561817%;
         --s-end-1: 57.79527252984263%;
-        --c-1: hsla(277.50000000000006, 18%, 7%, 0);
-        --y-1: 77%;
-        --c-2: hsla(221.5853522805607, 71%, 60%, 0.35);
-        --x-2: 16%;
-        --y-2: 80%;
-        --s-start-2: 10.524512369218554%;
-        --s-end-2: 41.41081577193815%;
+        --x-1: 94%;
+        --y-1: 5%;
+        --c-1: var(--color-2);
+        --y-2: 90%;
+        --x-2: 89%;
+        --s-start-2: 13%;
+        --s-end-2: 57%;
+        --c-2: hsla(285, 20%, 3%, 1);
     }
 
     100% {
-        --x-0: 22%;
-        --s-start-0: 8.7617747539524%;
-        --s-end-0: 44.205465467741966%;
-        --c-0: hsla(277.50000000000006, 18%, 7%, 0);
-        --y-0: 81%;
-        --x-1: 5%;
-        --s-start-1: 8.7617747539524%;
+        --c-0: var(--color-3);
+        --s-start-0: 5.483113540822528%;
+        --s-end-0: 50.77956970313765%;
+        --x-0: 87%;
+        --y-0: 78%;
+        --s-start-1: 13%;
         --s-end-1: 57.90247331543764%;
-        --c-1: hsla(88.65168539325842, 71%, 47%, 0.34);
-        --y-1: 6%;
-        --c-2: hsla(265.2847649069393, 68%, 71%, 0.25);
-        --x-2: 90%;
-        --y-2: 88%;
-        --s-start-2: 7.1392183644121925%;
-        --s-end-2: 37.47294723125771%;
+        --x-1: 17%;
+        --y-1: 92%;
+        --c-1: hsla(288, 20%, 4%, 1);
+        --y-2: 4%;
+        --x-2: 6%;
+        --s-start-2: 13%;
+        --s-end-2: 57%;
+        --c-2: var(--color-1);
     }
-}
-
-@property --x-0 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 83%
-}
-
-@property --s-start-0 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 13.2209727561817%
-}
-
-@property --s-end-0 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 57.79527252984263%
 }
 
 @property --c-0 {
     syntax: '<color>';
     inherits: false;
-    initial-value: hsla(344.8387096774194, 76%, 52%, 0.35)
+    initial-value: hsla(88.65168539325842, 71%, 47%, 0.12)
+}
+
+@property --s-start-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 4.332528137503798%
+}
+
+@property --s-end-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 46.687175781645685%
+}
+
+@property --x-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 37%
 }
 
 @property --y-0 {
     syntax: '<percentage>';
     inherits: false;
-    initial-value: 8%
-}
-
-@property --x-1 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 83%
+    initial-value: 74%
 }
 
 @property --s-start-1 {
@@ -126,60 +119,66 @@ import Footer from '@/components/Footer.vue';
     initial-value: 57.79527252984263%
 }
 
-@property --c-1 {
-    syntax: '<color>';
+@property --x-1 {
+    syntax: '<percentage>';
     inherits: false;
-    initial-value: hsla(277.50000000000006, 18%, 7%, 0)
+    initial-value: 94%
 }
 
 @property --y-1 {
     syntax: '<percentage>';
     inherits: false;
-    initial-value: 77%
+    initial-value: 5%
 }
 
-@property --c-2 {
+@property --c-1 {
     syntax: '<color>';
     inherits: false;
-    initial-value: hsla(221.5853522805607, 71%, 60%, 0.35)
-}
-
-@property --x-2 {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 16%
+    initial-value: hsla(344.8387096774194, 76%, 52%, 0.35)
 }
 
 @property --y-2 {
     syntax: '<percentage>';
     inherits: false;
-    initial-value: 80%
+    initial-value: 90%
+}
+
+@property --x-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 89%
 }
 
 @property --s-start-2 {
     syntax: '<percentage>';
     inherits: false;
-    initial-value: 10.524512369218554%
+    initial-value: 13%
 }
 
 @property --s-end-2 {
     syntax: '<percentage>';
     inherits: false;
-    initial-value: 41.41081577193815%
+    initial-value: 57%
+}
+
+@property --c-2 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(285, 20%, 3%, 1)
 }
 
 .effect {
-    --x-0: 83%;
-    --c-0: hsla(344.8387096774194, 76%, 52%, 0.35);
-    --y-0: 8%;
-    --x-1: 83%;
-    --c-1: hsla(277.50000000000006, 18%, 7%, 0);
-    --y-1: 77%;
-    --c-2: hsla(221.5853522805607, 71%, 60%, 0.35);
-    --x-2: 16%;
-    --y-2: 80%;
+    --c-0: hsla(88.65168539325842, 71%, 47%, 0.12);
+    --x-0: 37%;
+    --y-0: 74%;
+    --x-1: 94%;
+    --y-1: 5%;
+    --c-1: hsla(344.8387096774194, 76%, 52%, 0.35);
+    --y-2: 90%;
+    --x-2: 89%;
+    --c-2: hsla(285, 20%, 3%, 1);
     ;
-    background-color: hsla(277.5, 20%, 7%, 1);
+    background-color: hsla(282.85714285714283, 20%, 6%, 1);
     background-image: radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)), radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)), radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2));
     animation: hero-gradient-animation 5s linear infinite alternate;
     background-blend-mode: normal, normal, normal;
