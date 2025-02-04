@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col justify-center w-full items-center py-10">
     <h1 class="title">GabLivGifts</h1>
+    <Contador v-if="shouldShowContador" />
+
     <p class="sub p-2 md:px-1  sm:px-6">Aqui dividimos nossa lista de <span class="fra">presentes</span>, que contém uma
       imensa lista de desejos!</p>
 
@@ -78,6 +80,7 @@
 
 <script>
 import Card from '@/components/Card.vue';
+import Contador from '@/components/Contador.vue';
 import FormPresenteModal from '@/components/FormPresenteModal.vue';
 import { store } from '@/eventBus';
 import { getGiftByFilter } from '@/services/giftService';
@@ -105,7 +108,7 @@ export default {
   setup() {
     return { store };
   },
-  components: { Card, FormPresenteModal },
+  components: { Card, FormPresenteModal, Contador},
   data() {
     return {
       adcionadorPor: ['Todos'],
@@ -264,6 +267,11 @@ export default {
       this.getFilter();
     }, 0)
   },
+
+  computed: {
+    shouldShowContador() {
+      return this.userDetail?.id === 2 || this.userDetail?.id === 3
+    }},
 
   watch: {
     ordenarValue: {
