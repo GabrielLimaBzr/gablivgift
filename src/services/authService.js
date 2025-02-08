@@ -63,3 +63,33 @@ export async function verifyEmail(token) {
         return error.response
     }
 }
+
+export async function recoverPassword(registerData) {
+    try {
+        const endpoint = apiBaseUrl + '/recover-password';
+        const response = await axios.post(endpoint, registerData, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        return response;
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function resetPass(registerData) {
+    try {        
+        const endpoint = apiBaseUrl + '/reset-password';
+        const response = await axios.post(endpoint, registerData, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        return response;
+    } catch (error) {
+        return null;
+    }
+}

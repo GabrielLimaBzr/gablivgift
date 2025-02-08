@@ -17,6 +17,10 @@ const router = createRouter({
           path: "register",
           name: "auth-register",
         },
+        {
+          path: "recover",
+          name: "recover-pass",
+        },
       ],
     },
     
@@ -24,6 +28,12 @@ const router = createRouter({
       name: "confirm",
       path: "/verify-email",
       component: () => import("@/views/ConfirmAuthView.vue"),
+    },
+
+    {
+      name: "reset-pass",
+      path: "/reset-password",
+      component: () => import("@/views/ResetPass.vue"),
     },
 
     {

@@ -8,7 +8,8 @@
 
           <div class="flex flex-col justify-center align-center w-full max-w-[400px]">
             <h1 class="title text-center">Bem-vindo ao GabLivGifts 🎁</h1>
-            <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, que contém uma imensa lista de desejos!</p>
+            <p class="sub">Aqui dividimos nossa lista de <span class="fra">presentes</span>, que contém uma imensa lista
+              de desejos!</p>
           </div>
 
 
@@ -16,12 +17,13 @@
           <div class="w-full max-w-[400px] shadow-lg rounded-lg px-4 py-6"
             style="background-color: var(--va-background-secondary);">
             <div class="text-center mb-6">
-              <h1 class="text-2xl font-bold">
-                {{ activeTab === 'login' ? 'Login' : 'Cadastro' }}
-              </h1>
+              <h1 class="text-2xl font-bold">{{ tabTitle }}</h1>
               <p class="text-[#7e7e7e]">
-                {{ activeTab === 'login' ? loginText : registerText
-                }}
+                <span v-if="activeTab === 'recover'">
+                  Insira seu e-mail para redefinir sua senha. <br />
+                  Se o e-mail estiver registrado, você receberá instruções em sua caixa de entrada.
+                </span>
+                <span v-else>{{ tabDescription }}</span>
               </p>
             </div>
 
@@ -40,20 +42,22 @@
                   Entrar
                 </va-button>
 
-                <VaButton class="justify-self-start font-normal" preset="plainOpacity" size="small" color="#7e7e7e">
+                <VaButton class="justify-self-start font-normal" preset="plainOpacity" size="small" color="#7e7e7e"
+                  @click="navigateTo('recover')">
                   Esqueceu a senha?
                 </VaButton>
               </div>
 
               <div></div>
 
-              <VaButton  color="secondary" class="justify-self-center" preset="plain" size="small" @click="navigateTo('register')">
+              <VaButton color="secondary" class="justify-self-center" preset="plain" size="small"
+                @click="navigateTo('register')">
                 Ainda não tem uma conta? Registrar
               </VaButton>
             </VaForm>
 
             <!-- Formulário de Registro -->
-            <VaForm ref="formRef" v-if="activeTab === 'register' && !emailConfirmationMessage"
+            <VaForm ref="formRef" v-else-if="activeTab === 'register' && !emailConfirmationMessage"
               @submit.prevent="registerSub" class="flex flex-col gap-6">
 
               <VaInput v-model="registerForm.fullName" label="Nome" placeholder="Digite seu nome" required
@@ -73,9 +77,32 @@
                 </VaButton>
               </div>
 
-              <VaButton color="secondary" class="justify-self-center" preset="plain" size="small" @click="navigateTo('login')">
+              <VaButton color="secondary" class="justify-self-center" preset="plain" size="small"
+                @click="navigateTo('login')">
                 Já possui uma conta? Login
               </VaButton>
+
+            </VaForm>
+
+
+            <VaForm ref="formRef" v-else @submit.prevent="resetPasswordSub" class="flex flex-col gap-6">
+              <VaInput v-model="resetForm.email" label="E-mail" placeholder="Digite seu e-mail" required
+                class="col-span-1" :rules="[validateEmail]" />
+
+              <VaButton class="w-full mb-3" size="large" type="submit" color="primary" :disabled="!isValid || loading"
+                :loading="loading">
+                Enviar Link de Redefinição
+              </VaButton>
+
+              <VaAlert v-if="showAlert" class="mb-" color="#0f5132">
+                Um e-mail de recuperação de senha foi enviado, verifique sua caixa de entrada.
+              </VaAlert>
+
+              <VaButton color="secondary" class="justify-self-center" preset="plain" size="small"
+                @click="navigateTo('login')">
+                Voltar para Login
+              </VaButton>
+
 
             </VaForm>
 
@@ -96,20 +123,27 @@
 
 <script setup lang="ts">
 import Footer from '@/components/Footer.vue';
-import { loginUser, registerUser } from '@/services/authService';
-import { reactive, ref } from 'vue';
+import { loginUser, registerUser, recoverPassword } from '@/services/authService';
+import { computed, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useForm } from 'vuestic-ui';
 const route = useRoute();
 const router = useRouter();
 const { isValid } = useForm('formRef')
 
+const showAlert = ref(false);
+
 const emailConfirmationMessage = ref(false);
-const activeTab = ref(route.path.includes('register') ? 'register' : 'login');
+const activeTab = ref(
+  route.path.includes('register') ? 'register' :
+    route.path.includes('recover') ? 'recover' : 'login'
+);
 
-const loginText = ref('Bem-vindo de volta 👋');
-const registerText = ref('Crie sua conta e comece a adicionar seus presentes');
 
+
+const resetForm = reactive({
+  email: '',
+});
 const loginForm = reactive({
   email: '',
   password: '',
@@ -179,11 +213,59 @@ async function registerSub() {
   }
 }
 
+async function resetPasswordSub() {
+  try {
+    loading.value = true;
+    const response = await recoverPassword(resetForm);
+    resetForm.email = ''; // Limpar o campo após sucesso
+    showAlert.value = true;
+
+    // Ocultar alerta após 5 segundos
+    setTimeout(() => {
+      showAlert.value = false;
+    }, 10000);
+  } catch (error) {
+    showAlert.value = true;
+
+    // Ocultar alerta após 5 segundos
+    setTimeout(() => {
+      showAlert.value = false;
+    }, 10000);
+  } finally {
+    loading.value = false;
+  }
+}
+
 
 function validateEmail(valor: string) {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expressão regular para validar email
   return emailPattern.test(valor) || 'Por favor, insira um email válido.';
 }
+
+
+const tabTitle = computed(() => {
+  switch (activeTab.value) {
+    case 'login':
+      return 'Acessar Conta';
+    case 'register':
+      return 'Criar Conta';
+    case 'recover':
+      return 'Recuperar Senha';
+    default:
+      return '';
+  }
+});
+
+const tabDescription = computed(() => {
+  switch (activeTab.value) {
+    case 'login':
+      return 'Bem-vindo de volta 👋';
+    case 'register':
+      return 'Crie sua conta e comece a adicionar seus presentes';
+    default:
+      return '';
+  }
+});
 </script>
 
 <style scoped>
