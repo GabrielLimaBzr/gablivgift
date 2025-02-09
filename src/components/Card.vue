@@ -1,7 +1,15 @@
 <template>
   <div class="card shadow-md">
     <div class="card__image-container" @click="toggleDescription">
-      <span v-if="item.priority" class="priority drop-shadow-lg">🔥</span>
+      <div class="relative group">
+        <span v-if="item.priority" class="priority drop-shadow-lg cursor-pointer">🔥</span>
+
+        <!-- Popover -->
+        <div
+          class="absolute left-1/2 top-[3px] -translate-x-1/2 mt-2 bg-[#f32c42] text-white text-xs p-2 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition duration-300">
+          Prioridade alta!
+        </div>
+      </div>
       <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.title" class="card__img" loading="lazy" />
       <img src="../assets/giftsha.png" :alt="item.title" class="card__img" loading="lazy" />
     </div>
