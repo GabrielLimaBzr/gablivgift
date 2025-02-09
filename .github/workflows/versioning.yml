@@ -3,7 +3,7 @@ name: Versioning and Deployment
 on:
   push:
     branches:
-      - main  # Aciona o workflow ao fazer push na branch main
+      - develop  # Aciona o workflow ao fazer push na branch main
 
 jobs:
   versioning:
@@ -35,6 +35,7 @@ jobs:
         run: |
           # Verifica o tipo de commit para decidir o tipo de versionamento
           COMMIT_MESSAGE=$(git log -1 --pretty=%B | head -n 1)
+          echo "COMMIT_MESSAGE"
 
           if [[ "$COMMIT_MESSAGE" == *"feat:"* ]]; then
             npm run version:minor
