@@ -308,6 +308,7 @@ export default {
         this.ordenarValue = ordenarPorList[0];
         this.adcionadoValue = 'Todos';
         this.precoValue = precoAteList[0];
+        this.currentPage = 1;
         this.getFilter();
       },
       deep: true,
