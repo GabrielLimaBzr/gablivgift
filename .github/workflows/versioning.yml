@@ -34,9 +34,11 @@ jobs:
         id: bump-version
         run: |
           # Verifica o tipo de commit para decidir o tipo de versionamento
-          if [[ "$(git log -1 --pretty=%B)" == *"feat:"* ]]; then
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B | head -n 1)
+
+          if [[ "$COMMIT_MESSAGE" == *"feat:"* ]]; then
             npm run version:minor
-          elif [[ "$(git log -1 --pretty=%B)" == *"fix:"* ]]; then
+          elif [[ "$COMMIT_MESSAGE" == *"fix:"* ]]; then
             npm run version:patch
           else
             echo "No version bump needed."
