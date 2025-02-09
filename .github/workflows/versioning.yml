@@ -3,7 +3,7 @@ name: Versioning and Deployment
 on:
   push:
     branches:
-      - main  # Aciona o workflow ao fazer push na branch main
+      - develop  # Aciona o workflow ao fazer push na branch main
 
 jobs:
   versioning:
