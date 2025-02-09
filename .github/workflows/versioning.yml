@@ -23,6 +23,13 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Capture original commit message
+        id: capture-commit
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B | head -n 1)
+          echo "Original commit message: $COMMIT_MESSAGE"
+          echo "::set-output name=commit_message::$COMMIT_MESSAGE"
+
       - name: Clean working directory
         run: |
           git config --global user.name "GitHub Actions"
@@ -33,9 +40,8 @@ jobs:
       - name: Bump version
         id: bump-version
         run: |
-          # Verifica o tipo de commit para decidir o tipo de versionamento
-          COMMIT_MESSAGE=$(git log -1 --pretty=%B | head -n 1)
-          echo "New version: $COMMIT_MESSAGE"
+          # Usa a mensagem do commit original capturada anteriormente
+          COMMIT_MESSAGE="${{ steps.capture-commit.outputs.commit_message }}"
 
           if [[ "$COMMIT_MESSAGE" == *"feat:"* ]]; then
             npm run version:minor
