@@ -62,4 +62,4 @@ jobs:
           npm install -g vercel
 
           # Faz o deploy
-          vercel --prod --token $VERCEL_TOKEN
+          vercel --prod --token $VERCEL_TOKEN --yes
