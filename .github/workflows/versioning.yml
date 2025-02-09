@@ -35,6 +35,7 @@ jobs:
         run: |
           # Verifica o tipo de commit para decidir o tipo de versionamento
           COMMIT_MESSAGE=$(git log -1 --pretty=%B | head -n 1)
+          echo "New version: $COMMIT_MESSAGE"
 
           if [[ "$COMMIT_MESSAGE" == *"feat:"* ]]; then
             npm run version:minor
